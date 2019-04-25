@@ -1,0 +1,87 @@
+1.man 命令
+功能: 显示指定命令的用法和描述
+语法： man <command name>
+eg： man ls
+
+2. touch，cat 和 less 命令
+A. touch 
+功能：创建大小为0 的任意类型文件。
+语法： touch <filename>
+eg：touch demo.txt
+B. cat 命令用来查看文件内容。该命令只能查看，不能编辑。改命令不支持键盘上下键翻页
+语法：cat <filename>
+eg：cat demo.txt
+
+C. less 命令
+功能：浏览文件，less命令非常快。并且支持上下键查看文件的开头和结尾。
+
+语法： less <filename>
+eg：less demo.txt
+
+D.more 命令
+功能：more 命令和less命令的功能相似。但是more命令只能用‘enter’ 键来实现文件的向下翻页，该命令不支持回退
+语法：more <filename>
+eg：more demo.txt
+
+3. sort 和grep命令
+A. sort 命令用来对文件内容进行排序。
+B grep 命令
+ 功能：该命令非常强大，可以在文件中搜索制定格式的字符串。并对其进行标准输出。
+ 语法：grep "<search string>" <file name>
+ eg：grep "Mathew" test.txt
+ 
+ 4.cut 命令
+ 功能： 可以使用列或者分割符提取出文件中的指定部分。如果要列出文件中的全部内容，可以使用“-c”选项。
+ eg：列出test.txt文件中第1，2列的全部内容
+ 语法为： cut -c1-2 test.txt
+ 
+ 功能：如果希望从文件中读取指定的字符串，那么你可以使用分割符选项“-d” 和 “-f” 选项选中列。
+ 
+ 5.sed 命令
+ sed 是一种在线编辑器。它一次只能处理一行内容。处理时，把当前处理的行存储在临时的缓冲区中，称为“模式空间（pattern space）”,
+ 接着用sed处理缓冲区中的内容。处理完之后，把缓冲区中的送往屏幕。接着处理下一行，这样不断的重复，知道文件的末尾。文件内容并没用改变，除非
+ 你使用重定向存储输出。
+ 语法： sed "s/<old-word>/<mew-word>" test.txt
+ eg：将test.txt文件中用“michael”替换“mike”
+	sed "s/mike/michael" test.txt 
+	
+6. tar 命令
+ 功能：利用tar 命令来压缩和解压缩文件，其中经常用到 "-cf" 和  "-xf" 选项。
+语法：tar <options> <archive-name> <file/folder name>
+
+eg1：将test.txt 文件打包 （-cf 打包）
+tar -cf test.tar test.txt
+eg2：用"-C" 选项将刚才打包好的test.tar 解压至“demo”目录 (-xf 解压)
+tar -xf test.tar -C/root/demo/
+
+7.find 命令 
+功能 用来检索文件，可以用"-name" 选项来检索指定名称的文件
+
+find -name text.txt
+
+功能： 用"/ -name" 来检索指定名称的文件夹
+
+find / -name passwd
+
+8.diff命令
+功能：用来找出两个文件的不同点。
+语法： diff <filename1> <filename2> 
+eg1：diff test.txt test2.txt
+
+9. uniq 命令
+功能： 偶拿过来过滤文件中的重复行
+eg: uniq test.txt
+
+10. chmod命令
+功能：用来改变文件的读/写/执行权限。
+
+命令说明：
+4 - read permission
+2 - write permission
+1 - execute permission
+0 - no permission
+
+
+最高权限
+chmod 755 test.txt
+
