@@ -107,12 +107,35 @@
     pip -V
     -> pip 19.0.3 from /usr/local/python3/lib/python3.8/site-packages/pip (python 3.8)
     ```
+  4. 验证 python2 和 pip2 命令
+    ```
+    python2 -V
+    pip2 -V
+    ```
+    - __注:__
+      - 如果出现 `bash: cd: python2: Too many levels of symbolic links` 异常
+        1. 原因: 建立软连接时,采用的时相对路径
+        2. 查看软连接信息 `ls -al`
+        3. 解决方案: 用绝对路径代替相对路径 `ln -s /usr/bin/python2.7 /usr/bin/python2`, 问题解决
+
   4. yum 命令执行报错
 
     ```
     yum -y install gcc
+
     -> File "/usr/bin/yum", line 30
     ->   except KeyboardInterrupt, e:
                               ^
     -> SyntaxError: invalid syntax
+    ```
+    __原因__:因为 yum 是使用 python2 编写的，所以需要把 yum 的头文件改成用 python2 作为解释器
+
+    __解决方案__
+    ```lunix
+    whereis yum
+    -> yum: /usr/bin/yum /etc/yum /etc/yum.conf /usr/share/man/man8/yum.8
+
+    -> vim /usr/bin/yum
+
+    其中，#!/usr/bin/python 改成 #!/usr/bin/python2 即可
     ```
