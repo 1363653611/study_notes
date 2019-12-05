@@ -116,6 +116,16 @@
     gunicorn -k gevent -c gunicorn.py wsgi:app –preload
     gunicorn -k gevent -c gunicorn.py wsgi:app --log-level=debug
   ```
+
   __注__:run:app说明
     1. run为你定义Flask应用实例的py文件
     2. app是你在该文件中实例化的Flask应用的变量名
+    3. `gunicorn` 命令执行时,如果提示 `gunicorn commond not found` ,需要添加lunix 的环境变量:  
+      ```lunix
+        # 打开环境变量的配置位置
+        vi /etc/profile
+        # 添加 路径
+        export PATH=$PATH:/usr/local/python3/bin
+        # 使路径生效:
+        source /etc/profile
+      ```
