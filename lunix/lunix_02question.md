@@ -1,3 +1,13 @@
+---
+title: 02 Lunix 遇到问题总结
+date: 2019-12-09 15:14:10
+tags:
+ - LUNIX
+categories:
+ - LUNIX
+topdeclare: true
+reward: true
+---
 ### Lunix 遇到问题总结
 
 1. `xxx is not in the sudoers file.This incident will be reported`

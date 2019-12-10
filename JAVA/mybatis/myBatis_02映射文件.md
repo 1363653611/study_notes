@@ -1,3 +1,15 @@
+---
+title: 02.MyBatis 映射文件
+date: 2019-10-8 13:14:10
+tags:
+ - mybatis
+ - sql
+categories:
+ - mybatis
+ - 动态sql
+topdeclare: true
+reward: true
+---
 ### xml 映射文件
 
 #### 映射 文件的顶级元素
@@ -9,6 +21,8 @@
 - update 更新语句
 - delete 删除语句
 - select 选择语句
+
+<!--more-->
 
 #### select 语句
 - 属性分析

@@ -1,3 +1,16 @@
+---
+title: 3. Flask 项目打包部署
+date: 2019-10-06 13:14:10
+tags:
+ - python
+ - env
+categories:
+ - python
+ - env
+#top: 1
+topdeclare: true
+reward: true
+---
 ### Flask 项目打包部署
 
 #### requirements.txt 文件生成 `pip freeze > requirements.txt`

@@ -1,3 +1,16 @@
+---
+title: Hexo博客新建文章并发布
+date: 2019-12-05 13:14:10
+tags:
+ - hexo
+ - yilia
+categories:
+ - hexo
+top: 1
+topdeclare: true
+reward: true
+---
+
 ### 基于Hexo+Github 搭建个人博客
 
 #### node.js
@@ -8,7 +21,15 @@
 2. 安装 hexo `npm i -g hexo-cli`
 
 #### 安装 `yilia` 主题的坑
-1. 头像不展示
+1. 头像设置
+  - 在 `source\assets\image` 添加图片
+  - 在 `themes\yilia\_config.yml` 配置头像 和favicon：
+  ```yml
+  favicon: /zbcn.github.io/assets/image/favicon.ico
+  #你的头像url
+  avatar: /zbcn.github.io/assets/image/head.jpg
+  ```
+  __notify:__ 根目录下的url 配置为博客地址:https://1363653611.github.io/zbcn.github.io, 要配置 `zbcn.github.io`,否则会引发一堆问题
 
 2. 点击 所有文章/友联/关于我 出现 `habout:blank#blocked`页面
   - 解决方案:
@@ -24,7 +45,7 @@
             <%}%>
 		</nav>
     ```
-3. 添加 访问量统计
+3. ~添加 访问量统计1~(效果不是很好)
 
   - 添加本站总访问量(引入不蒜子):(pv的方式，单个用户连续点击n篇文章，记录n次访问量。)
   在 `themes/yilia/layout/_partial/footer.ejs` 的末尾 添加
@@ -52,6 +73,45 @@
       </span>
     <% } %>
     ```
+4. 访问量统计2:
+
+__网站访问量显示：__
+  - 我使用了不蒜子第三方的统计插件，网址：http://ibruce.info/2015/04/04/busuanzi/
+  - 在`themes\yilia\layout\_partial`下的footer.ejs中加入如下代码即可
+  ```js
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+  总访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+  ```
+__实现单篇文章浏览统计和评论统计__
+  - 评论数的统计是__网易云跟帖__中获取的，下面给出
+  - 修改`themes\yilia\layout\_partial`文件夹下的article.ejs文件
+  - 在`<%- partial('post/title', {class_name: 'article-title'}) %>`节点下加入：
+    - 注意这里网易云跟帖还没设置，而评论数中使用到了，这里运行会有问题，下面给出
+    ```js
+    <!-- 显示阅读和评论数 -->
+      <% if (!index && post.comments && config.wangYi){ %>
+      <br/>
+      <a class="cloud-tie-join-count" href="javascript:void(0);"target="_parent" style="color:gray;font-size:14px;">
+      <span class="icon-sort"></span>
+      <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+                阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+      </span>
+      </a>
+      <a class="cloud-tie-join-count" href="javascript:void(0);" target="_parent" style="color:#ef7522;font-size:14px;">
+      	<span class="icon-comment"></span>
+      	<span class="join-text" style="color:#ef7522;font-size:14px;">评论数:</span>
+      	<span class="join-count">0</span>次
+      </a>
+      <% } %>
+    ```
+#### 实现网易云跟帖评论
+- 注册账号：https://gentie.163.com/info.html
 
 #### 配置置顶文章
 - 安装插件
@@ -398,3 +458,48 @@ toc: true
 tags: [HTML,前端]
 categories: [前端,HTML]
 ```
+
+#### yilia 主题 翻页报错
+
+原因是 :`themes\yilia\layout\_partial\archive.ejs` 多出了`&laquo;` 和 `&raquo;`  
+解决方案,是在分页的地方删除以上两个标签,如下:
+  ```js
+  //修改前
+  <% if (page.total > 1){ %>
+   <nav id="page-nav">
+     <%- paginator({
+       prev_text: '&laquo; Prev',
+       next_text: 'Next &raquo;'
+     }) %>
+   </nav>
+ <% } %>
+ // 修改后
+ <% if (page.total > 1){ %>
+  <nav id="page-nav">
+    <%- paginator({
+      prev_text: 'Prev',
+      next_text: 'Next'
+    }) %>
+  </nav>
+<% } %>
+ ...
+ //修改前
+ <% if (page.total > 1){ %>
+   <nav id="page-nav">
+     <%- paginator({
+       prev_text: '&laquo; Prev',
+       next_text: 'Next &raquo;'
+     }) %>
+   </nav>
+ <% } %>
+ //修改后
+ <% if (page.total > 1){ %>
+   <nav id="page-nav">
+     <%- paginator({
+       prev_text: 'Prev',
+       next_text: 'Next'
+     }) %>
+   </nav>
+ <% } %>
+
+  ```

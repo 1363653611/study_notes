@@ -1,3 +1,16 @@
+---
+title: 1. lunix python3.8 安装
+date: 2019-11-05 13:14:10
+tags:
+ - python
+ - env
+categories:
+ - python
+ - env
+#top: 1
+topdeclare: true
+reward: true
+---
 ### lunix python 安装
 
 1. 先看看现有的 python2在哪里

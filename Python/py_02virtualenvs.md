@@ -1,3 +1,16 @@
+---
+title: 2. python3 virtualenv 虚拟环境搭建
+date: 2019-10-06 13:14:10
+tags:
+ - python
+ - env
+categories:
+ - python
+ - env
+#top: 1
+topdeclare: true
+reward: true
+---
 ### 虚拟环境搭建 ###
 1. venv 环境创建`virtualenv venv`
   - 报错,提示`virtualenv: command not found...`

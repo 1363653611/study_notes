@@ -1,3 +1,15 @@
+---
+title: 04.MyBatis java API
+date: 2019-10-9 13:14:10
+tags:
+ - mybatis
+ - sql
+categories:
+ - mybatis
+ - 动态sql
+topdeclare: true
+reward: true
+---
 ### MyBatis java API
 
 #### SqlSession  
@@ -11,6 +23,8 @@ SqlSessionFactory build(InputStream inputStream, Properties properties)
 SqlSessionFactory build(InputStream inputStream, String env, Properties props)
 SqlSessionFactory build(Configuration config)
 ```
+<!--more-->
+
 从 mybatis-config.xml 文件创建 SqlSessionFactory 的示例：
 ```java
 String resource = "org/mybatis/builder/mybatis-config.xml";

@@ -1,3 +1,15 @@
+---
+title: 03. myBatis动态sql
+date: 2019-10-10 13:14:10
+tags:
+ - mybatis
+ - sql
+categories:
+ - mybatis
+ - 动态sql
+topdeclare: true
+reward: true
+---
 ### 动态sql
 
 #### if
@@ -11,6 +23,8 @@
   </if>
 </select>
 ```
+
+<!--more-->
 
 #### choose \ when \ otherwise
 ```xml

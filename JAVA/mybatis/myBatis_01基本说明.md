@@ -1,9 +1,23 @@
-### myBatis 学习说明 ###
+---
+title: myBatis 01.基本说明
+date: 2019-10-07 13:14:10
+tags:
+ - mybatis
+ - sql
+categories:
+ - mybatis
+ - 基本说明
+topdeclare: true
+reward: true
+---
+### myBatis 01.基本说明 ###
 
 #### 关键类:
 - SqlSessionFactoryBuilder:
   - 作用:创建 ` SqlSessionFactory`, 一旦创建后,就再不需要了 `SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);`
   - 作用域: 方法作用域（也就是局部方法变量）
+
+<!--more-->
 
 - SqlSessionFactory:
   - 作用: 获取 `SqlSession` , `SqlSession session = sqlSessionFactory.openSession()`
