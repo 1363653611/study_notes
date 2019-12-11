@@ -51,9 +51,9 @@ reward: true
 			9. 对象引用
 			10. returnAddress类型
 
-	- 操作数栈
-	- 动态链接
-	- 方法出口
+  	- 操作数栈
+  	- 动态链接
+  	- 方法出口
 
 - 容量大小的设置: `-Xxs128k`
 
@@ -77,6 +77,8 @@ reward: true
 		1. Eden空间
 		2. From Survivor
 		3. To Survivor
+    4. 老年代
+    5. 永久代
 
 	- 内存分配角度
 		- 线程共享的java堆中可能划分出多个线程私有的分配缓冲区 `TLAB(Thread Local Allocation Buffer)`
