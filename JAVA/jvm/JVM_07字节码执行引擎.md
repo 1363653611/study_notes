@@ -6,7 +6,7 @@ tags:
   - java
 categories:
   - JVM
-  - jav
+  - java
 topdeclare: true
 reward: true
 ---
@@ -24,6 +24,7 @@ reward: true
     - 两者兼备
   - 输入的是字节码文件，处理过程是字节码解析的等效过程，输出的是执行结果
 
+<!--more-->
 - 运行时栈帧结构
   - 用于支持虚拟机进行方法调用和方法执行的数据结构
   - 属于虚拟机栈的元素
