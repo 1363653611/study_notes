@@ -2,9 +2,9 @@
 title: 01 mysql 基本命令
 date: 2019-12-09 18:14:10
 tags:
-  - redis 基本命令
+  - redis
 categories:
-  - redis 基本命令
+  - redis
 topdeclare: true
 reward: true
 ---
@@ -12,6 +12,7 @@ reward: true
 2. 建立链接`：redis-cli.exe -h 127.0.0.1 -p 6379`  （这时候另启一个 cmd 窗口，原来的不要关闭，不然就无法访问服务端了。）
 
 <!--more-->
+
 ### redis 支持数据类型 ###
 * Strings(字符串)
   - character：

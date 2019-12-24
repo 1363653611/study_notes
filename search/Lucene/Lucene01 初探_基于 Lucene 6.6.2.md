@@ -374,8 +374,7 @@ public class SearchEnglish {
 
 本篇文章使用IK-Analyzer来进行中文分词，不幸的是IK-Analyzer已经停止维护，其最新版本为IKAnalyzer2012_FF.jar，点击下载(https://code.google.com/archive/p/ik-analyzer/downloads )，与此对应的Lucene版本支持到了Lucene5.5.5(https://mirrors.aliyun.com/apache/lucene/java/5.5.5/) ，点击下载（PS：如果你想使用官方的版本，将Lucene版本修改为Lucene5就可以了）。
 
-为了能够让IK-Analyzer支持到Lucene6，作者自己对源码进行编译，现在能够支持到了Lucene6.6.2
-，点击下载(https://download.csdn.net/download/yuanlaijike/10270713),我自行编译后的IK-Analyzer-6.6.2.jar。
+为了能够让IK-Analyzer支持到Lucene8，作者自己对源码进行编译，网上大神已经开源了一个支持 最新lucene 版本的.，点击下载(https://github.com/blueshen/ik-analyzer) 源码,自行编译,然后安装到自己仓库,详见开源代码说明。
 
 项目结构如下：
 ![中文分词_包结构](img/中文分词_包结构.png)
