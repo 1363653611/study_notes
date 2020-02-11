@@ -82,7 +82,7 @@ reward: true
   #添加 pip3 的软链接
   ln -s /usr/local/python3/bin/pip3.8 /usr/bin/pip3
   #测试是否安装成功了
-  python -V
+  python3 -V
   ```
 
 #### 可选，如果需要将 python3.8 指向 python 软链接。则需要进行如下步骤
