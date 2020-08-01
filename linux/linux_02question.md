@@ -1,14 +1,15 @@
 ---
-title: 02 Lunix 遇到问题总结
+title: 02 LINUX遇到问题总结
 date: 2019-12-09 15:14:10
 tags:
- - LUNIX
+ - LINUX
 categories:
- - LUNIX
+ - LINUX
 topdeclare: true
 reward: true
 ---
-### Lunix 遇到问题总结
+
+### LINUX遇到问题总结
 
 1. `xxx is not in the sudoers file.This incident will be reported`
    - 解决方案：解决方法就是在/etc/sudoers文件里给该用户添加权限
