@@ -254,7 +254,7 @@ public class AServiceImpl implements AService{
 >2. 依据获取到的增强进行代理.
 
 postProcessorAfterInitialization 方法执行示意图:
-![postProcessorAfterInitialization](./imgs/postProcessorAfterInitazation.jpg)
+![postProcessorAfterInitialization](./imgs/postProcessorAfterInitazation.jpg) 
 
 - getAdvicesAndAdvisorsForBean 方法
 ```java
