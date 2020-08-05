@@ -88,7 +88,7 @@ reward: true
 11. 开启对外端口号:
     `iptables -I INPUT -p tcp --dport 5000 -j ACCEPT`
 
-# 常用命令
+# 基本命令
 
 
 
@@ -120,6 +120,23 @@ $ clear    ## 或者用快捷键  ctrl + l
   $ grep -r "ramesh" *
   ```
 
+- 其他
+
+```shell
+grep forest f.txt     #文件查找
+grep forest f.txt cpf.txt #多文件查找
+grep 'log' /home/admin -r -n #目录下查找所有符合关键字的文件
+cat f.txt | grep -i shopbase    
+grep 'shopbase' /home/admin -r -n --include *.{vm,java} #指定文件后缀
+grep 'shopbase' /home/admin -r -n --exclude *.{vm,java} #反匹配
+seq 10 | grep 5 -A 3    #上匹配
+seq 10 | grep 5 -B 3    #下匹配
+seq 10 | grep 5 -C 3    #上下匹配，平时用这个就妥了
+cat f.txt | grep -c 'SHOPBASE'
+```
+
+
+
 - 更多示例：Get a Grip on the Grep! – 15 Practical Grep Command Examples
 
   http://www.thegeekstuff.com/2009/03/15-practical-unix-grep-command-examples/
@@ -145,6 +162,26 @@ $ find -iname "myProgram.c" -exec md5sum {} \;
 ```shell
 $ find ~ -empty
 ```
+
+- 其他
+
+```shell
+sudo -u admin find /home/admin /tmp /usr -name \*.log(多个目录去找)
+find . -iname \*.txt(大小写都匹配)
+find . -type d(当前目录下的所有子目录)
+find /usr -type l(当前目录下所有的符号链接)
+find /usr -type l -name "z*" -ls(符号链接的详细信息 eg:inode,目录)
+find /home/admin -size +250000k(超过250000k的文件，当然+改成-就是小于了)
+find /home/admin f -perm 777 -exec ls -l {} \; (按照权限查询文件)
+find /home/admin -atime -1  1天内访问过的文件
+find /home/admin -ctime -1  1天内状态改变过的文件    
+find /home/admin -mtime -1  1天内修改过的文件
+find /home/admin -amin -1  1分钟内访问过的文件
+find /home/admin -cmin -1  1分钟内状态改变过的文件    
+find /home/admin -mmin -1  1分钟内修改过的文件
+```
+
+
 
 - 更多示例：Mommy, I found it! — 15 Practical Linux Find Command Examples
 
@@ -195,6 +232,32 @@ $ awk -F ':' '$3=$4' /etc/passwd
 ```shell
 $ awk '{print $2,$5;}' employee.txt
 ```
+
+- 其他
+
+```shell
+# 基础命令
+awk '{print $4,$6}' f.txt
+awk '{print NR,$0}' f.txt cpf.txt    
+awk '{print FNR,$0}' f.txt cpf.txt
+awk '{print FNR,FILENAME,$0}' f.txt cpf.txt
+awk '{print FILENAME,"NR="NR,"FNR="FNR,"$"NF"="$NF}' f.txt cpf.txt
+echo 1:2:3:4 | awk -F: '{print $1,$2,$3,$4}'
+
+# 匹配
+awk '/ldb/ {print}' f.txt   #匹配ldb
+awk '!/ldb/ {print}' f.txt  #不匹配ldb
+awk '/ldb/ && /LISTEN/ {print}' f.txt   #匹配ldb和LISTEN
+awk '$5 ~ /ldb/ {print}' f.txt #第五列匹配ldb
+# 内建变量
+# NR:NR表示从awk开始执行后，按照记录分隔符读取的数据次数，默认的记录分隔符为换行符，因此默认的就是读取的数据行数，NR可以理解为Number of Record的缩写。
+# FNR:在awk处理多个输入文件的时候，在处理完第一个文件后，NR并不会从1开始，而是继续累加，因此就出现了FNR，每当处理一个新文件的时候，FNR就从1开始计数，FNR可以理解为File Number of Record。
+# NF: NF表示目前的记录被分割的字段的数目，NF可以理解为Number of Field。
+```
+
+
+
+
 
 - 更多示例：8 Powerful Awk Built-in Variables – FS, OFS, RS, ORS, NR, NF, FILENAME, FNR
 
@@ -386,6 +449,10 @@ Select sort field via field letter, type any other key to return
 
 ```shell
 $ top -u oracle
+
+# top除了看一些基本信息之外，剩下的就是配合来查询vm的各种问题了
+ps -ef | grep java
+top -H -p pid
 ```
 
 更多示例：Can You Top This? 15 Practical Linux Top Command Examples
@@ -1569,6 +1636,24 @@ chkconfig   #查看所有服务器自启配置
 chkconfig iptables off   #关掉指定服务的自动启动
 chkconfig iptables on   #开启指定服务的自动启动
 ```
+
+### 其他
+
+#### 查看当前链接
+
+```shell
+#查看当前连接，注意close_wait偏高的情况，比如如下
+$ netstat -nat|awk  '{print $6}'|sort|uniq -c|sort -rn 
+
+[root@izm5edg2s72kme0kupc888z ~]# netstat -nat|awk  '{print $6}'|sort|uniq -c|sort -rn
+      6 LISTEN
+      3 ESTABLISHED
+      2 SYN_RECV
+      1 Foreign
+      1 established)
+```
+
+
 
 # 参考
 

@@ -11,6 +11,10 @@ topdeclare: true
 reward: true
 ---
 
+# java 代码转换字节码
+
+![image-20200804174206365](JVM_06类的加载机制/image-20200804174206365.png)
+
 # 类的加载机制
 
 ## 类的加载时机

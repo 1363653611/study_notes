@@ -28,6 +28,7 @@ reward: true
 ### 代码下载
 
 - 下载代码: `git clone 项目下载连接.git`
+- 下载代码并且指定本地名称：`git clone -b 项目下载连接.git [需要存放的本地分支名称]`
 - 分支查看 `git branch -a`
   - * 所在的分支就是当前分支
 - 切换分支 `git checkout 分支名称`
@@ -69,6 +70,7 @@ Git的设置文件为.gitconfig，它可以在用户主目录下（全局配置�
 - 列出所有本地分支和远程分支 `git branch -a`
 - 新建一个分支，但依然停留在当前分支: `git branch [new-branch]`
 - 新建一个分支，并切换到该分支: `git checkout -b [branch]`
+- 将新建的分支推送到远端 `git push origin [branch]`
 - 新建一个分支，指向指定commit: `git branch [branch] [commit]`
 - 新建一个分支，与指定的远程分支建立追踪关系 `git branch --track [branch] [remote-branch]`
 - 切换到指定分支，并更新工作区: `git checkout [branch-name]`
