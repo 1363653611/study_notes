@@ -31,6 +31,7 @@ reward: true
     ```
   - 作用域：请求或方法作用域（如果你现在正在使用一种 Web 框架，要考虑 SqlSession 放在一个和 HTTP 请求对象相似的作用域中。 换句话说，每次收到的 HTTP 请求，就可以打开一个 SqlSession，返回一个响应，就关闭它）  
     要保证 使用后一定要关闭：
+    
     ```java
     try (SqlSession session = sqlSessionFactory.openSession()) {
         BlogMapper mapper = session.getMapper(BlogMapper.class);
@@ -58,52 +59,55 @@ reward: true
   ```
 
   1. properties（属性）： 可外部配置或者可动态替换的。既可以在典型的 Java 属性文件中配置，亦可通过 properties 元素的子元素来传递
-    - 实例:  
-    ```xml
-    <properties resource="org/mybatis/example/config.properties">
-      <property name="username" value="dev_user"/>
-      <property name="password" value="F2Fa3!33TYyg"/>
-    </properties>
-    <!--然后其中的属性就可以在整个配置文件中被用来替换需要动态配置的属性值：
+
+~~~xml
+- 实例: 
+
+```xml
+<properties resource="org/mybatis/example/config.properties">
+    <property name="username" value="dev_user"/>
+    <property name="password" value="F2Fa3!33TYyg"/>
+</properties>
+<!--然后其中的属性就可以在整个配置文件中被用来替换需要动态配置的属性值：
       这个例子中的 username 和 password 将会由 properties 元素中设置的相应值来替换。 driver 和 url 属性将会由 config.properties 文件中对应的值来替换-->
-    <dataSource type="POOLED">
-      <property name="driver" value="${driver}"/>
-      <property name="url" value="${url}"/>
-      <property name="username" value="${username}"/>
-      <property name="password" value="${password}"/>
-    </dataSource>
+<dataSource type="POOLED">
+    <property name="driver" value="${driver}"/>
+    <property name="url" value="${url}"/>
+    <property name="username" value="${username}"/>
+    <property name="password" value="${password}"/>
+</dataSource>
+```
 
-    ```
+- 加载顺序：通过方法参数传递的属性具有最高优先级，resource/url 属性中指定的配置文件次之，最低优先级的是 properties 属性中指定的属性
+- 占位符：
+  ```xml
+  <dataSource type="POOLED">
+    <!-- ... -->
+    <property name="username" value="${username:ut_user}"/> <!-- 如果属性 'username' 没有被配置，'username' 属性的值将为 'ut_user' -->
+  </dataSource>
+  ```
+- 开启占位符：
+  ```xml
+  <properties resource="org/mybatis/example/config.properties">
+      <!-- ... -->
+      <property name="org.apache.ibatis.parsing.PropertyParser.enable-default-value" value="true"/> <!-- 启用默认值特性 -->
+  </properties>
+  ```
+- 修改默认值分割符：
+  ```xml
+  <!--修改-->
+  <properties resource="org/mybatis/example/config.properties">
+    <!-- ... -->
+    <property name="org.apache.ibatis.parsing.PropertyParser.default-value-separator" value="?:"/> <!-- 修改默认值的分隔符 -->
+  </properties>
 
-    - 加载顺序：通过方法参数传递的属性具有最高优先级，resource/url 属性中指定的配置文件次之，最低优先级的是 properties 属性中指定的属性
-    - 占位符：
-      ```xml
-      <dataSource type="POOLED">
-        <!-- ... -->
-        <property name="username" value="${username:ut_user}"/> <!-- 如果属性 'username' 没有被配置，'username' 属性的值将为 'ut_user' -->
-      </dataSource>
-      ```
-    - 开启占位符：
-      ```xml
-      <properties resource="org/mybatis/example/config.properties">
-          <!-- ... -->
-          <property name="org.apache.ibatis.parsing.PropertyParser.enable-default-value" value="true"/> <!-- 启用默认值特性 -->
-      </properties>
-      ```
-    - 修改默认值分割符：
-      ```xml
-      <!--修改-->
-      <properties resource="org/mybatis/example/config.properties">
-        <!-- ... -->
-        <property name="org.apache.ibatis.parsing.PropertyParser.default-value-separator" value="?:"/> <!-- 修改默认值的分隔符 -->
-      </properties>
-
-      <!--使用-->
-      <dataSource type="POOLED">
-        <!-- ... -->
-        <property name="username" value="${db:username?:ut_user}"/>
-      </dataSource>
-      ```
+  <!--使用-->
+  <dataSource type="POOLED">
+    <!-- ... -->
+    <property name="username" value="${db:username?:ut_user}"/>
+  </dataSource>
+  ```
+~~~
 
   2. 设置（settings）
 
@@ -146,6 +150,7 @@ FAILING: 映射失败 (抛出 SqlSessionException) 默认 NOTE -->
 
       ```
   3. 类型别名（typeAliases）:类型别名是为 Java 类型设置一个短的名字。 它只和 XML 配置有关，存在的意义仅在于用来减少类完全限定名的冗余
+
     ```xml
     <typeAliases>
       <typeAlias alias="Author" type="domain.blog.Author"/>
@@ -158,7 +163,7 @@ FAILING: 映射失败 (抛出 SqlSessionException) 默认 NOTE -->
       <package name="domain.blog"/>
     </typeAliases>
     ```
-
+    
     - 若有注解，则别名为其注解值
       ```java
       @Alias("author")
@@ -169,32 +174,33 @@ FAILING: 映射失败 (抛出 SqlSessionException) 默认 NOTE -->
   4. 类型处理器（typeHandlers）
    - 数据库数据类型和 java 数据类型转换.
    - 可以自定义转换:具体做法为：实现 org.apache.ibatis.type.TypeHandler 接口， 或继承一个很便利的类 org.apache.ibatis.type.BaseTypeHandler， 然后可以选择性地将它映射到一个 JDBC 类型。比如：
+
     ```java
     // ExampleTypeHandler.java
     @MappedJdbcTypes(JdbcType.VARCHAR)
     public class ExampleTypeHandler extends BaseTypeHandler<String> {
-
+    
       @Override
       public void setNonNullParameter(PreparedStatement ps, int i, String parameter, JdbcType jdbcType) throws SQLException {
         ps.setString(i, parameter);
       }
-
+    
       @Override
       public String getNullableResult(ResultSet rs, String columnName) throws SQLException {
         return rs.getString(columnName);
       }
-
+    
       @Override
       public String getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         return rs.getString(columnIndex);
       }
-
+    
       @Override
       public String getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         return cs.getString(columnIndex);
       }
     }
-
+    
     ```
     ```xml
     <!-- mybatis-config.xml -->
@@ -207,6 +213,7 @@ FAILING: 映射失败 (抛出 SqlSessionException) 默认 NOTE -->
   6. 对象工厂（objectFactory）:MyBatis 每次创建结果对象的新实例时，它都会使用一个对象工厂（ObjectFactory）实例来完成
 
   7. 插件（plugins）
+
     - MyBatis 允许你在已映射语句执行过程中的某一点进行拦截调用。默认情况下，MyBatis 允许使用插件来拦截的方法调用包括：
       ```
       Executor (update, query, flushStatements, commit, rollback, getTransaction, close, isClosed)
@@ -215,6 +222,7 @@ FAILING: 映射失败 (抛出 SqlSessionException) 默认 NOTE -->
       StatementHandler (prepare, parameterize, batch, update, query)
       ```
   8. 环境配置（environments）:MyBatis 可以配置成适应多种环境，这种机制有助于将 SQL 映射应用于多种数据库之中
+
     ```xml
     <environments default="development">
       <environment id="development">
@@ -230,27 +238,29 @@ FAILING: 映射失败 (抛出 SqlSessionException) 默认 NOTE -->
       </environment>
     </environments>
     ```
-
+    
     * 默认使用的环境 ID（比如：default="development"）。
     * 每个 environment 元素定义的环境 ID（比如：id="development"）。
     * 事务管理器的配置（比如：type="JDBC"）。
     * 数据源的配置（比如：type="POOLED"）
 
   9. 事务管理器（transactionManager）  
-  mybatis 中有两种事务管理器:
-  - DBC – 这个配置就是直接使用了 JDBC 的提交和回滚设置，它依赖于从数据源得到的连接来管理事务作用域。
+    
+    __mybatis 中有两种事务管理器:__
+  - JDBC – 这个配置就是直接使用了 JDBC 的提交和回滚设置，它依赖于从数据源得到的连接来管理事务作用域。
   - MANAGED – 这个配置几乎没做什么。它从来不提交或回滚一个连接，而是让容器来管理事务的整个生命周期（比如 JEE 应用服务器的上下文）。 默认情况下它会关闭连接，然而一些容器并不希望这样，因此需要将 closeConnection 属性设置为 false 来阻止它默认的关闭行为。
 
   __注:__ 如果你正在使用 Spring + MyBatis，则没有必要配置事务管理器， 因为 Spring 模块会使用自带的管理器来覆盖前面的配置。
 
   10. 数据源（dataSource）  
-  三种内建数据源: `UNPOOLED|POOLED|JNDI`
-  - `UNPOOLED` :个数据源的实现只是每次被请求时打开和关闭连接.
+
+      三种内建数据源: `UNPOOLED|POOLED|JNDI`
+  - `UNPOOLED` :该数据源的实现只是每次被请求时打开和关闭连接.
   - `POOLED`:这种数据源的实现利用“池”的概念将 JDBC 连接对象组织起来，避免了创建新的连接实例时所必需的初始化和认证时间。 这是一种使得并发 Web 应用快速响应请求的流行处理方式。
   - `JNDI`:这个数据源的实现是为了能在如 EJB 或应用服务器这类容器中使用，容器可以集中或在外部配置数据源，然后放置一个 JNDI 上下文的引用。
 
   11. 数据库厂商标识（databaseIdProvider）  
-  MyBatis 可以根据不同的数据库厂商执行不同的语句，这种多厂商的支持是基于映射语句中的 databaseId 属性
+    MyBatis 可以根据不同的数据库厂商执行不同的语句，这种多厂商的支持是基于映射语句中的 databaseId 属性
   ```xml
   <databaseIdProvider type="DB_VENDOR">
     <property name="SQL Server" value="sqlserver"/>
@@ -259,7 +269,7 @@ FAILING: 映射失败 (抛出 SqlSessionException) 默认 NOTE -->
   </databaseIdProvider>
   ```
   12. 映射器（mappers）  
-  需要告诉 MyBatis 到哪里去找到这些语句。 Java 在自动查找这方面没有提供一个很好的方法，所以最佳的方式是告诉 MyBatis 到哪里去找映射文件。 你可以使用相对于类路径的资源引用， 或完全限定资源定位符（包括 file:/// 的 URL），或类名和包名等。
+    需要告诉 MyBatis 到哪里去找到这些语句。 Java 在自动查找这方面没有提供一个很好的方法，所以最佳的方式是告诉 MyBatis 到哪里去找映射文件。 你可以使用相对于类路径的资源引用， 或完全限定资源定位符（包括 file:/// 的 URL），或类名和包名等。
 
   ```xml
   <!-- 使用相对于类路径的资源引用 -->

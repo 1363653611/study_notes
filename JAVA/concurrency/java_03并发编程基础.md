@@ -35,7 +35,7 @@ reward: true
   - waiting 等待
   - time wating 超时等待
   - terminaled 终止状态
-  ![线程状态图](img/状态图.jpg)
+    ![线程状态图](img/状态图.jpg)
 5. daemon 守护线程  
  - 用 thread.setDaemon(true) 将线程设置为守护线程
  - 守护线程的设置必须在线程启动前,不能再线程启动后设置
@@ -107,10 +107,10 @@ __用于线程之间的数据传输__ ，而传输的媒介为 __内存__
  - join(long millis,int nanos)
 
 > 当线程终止时，会调用线程自身的notifyAll()方法，会通知所有等待在该线程对象上的线
-程。可以看到join()方法的逻辑结构与4.3.3节中描述的等待/通知经典范式一致，即加锁、循环
+程。可以看到join()方法的逻辑结构 **等待/通知** 经典范式一致，即加锁、循环
 和处理逻辑3个步骤
 
 ### ThreadLocal的使用
-> ThreadLocal，即线程变量，是一个以ThreadLocal对象为键、任意对象为值的存储结构。这
-个结构被附带在线程上，也就是说一个线程可以根据一个ThreadLocal对象查询到绑定在这个
+> `ThreadLocal`，即线程变量，是一个以`ThreadLocal`对象为键、任意对象为值的存储结构。这
+个结构被附带在线程上，也就是说一个线程可以根据一个 `ThreadLocal`对象查询到绑定在这个
 线程上的一个值
