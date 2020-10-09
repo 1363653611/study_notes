@@ -26,7 +26,7 @@ reward: true
 
 # 命令格式
 
-##  jps   虚拟金进程状况
+##  jps   虚拟机进程状况
 
 ```shell
 # 命令格式
@@ -36,21 +36,21 @@ jps [ options ] [ hostid ]
 $ jps
 15236 Jps
 14966 Example1
-# eg2
+# eg2： 输出应用程序main class的完整package名或者应用程序的jar文件完整路径名
 $ jps -l
 15249 sun.tools.jps.Jps
 14966 com.jaxer.jvm.egs.Example1
 
-# eg3
+# eg3：输出main method的参数 
 $ jps -m
 15264 Jps -m
 14966 Example1
-# eg4
+# eg4 ：  输出传递给JVM的参数
 $ jps -v
 14966 Example1 -Dvisualvm.id=44321340563858 -Xmx50m -Xms50m -XX:+PrintGCDetails -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=61849:/Applications/IntelliJ IDEA.app/Contents/bin -Dfile.encoding=UTF-8
 15278 Jps -Dapplication.home=/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home -Xms8m
 
-# eg5
+# eg5： 只显示pid，不显示class名称,jar文件名和传递给main方法的参数
 $ jps -q
 9938
 14966
@@ -59,7 +59,55 @@ $ jps -q
 
 ##  jstat: 虚拟机统计信息监视工具
 
-### 堆内存监控
+### 参数说明
+
+```shell
+# option： 参数选项
+# -t： 可以在打印的列加上Timestamp列，用于显示系统运行的时间
+# -h： 可以在周期性数据数据的时候，可以在指定输出多少行以后输出一次表头
+# vmid： Virtual Machine ID（ 进程的 pid）
+# interval： 执行每次的间隔时间，单位为毫秒
+# count： 用于指定输出多少次记录，缺省则会一直打印
+```
+
+### option 选项
+
+```shell
+$ jstat -option
+
+-class 显示ClassLoad的相关信息；
+-compiler 显示JIT编译的相关信息；
+-gc 显示和gc相关的堆信息；
+-gccapacity 　　 显示各个代的容量以及使用情况；
+-gcmetacapacity 显示metaspace的大小
+-gcnew 显示新生代信息；
+-gcnewcapacity 显示新生代大小和使用情况；
+-gcold 显示老年代和永久代的信息；
+-gcoldcapacity 显示老年代的大小；
+-gcutil　　 显示垃圾收集信息；
+-gccause 显示垃圾回收的相关信息（通-gcutil）,同时显示最后一次或当前正在发生的垃圾回收的诱因；
+-printcompilation 输出JIT编译的方法信息
+```
+
+参数名称 | 参数说明
+ ---|---|---
+ class | 用于查看类加载情况的统计，显示加载class的数量，及所占空间等信息。
+ compiler | 查看HotSpot中即时编译器编译情况的统计
+ gc | 查看JVM中堆的垃圾收集情况的统计，可以显示gc的信息，查看gc的次数，及时间。其中最后五项，分别是young gc的次数，young gc的时间，full gc的次数，full gc的时间，gc的总时间。
+ gccapacity | 查看新生代、老生代及持久代的存储容量情况，可以显示，VM内存中三代（young,old,perm）对象的使用和占用大小
+ gccause | 查看垃圾收集的统计情况（这个和-gcutil选项一样），如果有发生垃圾收集，它还会显示最后一次及当前正在发生垃圾收集的原因
+ gcmetacapacity | 显示关于metaspace大小的统计信息。
+ gcnew | 查看新生代垃圾收集的情况，new对象的信息
+ gcnewcapacity | 用于查看新生代的存储容量情况，new对象的信息及其占用量
+ gcold | 用于查看老生代及持久代发生GC的情况，old对象的信息
+ gcoldcapacity | 用于查看老生代的容量，old对象的信息及其占用量
+ gcpermcapacity | 用于查看持久代的容量，perm对象的信息及其占用量
+ gcutil | 查看新生代、老生代及持代垃圾收集的情况
+ printcompilation | 当前VM执行的信息
+
+
+
+### 堆内存监控（垃圾收集统计 gc）
 
 ```shell
 # 命令格式
@@ -83,23 +131,67 @@ $ jstat -gc 11200 1000 10
   >
   > `S1U`: Survivor space 1 utilization (kB).
   >
-  > `EC`: Current eden space capacity (kB).`EU`: Eden space utilization (kB).
+  > `EC`: Current eden space capacity (kB).
   >
-  > `OC`: Current old space capacity (kB).`OU`: Old space utilization (kB).
+  > `EU`: Eden space utilization (kB).
   >
-  > `MC`: Metaspace capacity (kB).`MU`: Metacspace utilization (kB).
+  > `OC`: Current old space capacity (kB).
   >
-  > `CCSC`: Compressed class space capacity (kB).`CCSU`: Compressed class space used (kB).
+  > `OU`: Old space utilization (kB).
   >
+  > `MC`: Metaspace capacity (kB).
+  >
+  > `MU`: Metacspace utilization (kB).
+  >
+  > `CCSC`: Compressed class space capacity (kB).
+  >
+  > `CCSU`: Compressed class space used (kB).
+>
   > `YGC`: Number of young generation garbage collection events.
   >
   > `YGCT`: Young generation garbage collection time.
   >
-  > `FGC`: Number of full GC events.`FGCT`: Full garbage collection time.
+  > `FGC`: Number of full GC events.
+  >
+  > `FGCT`: Full garbage collection time.
   >
   > `GCT`: Total garbage collection time.
-
+  
   官方文档:https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstat.html#BEHHGFAE
+  
+  S0C：第一个幸存区的大小
+  
+  S1C：第二个幸存区的大小
+  
+  S0U：第一个幸存区的使用大小
+  
+  S1U：第二个幸存区的使用大小
+  
+  EC：青年代区的大小
+  
+  EU：青年代区的使用大小
+  
+  OC：老年代大小
+  
+  OU：老年代使用大小
+  
+  MC：方法区大小
+  
+  MU：方法区使用大小
+  
+  CCSC:压缩类空间大小
+  
+  CCSU:压缩类空间使用大小
+  
+  YGC：年轻代垃圾回收次数
+  
+  YGCT：年轻代垃圾回收消耗时间
+  
+  FGC：老年代垃圾回收次数
+  
+  FGCT：老年代垃圾回收消耗时间
+  
+  GCT：垃圾回收消耗总时间。
 
 
 ### 查看类加载/卸载信息
@@ -110,7 +202,190 @@ Loaded  Bytes  Unloaded  Bytes     Time
    829  1604.4        0     0.0       0.37
 ```
 
+- Loaded:加载class的数量
+- Bytes：所占用空间大小
+- Unloaded：未加载数量
+- Bytes:未加载占用空间
+- Time：时间
 
+### 编译统计 compiler
+
+```shell
+[root@localhost ~]# jstat -compiler 5013
+Compiled Failed Invalid   Time   FailedType FailedMethod
+   25446      9       0   583.46          1 oracle/net/ano/Ano init
+
+```
+
+- Compiled：编译数量
+- Failed：失败数量
+- Invalid：不可用数量
+- Time：时间
+- FailedType：失败类型
+- FailedMethod：失败的方法
+
+### ### 堆内存统计 gccapacity
+
+```shell
+[root@localhost ~]# jstat -gccapacity 5013
+ NGCMN    NGCMX     NGC     S0C   S1C       EC      OGCMN      OGCMX       OGC         OC       MCMN     MCMX      MC     CCSMN    CCSMX     CCSC    YGC    FGC
+ 26624.0 423936.0 418304.0 101376.0 100864.0 216064.0    53248.0   847872.0   847872.0   847872.0      0.0 1243136.0 212224.0      0.0 1048576.0  18432.0    164  8131
+```
+
+- NGCMN：新生代最小容量
+- NGCMX：新生代最大容量
+- NGC：当前新生代容量
+- S0C：第一个幸存区大小
+- S1C：第二个幸存区的大小
+- EC：青年代区的大小
+- OGCMN：老年代最小容量
+- OGCMX：老年代最大容量
+- OGC：当前老年代大小
+- OC:当前老年代大小
+- MCMN:最小元数据容量
+- MCMX：最大元数据容量
+- MC：当前元数据空间大小
+- CCSMN：最小压缩类空间大小
+- CCSMX：最大压缩类空间大小
+- CCSC：当前压缩类空间大小
+- YGC：年轻代gc次数
+- FGC：老年代GC次数
+
+### 新生代垃圾回收统计 gcnew
+
+```shell
+[root@localhost ~]# jstat -gcnew 5013
+ S0C    S1C    S0U    S1U   TT MTT  DSS      EC       EU     YGC     YGCT
+101376.0 100864.0    0.0    0.0  1  15 100864.0 216064.0 206937.9    164    3.348
+
+```
+
+- S0C：第一个幸存区大小
+- S1C：第二个幸存区的大小
+- S0U：第一个幸存区的使用大小
+- S1U：第二个幸存区的使用大小
+- TT:对象在新生代存活的次数
+- MTT:对象在新生代存活的最大次数
+- DSS:期望的幸存区大小
+- EC：伊甸园区的大小
+- EU：伊甸园区的使用大小
+- YGC：年轻代垃圾回收次数
+- YGCT：年轻代垃圾回收消耗时间
+
+### 新生代内存统计 gcnewcapacity
+
+```shell
+[root@localhost ~]# jstat -gcnewcapacity 5013
+  NGCMN      NGCMX       NGC      S0CMX     S0C     S1CMX     S1C       ECMX        EC      YGC   FGC
+   26624.0   423936.0   418304.0 141312.0 101376.0 141312.0 100864.0   422912.0   216064.0   164  8133
+```
+
+- NGCMN：新生代最小容量
+- NGCMX：新生代最大容量
+- NGC：当前新生代容量
+- S0CMX：最大幸存1区大小
+- S0C：当前幸存1区大小
+- S1CMX：最大幸存2区大小
+- S1C：当前幸存2区大小
+- ECMX：最大伊甸园区大小
+- EC：当前伊甸园区大小
+- YGC：年轻代垃圾回收次数
+- FGC：老年代回收次数
+
+### 老年代垃圾回收统计 gcold
+
+```shell
+[root@localhost ~]# jstat -gcold 5013
+   MC       MU      CCSC     CCSU       OC          OU       YGC    FGC    FGCT     GCT
+212224.0 206925.1  18432.0  17487.5    847872.0    847454.4    164  8134 5117.114 5120.462
+
+```
+
+- MC：方法区大小
+- MU：方法区使用大小
+- CCSC:压缩类空间大小
+- CCSU:压缩类空间使用大小
+- OC：老年代大小
+- OU：老年代使用大小
+- YGC：年轻代垃圾回收次数
+- FGC：老年代垃圾回收次数
+- FGCT：老年代垃圾回收消耗时间
+- GCT：垃圾回收消耗总时间
+
+###　老年代内存统计　gcoldcapacity
+
+```shell
+[root@localhost ~]# jstat -gcoldcapacity 5013
+   OGCMN       OGCMX        OGC         OC       YGC   FGC    FGCT     GCT
+    53248.0    847872.0    847872.0    847872.0   164  8134 5117.114 5120.462
+```
+
+- OGCMN：老年代最小容量
+- OGCMX：老年代最大容量
+- OGC：当前老年代大小
+- OC：老年代大小
+- YGC：年轻代垃圾回收次数
+- FGC：老年代垃圾回收次数
+- FGCT：老年代垃圾回收消耗时间
+- GCT：垃圾回收消耗总时间
+
+### 元数据空间统计 gcmetacapacity
+
+```shell
+[root@localhost ~]# jstat -gcmetacapacity 5013
+   MCMN       MCMX        MC       CCSMN      CCSMX       CCSC     YGC   FGC    FGCT     GCT
+       0.0  1243136.0   212224.0        0.0  1048576.0    18432.0   164  8135 5117.698 5121.046
+
+```
+
+- MCMN: 最小元数据容量
+- MCMX：最大元数据容量
+- MC：当前元数据空间大小
+- CCSMN：最小压缩类空间大小
+- CCSMX：最大压缩类空间大小
+- CCSC：当前压缩类空间大小
+- YGC：年轻代垃圾回收次数
+- FGC：老年代垃圾回收次数
+- FGCT：老年代垃圾回收消耗时间
+- GCT：垃圾回收消耗总时间
+
+### 总结垃圾回收统计 gcutil
+
+```shell
+[root@localhost ~]# jstat -gcutil 5013
+  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT
+  0.00   0.00  81.70  99.95  97.50  94.88    164    3.348  8136 5118.422 5121.769
+```
+
+- S0：幸存1区当前使用比例
+- S1：幸存2区当前使用比例
+- E：伊甸园区使用比例
+- O：老年代使用比例
+- M：元数据区使用比例
+- CCS：压缩使用比例
+- YGC：年轻代垃圾回收次数
+- FGC：老年代垃圾回收次数
+- FGCT：老年代垃圾回收消耗时间
+- GCT：垃圾回收消耗总时间
+
+### JVM编译方法统计 printcompilation 
+
+```shell
+[root@localhost ~]# jstat -printcompilation 5013
+Compiled  Size  Type Method
+   25446   1646    1 org/springframework/beans/factory/support/AbstractBeanFactory getAliases
+```
+
+- Compiled：最近编译方法的数量
+- Size：最近编译方法的字节码数量
+- Type：最近编译方法的编译类型。
+- Method：方法名标识。
+
+### 参考
+
+- https://www.jianshu.com/p/845924a1b8f2
+
+  
 
 ## jinfo java 配置信息工具
 
@@ -236,7 +511,7 @@ Server is ready.
 
 ![image-20200730165455251](JVM_04性能监控故障处理/imgs/image-20200730165455251.png)
 
-![image-20200730165536737](JVM_04性能监控故障处理_TODO/imgs/image-20200730165536737.png)
+![image-20200730165536737](JVM_04性能监控故障处理/imgs/image-20200730165536737.png)
 
 ## jconsole: JVM 性能监控
 

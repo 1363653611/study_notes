@@ -1,3 +1,5 @@
+
+
 ---
 title: 05 类文件结构
 date: 2019-12-10 18:14:10
@@ -23,10 +25,10 @@ reward: true
 	- 其他辅助信息
 
 <!--more-->
-	
-	![image-20200731144811221](JVM_05类文件结构/image-20200731144811221.png)
-	
-	**可以说`.class`文件是不同的语言在 Java 虚拟机之间的重要桥梁，同时也是支持 Java 跨平台很重要的一个原因。**
+
+![image-20200731144811221](JVM_05类文件结构/image-20200731144811221.png)
+
+**可以说`.class`文件是不同的语言在 Java 虚拟机之间的重要桥梁，同时也是支持 Java 跨平台很重要的一个原因。**
 
 ##  Class文件的结构
 
@@ -56,9 +58,10 @@ ClassFile {
 <img src="JVM_05类文件结构/image-20200731145012679.png" alt="image-20200731145012679" style="zoom:80%;" />
 
 ## 概述
-	- class文件是以8位字节为基础单位的二进制流。各个数据项目严格按照顺序紧凑地排列在class文件之中，中间没有任何分割符。
-	- 当遇到需要占用8位字节以上空间额数据项时，则会按照高位在前的方式，分割成若干个8位字节进行存储
-	- class文件格式采用类似与C语言结构的方式存储
+
+- class文件是以8位字节为基础单位的二进制流。各个数据项目严格按照顺序紧凑地排列在class文件之中，中间没有任何分割符。
+- 当遇到需要占用8位字节以上空间额数据项时，则会按照高位在前的方式，分割成若干个8位字节进行存储
+- class文件格式采用类似与C语言结构的方式存储
 
 ###  class文件的数据类型
 	- 无符号数
@@ -234,57 +237,52 @@ field_info     fields[fields_count];//一个类会可以有个字段
 	
 ## 方法集合表
 
-	```java
-	 u2             methods_count;//Class 文件的方法的数量
-	 method_info    methods[methods_count];//一个类可以有个多个方法
-	```
-	
-	- methods_count 表示方法的数量，而 method_info 表示的方法表。
-	- Class 文件存储格式中对方法的描述与对字段的描述几乎采用了完全一致的方式。方法表的结构如同字段表一样，依次包括了访问标志、名称索引、描述符索引、属性表集合几项
-	- method_info  方法表的结构
-	
-	![img](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/%E6%96%B9%E6%B3%95%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84.png)
+```java
+ u2             methods_count;//Class 文件的方法的数量
+ method_info    methods[methods_count];//一个类可以有个多个方法
+```
 
+- methods_count 表示方法的数量，而 method_info 表示的方法表。
 
-	- 包含的信息
-		- 访问标志 access_flag
-		- 名称索引 name_index
-		- 描述符索引 descriptor_index
-		- 属性表集合 attributes
-	- 方法属性表里里面的Code
-		- 方法体中的代码
-	- 父类方法在子类中没有被重写。则方法表集合中就不会出现父类方法信息
+- Class 文件存储格式中对方法的描述与对字段的描述几乎采用了完全一致的方式。方法表的结构如同字段表一样，依次包括了访问标志、名称索引、描述符索引、属性表集合几项
 
+- method_info  方法表的结构
+    ![img](JVM_05类文件结构/方法表的结构.png)
+    
+    > - 包含的信息
+    > 	- 访问标志 access_flag
+    > 	- 名称索引 name_index
+    > 	- 描述符索引 descriptor_index
+    > 	- 属性表集合 attributes
+    > - 方法属性表里里面的Code
+    > 	- 方法体中的代码
+    > - 父类方法在子类中没有被重写。则方法表集合中就不会出现父类方法信息
 
+- 方法表的 access_flag 取值：
+![方法表的 access_flag 取值](JVM_05类文件结构/方法表的access_flag的所有标志位.png)
 
-	- 方法表的 access_flag 取值：
-	![方法表的 access_flag 取值](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/%E6%96%B9%E6%B3%95%E8%A1%A8%E7%9A%84access_flag%E7%9A%84%E6%89%80%E6%9C%89%E6%A0%87%E5%BF%97%E4%BD%8D.png)
-	
-	因为`volatile`修饰符和`transient`修饰符不可以修饰方法，所以方法表的访问标志中没有这两个对应的标志，但是增加了`synchronized`、`native`、`abstract`等关键字修饰方法，所以也就多了这些关键字对应的标志。
+因为`volatile`修饰符和`transient`修饰符不可以修饰方法，所以方法表的访问标志中没有这两个对应的标志，但是增加了`synchronized`、`native`、`abstract`等关键字修饰方法，所以也就多了这些关键字对应的标志。
 
-
-​	
-​	
 ## 属性表集合 attribute_info
 
-	```java
-	u2             attributes_count;//此类的属性表中的属性数
-	attribute_info attributes[attributes_count];//属性表集合
-	```
-	
-	在 Class 文件，字段表，方法表中都可以携带自己的属性表集合，以用于描述某些场景专有的信息。与 Class 文件中其它的数据项目要求的顺序、长度和内容不同，属性表集合的限制稍微宽松一些，不再要求各个属性表具有严格的顺序，并且只要不与已有的属性名重复，任何人实现的编译器都可以向属性表中写 入自己定义的属性信息，Java 虚拟机运行时会忽略掉它不认识的属性。
-	
-	- Class文件、字段表、方法表都可以携带自己的属性表集合
-	- 一些关键属性
-		- code属性
-		- Exceptons属性
-		- LineNumberTable 属性
-		- Source File 属性
-		- ConstantValue 属性
-		- Inner Class 属性
-		- Deprecated 及 Synthetic 属性
-		- Signature 属性
-		- BootStrapMethods 属性
+```java
+u2             attributes_count;//此类的属性表中的属性数
+attribute_info attributes[attributes_count];//属性表集合
+```
+
+在 Class 文件，字段表，方法表中都可以携带自己的属性表集合，以用于描述某些场景专有的信息。与 Class 文件中其它的数据项目要求的顺序、长度和内容不同，属性表集合的限制稍微宽松一些，不再要求各个属性表具有严格的顺序，并且只要不与已有的属性名重复，任何人实现的编译器都可以向属性表中写 入自己定义的属性信息，Java 虚拟机运行时会忽略掉它不认识的属性。
+
+- Class文件、字段表、方法表都可以携带自己的属性表集合
+- 一些关键属性
+	- code属性
+	- Exceptons属性
+	- LineNumberTable 属性
+	- Source File 属性
+	- ConstantValue 属性
+	- Inner Class 属性
+	- Deprecated 及 Synthetic 属性
+	- Signature 属性
+	- BootStrapMethods 属性
 
 # 字节码指令简介
 - 分类
@@ -336,7 +334,7 @@ field_info     fields[fields_count];//一个类会可以有个字段
 
 - 方法调用和返回指令
 	- invokevirtual 指令 用于调用对象实例方法
-	- nvokeinterface 指令用调用接口方法
+	- invokeinterface 指令用调用接口方法
 	- invokespecial 指令用于调用一些需要特殊处理的实例方法（实例初始化方法、私有方法、父类方法）
 	- invokestatic 指令用于调用类方法
 	- invokedynamic 指令 用于在运行时动态解析出调用点姓丁符所引用的方法，并执行该方法

@@ -73,7 +73,7 @@ reward: true
       - 可以解析的方法：不能通过继承或者别的方式重写其他版本
 - 调用方法的字节码指令
     - invokestatic 调用静态方法
-    - invokespecial  调用实例构造<init>方法、是由方法和父类方法
+    - invokespecial  调用实例构造`<init>`方法、是由方法和父类方法
     - invokevirtual 调用虚方法
 		
     	> 被final修饰的方法，虽然使用invokevirtual指令来调用，但是由于它无法被覆盖，没有其他版本，所以也无需对方法接收者进行多太选择，或者选择果肯定是唯一的。final修饰的方法是非虚方法
@@ -85,7 +85,7 @@ reward: true
 - (`invokestatic, invokespecial, invokevirtual, invokeiniterface`),调用和分配逻辑时固化在虚拟机内部的
   
 - 非虚方法:静态方法、实例构造方法、父类方法
-    
+  
     - 类加载的时候会把符号引用转化为直接引用(invokestatic 调用静态方法, invokespecial  调用实例构造<init>方法、是由方法和父类方法)
 - 虚方法
       - (`invokevirtual, invokeiniterface, invokedyname`)
