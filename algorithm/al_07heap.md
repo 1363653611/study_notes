@@ -1,3 +1,14 @@
+---
+title: al_07 heap
+date: 2020-06-27 12:14:10
+tags:
+  - algorithm
+categories:
+  - algorithm
+topdeclare: true
+reward: true
+---
+
 # 堆的概念：
 
 堆(heap)又被为优先队列(priority queue). 尽管名为优先队列，但堆并不是队列。在[队列](http://www.cnblogs.com/vamei/archive/2013/03/15/2961729.html)中，我们可以进行的限定操作是dequeue和enqueue。dequeue是按照进入队列的先后顺序来取出元素。而在堆中，我们不是按照元素进入队列的先后顺序取出元素的,而是按照元素的优先级取出元素。

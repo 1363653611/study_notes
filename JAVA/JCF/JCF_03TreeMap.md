@@ -1,3 +1,15 @@
+---
+title: JCF_03 TreeMap
+date: 2020-10-09 12:14:10
+tags:
+  - JCF
+categories:
+  - JCF
+topdeclare: true
+reward: true
+---
+
+
 # 总体介绍
 
 Java *TreeMap*实现了*SortedMap*接口，也就是说会按照`key`的大小顺序对*Map*中的元素进行排序，`key`大小的评判可以通过其本身的自然顺序（natural ordering），也可以通过构造时传入的比较器（Comparator）。
@@ -5,6 +17,8 @@ Java *TreeMap*实现了*SortedMap*接口，也就是说会按照`key`的大小�
 **`TreeMap`底层通过红黑树（Red-Black tree）实现**，也就意味着`containsKey()`, `get()`, `put()`, `remove()`都有着`log(n)`的时间复杂度。
 
 ![TreeMap_base.png](JCF_03TreeMap/939998-20160517211933779-124491145.png)
+
+<!--more-->
 
 出于性能原因，*TreeMap*是非同步的（not synchronized），如果需要在多线程环境使用，需要程序员手动同步；或者通过如下方式将*TreeMap*包装成（wrapped）同步的：
 
@@ -375,4 +389,3 @@ public class TreeSet<E> extends AbstractSet<E>
     ......
 }
 ```
-

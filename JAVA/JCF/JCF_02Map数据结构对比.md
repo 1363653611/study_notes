@@ -1,8 +1,21 @@
+---
+title: JCF_02 Map 数据结构对比
+date: 2020-10-08 12:14:10
+tags:
+  - JCF
+categories:
+  - JCF
+topdeclare: true
+reward: true
+---
+
 # ConCurrentHashMap
 
 ## put 方法分析
 
 ![image-20200817135444955](JCF_02Map数据结构对比/image-20200817135444955.png)
+
+<!--more-->
 
 ### 源码
 
@@ -138,7 +151,7 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 
 - 插入完成后，判断binCount（数组下标存储是一个链表时，binCount是链表长度），当binCount超过8时，**并且数组的长度大于64时**，那么调用treeifyBin方法将链表转换为红黑树。最后break出for循环。
 
-### NOTE: 
+### NOTE:
 
 很多技术文章都是说链表长度大于8就转换为红黑树，我当时也没有注意这个细节，直到有个群里的朋友指正，当原来的链表长度超过8时，确实会调用treeifyBin方法，但是在treeifyBin方法中会判断**当前tab是否为空，或者数组长度是否小于64**，如果满足条件，那么调用resize方法对tab初始化或者扩容，就不会将链表转换为红黑树了。
 
@@ -150,7 +163,7 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 
 ```java
 transient Node<K,V>[] table; //HashMap
-    
+
 transient volatile Node<K,V>[] table;//ConcurrentHashMap
 
 private transient Entry<？,？>[] table;//HashTable
@@ -317,9 +330,9 @@ HashMap和ConcurrentHashMap的hash值都是通过将key的hashCode()高16位与�
 //HashMap计算hash值的方法
 static int hash(Object key) {
     int h;
-    return (key == null)? 0 : (h = key.hashCode())^(h >>> 16); 
+    return (key == null)? 0 : (h = key.hashCode())^(h >>> 16);
 }
-//ConcurrentHashMap计算hash值的方法 
+//ConcurrentHashMap计算hash值的方法
 static  int spread(int h) {//h是对象的hashCode
     return (h ^ (h >>> 16)) & HASH_BITS;// HASH_BITS = 0x7fffffff;
 }
@@ -436,7 +449,7 @@ final long sumCount() {
 		return sum;
 }
 //这个注解可以避免伪共享，提升性能。加与不加，性能差距达到了 5 倍。在缓存系统中，由于一个缓存行是出于32-256个字节之间，常见的缓存行为64个字节。而一般的变量可能达不到那么多字节，所以会出现多个相互独立的变量存储在一个缓存行中的情况，此时即便多线程访问缓存行上相互独立变量时，也涉及到并发竞争，会有性能开销，加了@sun.misc.Contended这个注解，在jDK8中，会对对象前后都增加128字节的padding，使用2倍于大多数硬件缓存行的大小来避免相邻扇区预取导致的伪共享冲突。
-@sun.misc.Contended 
+@sun.misc.Contended
 static final class CounterCell {
     volatile long value;
     CounterCell(long x) { value = x; }
@@ -780,7 +793,7 @@ void afterNodeAccess(Node<K,V> e) { // move node to last
         LinkedHashMap.Entry<K,V> last;
         if (accessOrder && (last = tail) != e) {
             LinkedHashMap.Entry<K,V> p =
-                (LinkedHashMap.Entry<K,V>)e, 
+                (LinkedHashMap.Entry<K,V>)e,
             b = p.before, a = p.after;
             p.after = null;
             if (b == null) head = a;
@@ -798,4 +811,3 @@ void afterNodeAccess(Node<K,V> e) { // move node to last
     }
 }
 ```
-

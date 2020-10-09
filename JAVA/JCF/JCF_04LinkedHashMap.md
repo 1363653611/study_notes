@@ -1,8 +1,21 @@
+---
+title: JCF_01 LinkedHashMap
+date: 2020-10-10 12:14:10
+tags:
+  - JCF
+categories:
+  - JCF
+topdeclare: true
+reward: true
+---
+
 # 总体介绍
 
 *LinkedHashSet*和*LinkedHashMap*在Java里也有着相同的实现，前者仅仅是对后者做了一层包装，也就是说**`LinkedHashSet`里面有一个`LinkedHashMap`（适配器模式）**。因此本文将重点分析`LinkedHashMap`。
 
 *LinkedHashMap*实现了*Map*接口，即允许放入`key`为`null`的元素，也允许插入`value`为`null`的元素。从名字上可以看出该容器是*linked list*和*HashMap*的混合体，也就是说它同时满足*HashMap*和*linked list*的某些特性。**可将`LinkedHashMap`看作采用`linkedlist`增强的`HashMap`。**
+
+<!--more-->
 
 ![LinkedHashMap_base.png](JCF_04LinkedHashMap/939998-20160528192537725-909052596.png)
 
@@ -82,7 +95,7 @@ void afterNodeAccess(Node<K,V> e) { // move node to last
             head = a;
         else
             b.after = a;
-            
+
         if (a != null)
             a.before = b;
         /*
@@ -91,7 +104,7 @@ void afterNodeAccess(Node<K,V> e) { // move node to last
          */
         else
             last = b;
-    
+
         if (last == null)
             head = p;
         else {
@@ -105,7 +118,7 @@ void afterNodeAccess(Node<K,V> e) { // move node to last
 }
 ```
 
-下面举例演示一下，帮助大家理解。假设我们访问下图键值为3的节点	
+下面举例演示一下，帮助大家理解。假设我们访问下图键值为3的节点
 
 ![img](JCF_04LinkedHashMap/15166338955699.jpg)
 
@@ -144,7 +157,7 @@ void afterNodeInsertion(boolean evict) { // possibly remove eldest
     }
 //LinkedHashMap 默认返回false 则不删除节点。 返回true 代表要删除最早的节点。通常构建一个LruCache会在达到Cache的上限是返回true
 protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
-    return false; 
+    return false;
 }
 ```
 
@@ -279,7 +292,7 @@ public class SimpleCache<K, V> extends LinkedHashMap<K, V> {
     public boolean exists(K key) {
         return containsKey(key);
     }
-    
+
     /**
      * 判断节点数是否超限
      * @param eldest

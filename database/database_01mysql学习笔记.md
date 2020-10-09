@@ -47,6 +47,19 @@ SHOW VARIABLES -- 显示系统变量信息
 -- 删除库
     DROP DATABASE[ IF EXISTS] 数据库名
         -- 同时删除该数据库相关的目录及其目录内容
+        
+# 查看表信息
+use  learn_sql;
+show table status like 'account';
+
+show databases;
+# 查看版本信息
+select version();
+# 查看链接信息
+show processlist;
+
+# 查看事物信息
+show variables like 'transaction_isolation';
 ```
 ### 表的操作
 ```SQL
@@ -84,7 +97,7 @@ SHOW VARIABLES -- 显示系统变量信息
 -- 查看所有表
     SHOW TABLES[ LIKE 'pattern']
     SHOW TABLES FROM 表名
--- 查看表机构
+-- 查看表结构
     SHOW CREATE TABLE 表名 （信息更详细）
     DESC 表名 / DESCRIBE 表名 / EXPLAIN 表名 / SHOW COLUMNS FROM 表名 [LIKE 'PATTERN']
     SHOW TABLE STATUS [FROM db_name] [LIKE 'pattern']
@@ -692,7 +705,7 @@ CREATE [OR REPLACE] [ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}] VIEW view_name
     ROLLBACK;
     如果部分操作发生问题，映射到事务开启前。
 
--- 事务的特性
+-- 事务的特性 ACDI
     1. 原子性（Atomicity）
         事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。
     2. 一致性（Consistency）

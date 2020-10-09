@@ -1,3 +1,14 @@
+---
+title: JCF_01 HashMap
+date: 2020-10-06 12:14:10
+tags:
+  - JCF
+categories:
+  - JCF
+topdeclare: true
+reward: true
+---
+
 # hashMap 的前世今生
 
 # 简介
@@ -11,6 +22,8 @@ HashMap非线程安全，即任一时刻可以有多个线程同时写HashMap，
 如果需要满足线程安全，可以使用ConcurrentHashMap。
 
 hashMap 由数组+ 链表组成。数组是HashMap的主体，链表是为了结局Hash冲突而存在的（拉链法）。
+
+<!--more-->
 
 ## jdk1.8之后
 
@@ -38,7 +51,7 @@ hashMap 由数组+ 链表组成。数组是HashMap的主体，链表是为了结
 
 存储区间离散，占用内存比较宽松，故空间复杂度很小。但查找时间复杂度表大，需要循环整个链表O(n)，
 
-**链表特点:**查找速度慢，插入和删除速率高。 
+**链表特点:**查找速度慢，插入和删除速率高。
 
 ### 红黑树
 
@@ -113,17 +126,17 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     // 默认的初始容量是16
     static final int DEFAULT_INITIAL_CAPACITY = 1 << 4;   
     // 最大容量
-    static final int MAXIMUM_CAPACITY = 1 << 30; 
+    static final int MAXIMUM_CAPACITY = 1 << 30;
     // 默认的填充因子
     static final float DEFAULT_LOAD_FACTOR = 0.75f;
     // 当桶(bucket)上的结点数大于这个值时会转成红黑树
-    static final int TREEIFY_THRESHOLD = 8; 
+    static final int TREEIFY_THRESHOLD = 8;
     // 当桶(bucket)上的结点数小于这个值时树转链表
     static final int UNTREEIFY_THRESHOLD = 6;
     // 桶中结构转化为红黑树对应的table的最小大小
     static final int MIN_TREEIFY_CAPACITY = 64;
     // 存储元素的数组，总是2的幂次倍
-    transient Node<k,v>[] table; 
+    transient Node<k,v>[] table;
     // 存放具体元素的集
     transient Set<map.entry<k,v>> entrySet;
     // 存放元素的个数，注意这个不等于数组的长度。
@@ -225,18 +238,18 @@ HashMap 中有四个构造方法，它们分别如下：
     public HashMap() {
         this.loadFactor = DEFAULT_LOAD_FACTOR; // all   other fields defaulted
      }
-     
+
      // 包含另一个“Map”的构造函数
      public HashMap(Map<? extends K, ? extends V> m) {
          this.loadFactor = DEFAULT_LOAD_FACTOR;
          putMapEntries(m, false);//下面会分析到这个方法
      }
-     
+
      // 指定“容量大小”的构造函数
      public HashMap(int initialCapacity) {
          this(initialCapacity, DEFAULT_LOAD_FACTOR);
      }
-     
+
      // 指定“容量大小”和“加载因子”的构造函数
      public HashMap(int initialCapacity, float loadFactor) {
          if (initialCapacity < 0)
@@ -364,7 +377,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
             }
         }
         // 表示在桶中找到key值、hash值与插入元素相等的结点
-        if (e != null) { 
+        if (e != null) {
             // 记录e的value
             V oldValue = e.value;
             // onlyIfAbsent为false或者旧值为null
@@ -385,7 +398,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
     // 插入后回调
     afterNodeInsertion(evict);
     return null;
-} 
+}
 ```
 
 ### get 方法
@@ -443,7 +456,7 @@ final Node<K,V>[] resize() {
     }
     else if (oldThr > 0) // initial capacity was placed in threshold
         newCap = oldThr;
-    else { 
+    else {
         // signifies using defaults
         newCap = DEFAULT_INITIAL_CAPACITY;
         newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
@@ -467,7 +480,7 @@ final Node<K,V>[] resize() {
                     newTab[e.hash & (newCap - 1)] = e;
                 else if (e instanceof TreeNode)
                     ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);
-                else { 
+                else {
                     Node<K,V> loHead = null, loTail = null;
                     Node<K,V> hiHead = null, hiTail = null;
                     Node<K,V> next;
@@ -660,4 +673,3 @@ static final int tableSizeFor(int cap) {
 - https://juejin.im/post/6844903863942643720
 - https://coolshell.cn/?s=hashmap
 - https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/collection/HashMap.md
-
