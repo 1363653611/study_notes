@@ -11,25 +11,36 @@ categories:
 topdeclare: true
 reward: true
 ---
-### ConcurrrentHashMap
+# ConcurrrentHashMap
 线程安全且高效的hashMap
-#### 为什么要使用 ConcurrentHashMap
-> 并发编程中，HashMap 不是线程安全的，而且容易造成 死循环， 而 HashTable 效率又特别低下，由此，并发编程中穿线了 `ConcurrentHashMap`
+## 为什么要使用 ConcurrentHashMap
+> 并发编程中，HashMap 不是线程安全的，而且容易造成 死循环， 而 HashTable 效率又特别低下，由此，并发编程中出现了 `ConcurrentHashMap`
 
 <!--more-->
 
-- 线程不安全的ConcurrentHashMap
+- 线程不安全的HashMap
   - HashMap 在并发执行put 操作时，会引起死循环。因为多线程会导致HashMap 中的Entry 链表形成环形数据结构，Entry 的next 节点永远不为空，就会产生死循环获取Entry
 - 效率低下的 HashTable
   - hashTable 使用synchronized 来保证线程安全，但是在线程竞争激烈的情况下，HashTable 的效率特别低下。因为当一个线程访问hashTable 的同步方法，其他的线程也访问HashTable 的方法时，会进入阻塞轮询状态。如线程1使用put进行元素添加，线程2不但不能使用put方法添加元素，也不能使用get方法来获取元素，所以竞争越激烈效率越低。
 - ConcurrentHashMap 的锁分段技术有效提升并发访问效率
 >HashTable容器在竞争激烈的并发环境下表现出效率低下的原因是所有访问HashTable的线程都必须竞争同一把锁，假如容器里有多把锁，每一把锁用于锁容器其中一部分数据，那么当多线程访问容器里不同数据段的数据时，线程间就不会存在锁竞争，从而可以有效提高并发访问效率，这就是ConcurrentHashMap所使用的锁分段技术。首先将数据分成一段一段地存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问。
 
-#### ConcurrentHashMap的结构
-- segments 数组
-- hashEntry
+## ConcurrentHashMap的结构
+- segments 数组(Segment是一种可重入锁（ReentrantLock），在ConcurrentHashMap里扮演锁的角色)
 
-#### ConcurrentHashMap 初始化
+- hashEntry(HashEntry则用于存储键值对数据)
+
+- Segment的结构和HashMap类似，是一种数组和链表结构(一个Segment里包含一个HashEntry数组，每个HashEntry是一个链表结构的元素，每个Segment守护着一个HashEntry数组里的元素，当对HashEntry数组的数据进行修改时，必须首先获得与它对应的Segment锁)
+
+  ### 类图
+
+  ![image-20201113092259740](java_05并发容器和框架/image-20201113092259740.png)
+
+  ### 结构图:
+
+  ![image-20201113091645512](java_05并发容器和框架/image-20201113091645512.png)
+
+## ConcurrentHashMap 初始化
 > ConcurrentHashMap初始化方法是通过initialCapacity、loadFactor和concurrencyLevel等几个参数来初始化segment数组、段偏移量segmentShift、段掩码segmentMask和每个segment里的HashEntry数组来实现的
 
 1. 初始化segments数组
@@ -198,8 +209,9 @@ SynchronousQueue可以看成是一个传球手，负责把生产者线程处理�
 >LinkedTransferQueue是一个由链表结构组成的无界阻塞TransferQueue队列。相对于其他阻塞队列，LinkedTransferQueue多了tryTransfer和transfer方法。
 
 - transfer方法
-  - 如果当前有消费者正在等待接收元素（消费者使用take()方法或带时间限制的poll()方法时），transfer方法可以把生产者传入的元素立刻transfer（传输）给消费者。如果没有消费者在等待接收元素，transfer方法会将元素存放在队列的tail节点，并等到该元素被消费者消费了才返回
-
+  
+- 如果当前有消费者正在等待接收元素（消费者使用take()方法或带时间限制的poll()方法时），transfer方法可以把生产者传入的元素立刻transfer（传输）给消费者。如果没有消费者在等待接收元素，transfer方法会将元素存放在队列的tail节点，并等到该元素被消费者消费了才返回
+  
 - tryTransfer方法
   > 用来试探生产者传入的元素是否能直接传给消费者。如果没有消费者等待接收元素，则返回false。和transfer方法的区别是tryTransfer方法无论消费者是否接收，方法立即返回，而transfer方法是必须等到消费者消费了才返回。
 

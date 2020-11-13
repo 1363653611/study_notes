@@ -54,10 +54,11 @@ reward: true
 7. 安装 3.8 的python 包
   ```lunix
   # 下载
-  wget https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz
+  wget https://www.python.org/ftp/python/3.9.0/Python-3.9.0.tgz
 
   #解压缩
   tar -zxvf Python-3.8.0.tgz
+  (tar -zxvf Python-3.8.0.tgz -C /usr/local/python3)
 
   #进入解压后的目录，依次执行下面命令进行手动编译
   ./configure prefix=/usr/local/python3
@@ -121,6 +122,7 @@ reward: true
     -> pip 19.0.3 from /usr/local/python3/lib/python3.8/site-packages/pip (python 3.8)
     ```
   4. 验证 python2 和 pip2 命令
+
     ```
     python2 -V
     pip2 -V
@@ -135,20 +137,20 @@ reward: true
 
     ```
     yum -y install gcc
-
+    
     -> File "/usr/bin/yum", line 30
     ->   except KeyboardInterrupt, e:
                               ^
     -> SyntaxError: invalid syntax
     ```
     __原因__:因为 yum 是使用 python2 编写的，所以需要把 yum 的头文件改成用 python2 作为解释器
-
+    
     __解决方案__
     ```lunix
     whereis yum
     -> yum: /usr/bin/yum /etc/yum /etc/yum.conf /usr/share/man/man8/yum.8
-
+    
     -> vim /usr/bin/yum
-
+    
     其中，#!/usr/bin/python 改成 #!/usr/bin/python2 即可
     ```
