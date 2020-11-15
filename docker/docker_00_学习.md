@@ -1546,7 +1546,7 @@ $ docker run -d --name elasticsearch02 -p 9200:9200 -p 9300:9300 -e "discovery.t
 没成功啊，SEI能告诉我为啥！！
 
 ```shell
-docker run -d --name elasticsearch02 -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e ES_JAVA_OPTS="-Xms64m -Xmx512m" elasticsearch:7.6.2
+docker run -d --name zbcn-es -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e ES_JAVA_OPTS="-Xms64m -Xmx512m" elasticsearch:7.6.2
 ```
 
 >py0003null大佬:
@@ -1605,8 +1605,6 @@ docker run -d -p 8088:9000 --restart=always -v /var/run/docker.sock:/var/run/doc
 ![image-20200618135450037](Docker.assets/image-20200618135450037.png)
 
 【平时不会用这个，好吧，先往下】
-
-### 
 
 
 
