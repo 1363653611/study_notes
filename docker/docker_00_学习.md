@@ -244,6 +244,22 @@ yum install docker-ce docker-ce-cli containerd.io # docker-ce 社区版 ee 企�
 
 
 
+### docker 安装报错:
+
+```shell
+问题:
+ackage containerd.io-1.2.0-3.el7.x86_64 is already installed.
+Error:
+ Problem: package docker-ce-3:19.03.13-3.el7.x86_64 requires containerd.io >= 1.2.2-3, but none of the providers can be installed
+  - cannot install the best candidate for the job
+  
+解决方案:
+yum install docker-ce docker-ce-cli containerd.io --nobest
+
+```
+
+
+
 ### 启动Docker
 
 ```
