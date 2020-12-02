@@ -1,5 +1,5 @@
 ---
-title: 01 JVM- java内存区域
+ title: 01 JVM- java内存区域
 date: 2019-12-09 18:14:10
 tags:
   - JVM

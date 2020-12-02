@@ -26,6 +26,7 @@ reward: true
 
 ### 事物自定义标签
 ` <tx:annotation-driven/>` 事物配置的开关，全局搜索，发现在 类 TxNamespaceHandler#init 方法中找打了初始化的方法。
+
 ```java
 //TxNamespaceHandler
     @Override
@@ -181,7 +182,7 @@ SmartlnstantiationAwareBeanPostProcessor ，而SmartlnstantiationAwareBeanPostPr
 对于事务属性的获取规则相信大家都已经很清楚，如果方法中存在事务属性，则使用方法上的属性，否则使用方法所在的类上的属性，如果方法所在类的属性上还是没有搜寻到对应的事务属性，那么再搜寻接口中的方法，再没有的话，最后尝试搜寻接口的类上面的声明。
 
 #### 总结
-当判断某个bean 适用于事物增强时，也就是适用于增强器BeanFactoryTransactionA忧ributeSourceAdvisor ，所以说，在自
+当判断某个bean 适用于事物增强时，也就是适用于增强器BeanFactoryTransactionAttrributeSourceAdvisor ，所以说，在自
 定义标签解析时，注入的类成为了整个事务功能的基础。
 
 BeanFactoryTransactionAttributeSourceAdvisor 作为Advisor 的实现类，自然要遵从Advisor的处理方式，代理被调用时会调用这个类的增强方法，也就是此bean 的Advise ， 又因为在解析事务定义标签时我们把Transactionlnterceptor 类型的bean 注入到了BeanFactoryTransactionAttributeSourceAdvisor 中，所以，在调用事务增强器增强的代理类时会首先执行
@@ -349,8 +350,8 @@ protected TransactionInfo createTransactionIfNecessary(
 
 - _区别_：  
 	+ PROPAGATION_REQUIRES_NEW 启动一个新的, 不依赖于环境的 "内部" 事务. 这个事务将被完全 commited 或 rolled back 而不依赖于外部事务, 它拥有自己的隔离范围, 自己的锁, 等等. 当内部事务开始执行时, 外部事务将被挂起, 内务事务结束时, 外部事务将继续执行.
-	+ PROPAGATION_NESTED 开始一个 "嵌套的" 事务,  它是已经存在事务的一个真正的子事务. 潜套事务开始执行时,  它将取得一个 savepoint. 如果这个嵌套事务失败, 我们将回滚到此 savepoint. 嵌套事务是外部事务的一部分, 只有外部事务结束后它才会被提交. 
-	+ 由此可见, PROPAGATION_REQUIRES_NEW 和 PROPAGATION_NESTED 的最大区别在于, PROPAGATION_REQUIRES_NEW 完全是一个新的事务, 而 PROPAGATION_NESTED 则是外部事务的子事务, 如果外部事务 commit, 潜套事务也会被 commit, 这个规则同样适用于 roll back. 
+	+ PROPAGATION_NESTED 开始一个 "嵌套的" 事务,  它是已经存在事务的一个真正的子事务. 嵌套事务开始执行时,  它将取得一个 savepoint. 如果这个嵌套事务失败, 我们将回滚到此 savepoint. 嵌套事务是外部事务的一部分, 只有外部事务结束后它才会被提交. 
+	+ 由此可见, PROPAGATION_REQUIRES_NEW 和 PROPAGATION_NESTED 的最大区别在于, PROPAGATION_REQUIRES_NEW 完全是一个新的事务, 而 PROPAGATION_NESTED 则是外部事务的子事务, 如果外部事务 commit, 嵌套事务也会被 commit, 这个规则同样适用于 roll back. 
 
 #### 事务回滚
 - 当程序没有按照预期情况执行，那么会出现特定的错误，当出现错误的时候，spring 会出现回滚。具体执行如下：

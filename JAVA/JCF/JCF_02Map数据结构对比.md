@@ -204,7 +204,8 @@ ConcurrentHashMap是线程安全的，主要是通过CAS操作+synchronized来�
 final V putVal(K key, V value, boolean onlyIfAbsent) {
 ...其他代码
   if ((f = tabAt(tab, i = (n - 1) & hash)) == null) {
-    if (casTabAt(tab, i, null, new Node<K,V>(hash, key, value, null))) 				break; // 因为对应的数组下标元素为null，所以null作为预期值，new Node<K,V>(hash, key, value, null)作为即将更新的值，只有当内存中的值与即将预期值一致时，才会进行更新，保证原子性。
+    if (casTabAt(tab, i, null, new Node<K,V>(hash, key, value, null))) 				
+        break; // 因为对应的数组下标元素为null，所以null作为预期值，new Node<K,V>(hash, key, value, null)作为即将更新的值，只有当内存中的值与即将预期值一致时，才会进行更新，保证原子性。
   }
 ...其他代码
 }
