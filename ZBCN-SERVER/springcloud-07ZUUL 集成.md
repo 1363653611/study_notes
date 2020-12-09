@@ -302,6 +302,9 @@ zuul:
 
 # 对应的项目
 
-- zuul网关 ： ZBCN-SERVER/zbcn-gateway/zuul-gateway
-- eureka 注册中心：ZBCN-SERVER/zbcn-register/eureka-server
-- 业务服务：ZBCN-SERVER/zbcn-business/zbcn-demo-server
+```shell
+ZBCN-SERVER
+├── zbcn-register/eureka-server -- eureka注册中心
+├── zbcn-gateway/zuul-gateway -- zuul网关
+└── /zbcn-business/zbcn-demo-server -- 业务服务
+```
