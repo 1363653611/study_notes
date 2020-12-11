@@ -152,11 +152,11 @@ management:
 
 - 我们先启动相关服务，启动eureka-server，以application-amqp.yml为配置启动config-server，以bootstrap-amqp1.yml为配置启动config-client，以bootstrap-amqp2.yml为配置再启动一个config-client，启动后注册中心显示如下：
 
-![image-20201210112704662](Untitled/image-20201210112704662.png)
+![image-20201210112704662](springcloud-09bus消息总线/image-20201210112704662.png)
 
 - 启动所有服务后，我们登录RabbitMQ的控制台可以发现Spring Cloud Bus 创建了一个叫springCloudBus的交换机及三个以 springCloudBus.anonymous开头的队列：
 
-  ![image-20201210112725899](Untitled/image-20201210112725899.png)
+  ![image-20201210112725899](springcloud-09bus消息总线/image-20201210112725899.png)
 
 - 我们先修改Git仓库中dev分支下的config-dev.yml配置文件：
 
