@@ -48,7 +48,7 @@ Gateway 提供了两种不同的方式用于配置路由，一种是通过yml文
 server:
   port: 9201
 service-url:
-  user-service: http://localhost:8201
+  user-service: http://localhost:9001
 spring:
   cloud:
     gateway:
@@ -83,6 +83,8 @@ public class GatewayConfig {
 
 - 重新启动api-gateway服务，并调用该地址测试：http://localhost:9201/user/getByUsername?username=zbcn
 - 我们发现该请求被路由到了user-service的该路径上：http://localhost:8201/user/getByUsername?username=zbcn
+
+
 
 # Route Predicate 的使用
 
@@ -321,4 +323,384 @@ spring:
 ```
 
 # Route Filter 的使用
+
+路由过滤器可用于修改进入的HTTP请求和返回的HTTP响应，路由过滤器只能指定路由进行使用。Spring Cloud Gateway 内置了多种路由过滤器，他们都由GatewayFilter的工厂类来产生，下面我们介绍下常用路由过滤器的用法。
+
+```shell
+spring.cloud.gateway.routes.*：配置路由信息
+id：路由唯一标识
+uri：路由转发地址，以 lb 开头的路由，会由 ribbon 处理，转发到 cloud-eureka-client 的服务处理。也可配置成 http 的单机路由 — http://localhost:2222。
+order：路由执行顺序（也可理解成过滤器的执行顺序），执行顺序是从小到大执行，较高的值被解释为较低的优先级。
+predicates：路由断言，匹配访问路径为 "/client/**" 的请求。
+filters：网关的过滤器配置
+```
+
+
+
+## AddRequestParameter GatewayFilter
+
+给请求添加参数的过滤器。
+
+```yaml
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: add_request_parameter_route
+          uri: http://localhost:8201
+          filters:
+            - AddRequestParameter=username, zncn
+          predicates:
+            - Method=GET
+```
+
+以上配置会对GET请求添加`username=zbcn`的请求参数，通过curl工具使用以下命令进行测试。
+
+```http
+curl http://localhost:9201/user/getByUsername
+```
+
+相当于发起该请求：
+
+```http
+curl http://localhost:8201/user/getByUsername?username=zbcn
+```
+
+## StripPrefix GatewayFilter
+
+对指定数量的路径前缀进行去除的过滤器。
+
+```yaml
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: strip_prefix_route
+        uri: http://localhost:8201
+        predicates:
+        - Path=/user-service/**
+        filters:
+        - StripPrefix=2
+```
+
+以上配置会把以`/user-service/`开头的请求的路径去除两位，通过curl工具使用以下命令进行测试。
+
+```http
+curl http://localhost:9201/user-service/a/user/1
+```
+
+相当于发起该请求：
+
+```http
+curl http://localhost:8201/user/1
+```
+
+## PrefixPath GatewayFilter
+
+与StripPrefix过滤器恰好相反，会对原有路径进行增加操作的过滤器。
+
+```yaml
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: prefix_path_route
+        uri: http://localhost:8201
+        predicates:
+        - Method=GET
+        filters:
+        - PrefixPath=/user
+```
+
+以上配置会对所有GET请求添加`/user`路径前缀，通过curl工具使用以下命令进行测试。
+
+```http
+curl http://localhost:9201/1
+```
+
+相当于发起该请求：
+
+```http
+curl http://localhost:8201/user/1
+```
+
+## Hystrix GatewayFilter
+
+Hystrix 过滤器允许你将断路器功能添加到网关路由中，使你的服务免受级联故障的影响，并提供服务降级处理。
+
+- 要开启断路器功能，我们需要在pom.xml中添加Hystrix的相关依赖：
+
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+</dependency>
+```
+
+- 然后添加相关服务降级的处理类：
+
+```java
+@RestController
+public class FallbackController {
+
+    @GetMapping("/fallback")
+    public Object fallback() {
+        Map<String,Object> result = new HashMap<>();
+        result.put("data",null);
+        result.put("message","Get request fallback!");
+        result.put("code",500);
+        return result;
+    }
+}
+
+```
+
+- 在application-filter.yml中添加相关配置，当路由出错时会转发到服务降级处理的控制器上：
+
+```yaml
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: hystrix_route
+          uri: ${service-url.user-service}
+          order: 0 # 路由执行顺序（也可理解成过滤器的执行顺序），执行顺序是从小到大执行，较高的值被解释为较低的优先级。
+          predicates:
+            - Method=GET
+          filters:
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallback
+```
+
+- 关闭user-service，调用该地址进行测试：http://localhost:9201/user/1 ，发现已经返回了服务降级的处理信息。
+
+![image-20201214113420394](springcloud-12gateway网关/image-20201214113420394.png)
+
+## RequestRateLimiter GatewayFilter
+
+RequestRateLimiter 过滤器可以用于限流，使用RateLimiter实现来确定是否允许当前请求继续进行，如果请求太大默认会返回HTTP 429-太多请求状态。
+
+- 在pom.xml中添加相关依赖：
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+</dependency>
+
+```
+
+- 添加限流策略的配置类，这里有两种策略一种是根据请求参数中的username进行限流，另一种是根据访问IP进行限流；
+
+```java
+@Configuration
+public class RedisRateLimiterConfig {
+
+    @Bean
+    public KeyResolver userKeyResolver() {
+        return exchange -> Mono.just(exchange.getRequest().getQueryParams().getFirst("username"));
+    }
+
+    @Bean
+    @Primary
+    public KeyResolver ipKeyResolver() {
+        return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getHostName());
+    }
+}
+```
+
+- 我们使用Redis来进行限流，所以需要添加Redis和RequestRateLimiter的配置，这里对所有的GET请求都进行了按IP来限流的操作；
+- 新建配置文件 application-limit.yml。添加如下配置
+
+```yaml
+server:
+  port: 9201
+service-url:
+  user-service: http://localhost:9001
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: requestratelimiter_route # 限流
+          uri: ${service-url.user-service}
+          order: 0
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1 #每秒允许处理的请求数量
+                redis-rate-limiter.burstCapacity: 2 #每秒最大处理的请求数量
+                key-resolver: "#{@ipKeyResolver}" #限流策略，对应策略的Bean
+          predicates:
+            - Method=GET
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
+  redis:
+    host: localhost
+    port: 6379
+    # password: 123456
+  logging:
+    level:
+      org.springframework.cloud.gateway: debug
+
+```
+
+- 利用 application-limit.yml 启动 服务
+
+```yml
+--spring.config.location=classpath:application-limit.yml
+```
+
+- 多次请求该地址：http://localhost:9201/user/1 ，会返回状态码为429的错误；
+
+![image-20201214195216568](springcloud-12gateway网关/image-20201214195216568.png)
+
+## Retry GatewayFilter
+
+- 对路由请求进行重试的过滤器，可以根据路由请求返回的HTTP状态码来确定是否进行重试。
+- 修改配置文件：
+
+```yaml
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: retry_route
+        uri: http://localhost:9001
+        predicates:
+        - Method=GET
+        filters:
+        - name: Retry
+          args:
+            retries: 1 #需要进行重试的次数
+            statuses: BAD_GATEWAY #返回哪个状态码需要进行重试，返回状态码为5XX进行重试
+            backoff:
+              firstBackoff: 10ms
+              maxBackoff: 50ms
+              factor: 2
+              basedOnPreviousValue: false
+```
+
+- 当调用返回500时会进行重试，访问测试地址：http://localhost:9201/user/111
+- 可以发现user-service控制台报错2次，说明进行了一次重试。
+
+## 结合注册中心使用
+
+之前**使用Zuul作为网关**结合注册中心进行使用时，默认情况下Zuul会根据注册中心注册的服务列表，以服务名为路径创建动态路由，Gateway同样也实现了该功能。下面我们演示下Gateway结合注册中心如何使用默认的动态路由和过滤器。
+
+### 使用动态路由
+
+- 在pom.xml中添加相关依赖：
+
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+</dependency>
+```
+
+- 添加application-eureka.yml配置文件：
+
+```yaml
+server:
+  port: 9201
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+          lower-case-service-id: true #使用小写服务名，默认是大写
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
+```
+
+- 使用application-eureka.yml配置文件启动api-gateway服务，访问http://localhost:9201/user-service/user/1 ，可以路由到user-service的http://localhost:8201/user/1 处。
+
+### 使用过滤器
+
+在结合注册中心使用过滤器的时候，我们需要注意的是uri的协议为`lb`，这样才能启用Gateway的负载均衡功能。
+
+- 修改application-eureka.yml文件，使用了PrefixPath过滤器，会为所有GET请求路径添加`/user`路径并路由；
+
+```yaml
+server:
+  port: 9201
+service-url:
+  user-service: lb://user-service #此处需要使用lb协议
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: user_server_route #路由的ID
+          uri: ${service-url.user-service} #匹配后路由地址
+          order: 10 # 路由执行顺序（也可理解成过滤器的执行顺序），执行顺序是从小到大执行，较高的值被解释为较低的优先级。
+          predicates: # 断言，路径相匹配的进行路由
+            - Path=/user/{id}
+          filters:
+            - name: Hystrix # 熔断（如果服务失败，则熔断）
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallback
+            - name: Retry # 重复请求
+              args:
+                retries: 1 #需要进行重试的次数
+                statuses: BAD_GATEWAY #返回哪个状态码需要进行重试，返回状态码为5XX进行重试
+                backoff:
+                  firstBackoff: 10ms
+                  maxBackoff: 50ms
+                  factor: 2
+                  basedOnPreviousValue: false
+            - name: RequestRateLimiter # 限流
+              args:
+                redis-rate-limiter.replenishRate: 1 #每秒允许处理的请求数量
+                redis-rate-limiter.burstCapacity: 2 #每秒最大处理的请求数量
+                key-resolver: "#{@ipKeyResolver}" #限流策略，对应策略的Bean
+# 注册中心
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+  profiles:
+    active: dev
+
+  redis:
+    host: localhost
+    port: 6379
+    # password: 123456
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
+```
+
+- 使用application-eureka.yml配置文件启动api-gateway服务，访问http://localhost:9201/1 ，可以路由到user-service的http://localhost:8201/user/1 处。
+
+```shell
+--spring.config.location=classpath:application-eureka.yml
+```
+
+
+
+# 使用到的模块
+
+```shell
+ZBCN-SERVER
+├── zbcn-register/eureka-server -- eureka注册中心
+├── zbcn-gateway/api-gateway -- gateway作为网关服务
+└── zbcn-business/user-server -- 业务客户端
+```
 
