@@ -176,3 +176,16 @@ config:
 
 我们只要修改下Nacos中的配置信息，再次调用查看配置的接口，就会发现配置已经刷新，Nacos和Consul一样都支持动态刷新配置。当我们在Nacos页面上修改配置并发布后，应用会刷新配置并打印如下信息
 
+
+
+# 使用到的模块
+
+```shell
+ZBCN-SERVER
+├── zbcn-nacos/nacos-ribbon-service -- 注册到nacos的ribbon服务调用测试服务
+├── zbcn-nacos/nacos-config-client -- 用于演示nacos作为配置中心的nacos客户端
+└── zbcn-business/nacos-user-service -- 注册到nacos的提供User对象CRUD接口的服务
+```
+
+
+
