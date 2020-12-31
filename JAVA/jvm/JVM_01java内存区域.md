@@ -231,7 +231,7 @@ public int add(){
 	3. 永久代(Permanent Generation)
 
 	      	1. Perm：用来存储类的元数据，也就是方法区。
-	     	2. Perm的废除：在jdk1.8中，Perm被替换成MetaSpace，MetaSpace存放在本地内存中.原因是永久代经常内存不够用，或者发生内存泄漏
+	     	 	2. Perm的废除：在jdk1.8中，Perm被替换成MetaSpace，MetaSpace存放在本地内存中.原因是永久代经常内存不够用，或者发生内存泄漏
 	4. MetaSpace（元空间）：元空间的本质和永久代类似，都是对JVM规范中方法区的实现。
 
 		   1. 元空间与永久代之间最大的区别在于：元空间并不在虚拟机中，而是使用本地内存

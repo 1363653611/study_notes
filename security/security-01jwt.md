@@ -33,7 +33,9 @@ reward: true
   - 格式：`head.payload.singature`
 #### 如何创建JWT?  
 JWT通常由“标头.有效载荷.签名”的格式组成。其中，标头用于存储有关如何计算JWT签名的信息，如对象类型，签名算法等。下面是JWT中Header部分的JSON对象实例：  
+
 __标头__
+
 ```json
 //标头：type表示该对象为JWT,alg表示创建JWT时使用HMAC-SHA256散列算法计算签名
 {
@@ -57,18 +59,19 @@ var data = base64UrlEncode(head) + base64UrlEncode(payload)
 var hashData = hmacSha256(data.secret)
 var signature = base64UrlEncode(hashData)
 ```
-####基于 Java 实现的 JWT  
+#### 基于 Java 实现的 JWT  
 导入包
+
 ```xml
 <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt</artifactId>
-      <version>0.9.0</version>
-    </dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt</artifactId>
+    <version>0.9.0</version>
+</dependency>
 ```
 1. 创建 token
 ```java
-/**
+	/**
 	 * 创建 Jwt
 	 * @param type 数据类型 ：jwt
 	 * @param subject  主题
@@ -100,7 +103,7 @@ var signature = base64UrlEncode(hashData)
 ```
 2. 生成密钥
 ```java
-/**
+	/**
 	 * 生成签名密钥
 	 * @return
 	 */
@@ -112,7 +115,7 @@ var signature = base64UrlEncode(hashData)
 ```
 3. 解析密钥
 ```java
-/**
+	/**
 	 * 解析jwt
 	 * @param jwt
 	 * @return
