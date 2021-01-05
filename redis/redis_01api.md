@@ -27,7 +27,7 @@ reward: true
 * Lists(列表)
   - Redis 列表仅仅是按照插入顺序排序的字符串列表。
   - `LPUSH `命令用于插入一个元素到列表的头部，`RPUSH `命令用于插入一个元素到列表的尾部。
-  - 列表的最大长度是 223-1 个元素 (4294967295，超过 40 亿个元素)。
+  - 列表的最大长度是 2^23-1 个元素 (4294967295，超过 40 亿个元素)。
   - 使用：
    > 1.为社交网络时间轴 (timeline) 建模，使用 `LPUSH `命令往用户时间轴插入元素，使用 `LRANGE `命令获得最近事项。
     > 2.使用 `LPUSH `和 `LTRIM `命令创建一个不会超出给定数量元素的列表，只存储最近的 N 个元素。
@@ -57,7 +57,7 @@ reward: true
     ```
     - 拥有少量字段 (少量指的是大约 100) 的哈希会以占用很少存储空间的方式存储，所以你可以在一个很小的 Redis 实例里存储数百万的对象。
     - 由于哈希主要用来表示对象，对象能存储很多元素，所以你可以用哈希来做很多其他的事情
-    - 每个哈希可以存储多达 223-1 个字段值对 (field-value pair)(多于 40 亿个)。
+    - 每个哈希可以存储多达 2^23-1 个字段值对 (field-value pair)(多于 40 亿个)。
 * Sorted sets (有序集合)
   - Redis 有序集合和 Redis 集合类似，是非重复字符串集合 (collection)。不同的是，每一个有序集合的成员都有一个关联的分数 (score)，用于按照分数高低排序。尽管成员是唯一的，但是分数是可以重复的。
   - 对有序集合我们可以通过很快速的方式添加，删除和更新元素 (在和元素数量的对数成正比的时间内)。由于元素是有序的而无需事后排序，你可以通过分数或者排名 (位置) 很快地来获取一个范围内的元素。访问有序集合的中间元素也是很快的，所以你可以使用有序集合作为一个无重复元素，快速访问你想要的一切的聪明列表：有序的元素，快速的存在性测试，快速的访问中间元素！
@@ -97,120 +97,213 @@ reward: true
   - Redis 字符串是可以关联给 redis 键的最简单值类型。字符串是 Memcached 的唯一数据类型，所以新手使用起来也是很自然的。
   - 由于 Redis 的键也是字符串，当我们使用字符串作为值的时候，我们是将一个字符串映射给另一个字符串。字符串数据类型适用于很多场景，例如，缓存 HTML 片段或者页面。
 
-#### Redis(String) ####
+# Redis(String) #
 
-- `set mykey somevalue` 设置内容：
+## `set mykey somevalue` 设置内容：
+
+```shell
+127.0.0.1:6379> set name zbcn
+OK
+```
+
+>  `set key value [ex seconds] [ px millionseconds] [nx|xx]`：为指定的键设置一个值，若键已存在值则覆盖，命令执行成功返回ok，添加nx或xx时命令执行失败返回nil
+>   [ex seconds] 设置指定秒数后值失效 
+>
+>   [px millionseconds] 设置指定毫秒数后值失效 
+>
+> [nx|xx] nx表示只有键不存在才设置值，xx表示只有键存在才设置值
 
   __note__: 如果键已经存在，SET 会替换掉该键已经存在的值，哪怕这个键关联的是一个非字符串类型的值。SET 执行的是赋值操作。
   - 值可以是任何类型的字符串 (包括二进制数据)，例如，你可以存储一个 JPEG 图像。值不能大于 512MB。
-  - `set mykey somevalue nx` - 如果我要求如果键存在 (或刚好相反) 则执行失败
-  - `set mykey somevalue xx`
-  - redis 可以进行基本数值的原子操作：`INCR` 命令将字符串值解析为整数，并增加一，最后赋值后作为新值。还有一些类似的命令 `INCRBY`，`DECR` 和 `DECRBY`。它们以略微不同的方式执行，但其内部都是一样的命令
-  ```redis
-      > set counter 100   #  
-      OK  
-      > incr counter  
-      (integer) 101  
-      > incr counter  
-      (integer) 102  
-      > incrby counter 50  
-      (integer) 152   
+
+## `get mykey`  获取内容
+
+```shell
+127.0.0.1:6379> get name
+"zbcn"
+```
+
+
+
+## `set mykey somevalue nx`  和 `set mykey somevalue xx`
+
+> `set mykey somevalue nx` - 如果不存在则插入成功,如果存在则插入失败
+>
+> `set mykey somevalue xx` - 如果存在则插入成功,如果不存在则插入失败
+
+```shell
+# 插入 name= zbcn
+127.0.0.1:6379> set name zbcn
+OK
+# 查询 name 的值
+127.0.0.1:6379> get name
+"zbcn"
+# 插入失败: nx表示只有键不存在才设置值
+127.0.0.1:6379> set name zbcn_1 nx
+(nil)
+# 插入成功: xx表示只有键存在才设置值
+127.0.0.1:6379> set name zbnc_02 xx
+OK
+
+```
+
+## `INCR`, `IINCRBY` 和 `DECR` `DECRBY`
+
+- `INCR` 命令将字符串值解析为整数，并增加一，最后赋值后作为新值
+- `INCRBY`  命令将字符串值解析为整数，命令将按照指定的整数增加
+- `DECR`  命令将字符串值解析为整数，并减 一 ,最后赋值后作为新值
+- `DECRBY` 命令将字符串值解析为整数，命令将按照指定的整数减少
+
+**示例:** 
+
+  ```shell
+127.0.0.1:6379> set count 100 
+OK
+127.0.0.1:6379> get count
+"100"
+# INCR 增加 1
+127.0.0.1:6379> INCR count
+(integer) 101
+# 查看增加后的 count
+127.0.0.1:6379> get count
+"101"
+# INCRBY 指定数量增加 
+127.0.0.1:6379> INCRBY count 2
+(integer) 103
+# 查看增加后的值
+127.0.0.1:6379> get count
+"103" 	
+# DECR 自减1
+127.0.0.1:6379> DECR count
+(integer) 102
+# DECRBY 指定数量减少
+127.0.0.1:6379> DECRBY count 5
+(integer) 97
   ```
-  - `get mykey` --获取内容
-  -  `MSET` 和 `MGET` 命令：
-    
-    ```
-    > mset a 10 b 20 c 30  
-    OK  
-    > mget a b c  
-    1) "10"  
-    2) "20"  
-    3) "30"
-    ```
-  - 改变和查询键空间 (key space)
-    * `EXISTS` 命令返回 1(存在) 或者 0(不存在)，来表示键在数据库中是否存在。
-    * `DEL` 命令删除键及其关联的值，无论值是什么。
-    * `TYPE` 命令返回某个键的值的类型。
-    ```shell
-    > set mykey hello  
-    OK  
-    > exists mykey  
-    (integer) 1  
-    > del mykey  
-    (integer) 1  
-    > exists mykey  
-    (integer) 0
-    > set mykey x  
-    OK  
-    > type mykey  
-    string  
-    > del mykey  
-    (integer) 1  
-    > type mykey  
-    none  
-    ```
+## `MSET` 和 `MGET` 命令：
 
-- Redis 过期 (expires)：有限生存时间的键
-  > 在我们继续更复杂的数据结构之前，我们先抛出一个与类型无关的特性， 称为 Redis 过期 。你可以给键设置超时，也就是一个有限的生存时间。当生存时间到了，键就会自动被销毁，就像用户调用 DEL 命令一样。
+`MESET`表示同时设置多个值, `MGET` 表示同时获取多个值
 
-  * note ：
-    - 过期时间可以设置为秒或者毫秒精度。
-    - 过期时间分辨率总是 1 毫秒。
-    - 过期信息被复制和持久化到磁盘，当 Redis 停止时时间仍然在计算 (也就是说 Redis 保存了过期时间)。
+```shell
+127.0.0.1:6379> mset a 1 b 2 c 3
+OK
+127.0.0.1:6379> mget a b c
+1) "1"
+2) "2"
+3) "3"
+```
 
-    - `EXPIRE` 命令设置过期
-    - `PERSIST` 命令可以删除过期时间使键永远存在
-    - `TTL` 命令检查键的生存剩余时间。
-    ```shell
-      > set key some-value  
-      OK  
-      > expire key 5  
-      (integer) 1  
-      > get key (immediately)  
-      "some-value"  
-      > get key (after some time)  
-      (nil)  
+## 改变和查询键空间 (key space)
 
-      > set key 100 ex 10  
-      OK  
-      > ttl key  
-      (integer) 9
-    ```
+* `EXISTS` 命令返回 1(存在) 或者 0(不存在)，来表示键在数据库中是否存在。
+* `DEL` 命令删除键及其关联的值，无论值是什么。
+* `TYPE` 命令返回某个键的值的类型。
+```shell
+> set mykey hello  
+OK  
+> exists mykey  
+(integer) 1  
+> del mykey  
+(integer) 1  
+> exists mykey  
+(integer) 0
+> set mykey x  
+OK  
+> type mykey  
+string  
+> del mykey  
+(integer) 1  
+> type mykey  
+none  
+```
 
-#### Redis 列表(Lists) ####
-- 操作
-  - `LPUSH` 命令从左边 (头部) 添加一个元素到列表，
-  - `RPUSH` 命令从右边(尾部)添加一个元素的列表。
-  - `LRANGE` 命令从列表中提取一个范围内的元素。
-    
-    ```shell
-      > rpush mylist A  
-      (integer) 1  
-      > rpush mylist B  
-      (integer) 2  
-      > lpush mylist first  
-      (integer) 3  
-      > lrange mylist 0 -1  
-      1) "first"  
-      2) "A"  
-      3) "B"  
-      > rpush mylist 1 2 3 4 5 "foo bar"  
-      (integer) 9  
-      > lrange mylist 0 -1  
-      1) "first"  
-      2) "A"  
-      3) "B"  
-      4) "1"  
-      5) "2"  
-      6) "3"  
-      7) "4"  
-      8) "5"  
-      9) "foo bar"
-    ```
+## Redis 过期 (expires)：有限生存时间的键
+
+> 在我们继续更复杂的数据结构之前，我们先抛出一个与类型无关的特性， 称为 Redis 过期 。你可以给键设置超时，也就是一个有限的生存时间。当生存时间到了，键就会自动被销毁，就像用户调用 DEL 命令一样。
+
+* note ：
+  - 过期时间可以设置为秒或者毫秒精度。
+  - 过期时间分辨率总是 1 毫秒。
+  - 过期信息被复制和持久化到磁盘，当 Redis 停止时时间仍然在计算 (也就是说 Redis 保存了过期时间)。
+
+  - `EXPIRE` 命令设置过期
+  - `PERSIST` 命令可以删除过期时间使键永远存在
+  - `TTL` 命令检查键的生存剩余时间。
+  ```shell
+  127.0.0.1:6379> set expire_key 'hello redis'
+  OK
+  127.0.0.1:6379> expire expire_key 10
+  (integer) 1
+  127.0.0.1:6379> get expire_key
+  "hello redis"
+  # 10 秒后
+  127.0.0.1:6379> get expire_key 
+(nil)
+  
+  # 另一种方式
+  127.0.0.1:6379> set expire_key 'hello word' EX 100
+  OK
+  # 检查剩余时间
+  127.0.0.1:6379> ttl expire_key
+  (integer) 93
+  127.0.0.1:6379> get expire_key
+  "hello word"
+  # 删除过期时间,持久化到redis
+  127.0.0.1:6379> PERSIST expire_key
+  (integer) 1
+  ```
+
+# Redis 列表(Lists) #
+## 操作
+
+- `LPUSH` 命令从左边 (头部) 添加一个元素到列表，
+
+- `RPUSH` 命令从右边(尾部)添加一个元素的列表。
+
+- `LRANGE` 命令从列表中提取一个范围内的元素。
+  
 - `rpop` 从左侧弹出元素
+  
 - `lpop` 从右侧弹出
 
-#### 列表的通用场景(Common use cases) ####
+  ```shell
+    # 从左边插入 一个 值 A
+    > rpush mylist A  
+    (integer) 1  
+    # 从右边插入一个值 B
+    > rpush mylist B  
+    (integer) 2  
+    # 从左边插入一个 值 first
+    > lpush mylist first  
+    (integer) 3  
+    # 获取 mylist 列表 中的全部值
+    > lrange mylist 0 -1  
+    1) "first"  
+    2) "A"  
+    3) "B"  
+    # 从右边依次插入 : 1 2 3 4 5 "foo bar"
+    > rpush mylist 1 2 3 4 5 "foo bar"  
+    (integer) 9  
+    # 获取list 中的全部值
+    > lrange mylist 0 -1  
+    1) "first"  
+    2) "A"  
+    3) "B"  
+    4) "1"  
+    5) "2"  
+    6) "3"  
+    7) "4"  
+    8) "5"  
+    9) "foo bar"
+  # 从左边弹出 first   
+  127.0.0.1:6379> lpop mylist
+  "first"
+  # 从左边弹出 "foo bar"
+  127.0.0.1:6379> rpop mylist
+  "foo bar"
+  ```
+
+### 列表的通用场景(Common use cases) ###
 - 记住社交网络中用户最近提交的更新。
 - 使用生产者消费者模式来进程间通信，生产者添加项(item)到列表，消费者(通常是 worker)消费项并执行任务。Redis 有专门的列表命令更加可靠和高效的解决这种问题。
 - 使用 `LTRIM` 命令仅仅只记住最新的 N 项，丢弃掉所有老的项。
@@ -221,65 +314,402 @@ reward: true
 - 当我们从聚合数据类型删除一个元素，如果值为空，则键也会被销毁。
 - 调用一个像 `LLEN` 的只读命令(返回列表的长度)，或者一个写命令从空键删除元素，总是产生和操作一个持有空聚合类型值的键一样的结果。
 
-#### Redis 哈希/散列 (Hashes) ####
+# Redis 哈希/散列 (Hashes) #
 - `HMSET` 添加元素
 - `HGET` 获取元素
 - `hgetall` 获取所有元素
 - `HINCRBY` 针对单个字段的操作
   ```shell
-      > hmset user:1000 username antirez birthyear 1977 verified 1  
-      OK  
-      > hget user:1000 username  
-      "antirez"  
-      > hget user:1000 birthyear  
-      "1977"  
-      > hgetall user:1000  
-      1) "username"  
-      2) "antirez"  
-      3) "birthyear"  
-      4) "1977"  
-      5) "verified"  
-      6) "1"  
+  # 同时将多个 field-value (域-值)对设置到哈希表 key 中。
+  127.0.0.1:6379> hmset user username zbcn age 23 gender 1 addr beijing
+  OK 
+  # 获取在哈希表中指定 key 的所有字段和值
+  127.0.0.1:6379> hgetall user
+  1) "username"
+  2) "zbcn"
+  3) "age"
+  4) "23"
+  5) "gender"
+  6) "1"
+  7) "addr"
+  8) "beijing"
+  # 获取所有哈希表中的字段
+  127.0.0.1:6379> hkeys user
+  1) "username"
+  2) "age"
+  3) "gender"
+  4) "addr"
+  5) "money"
+  # 获取哈希表中字段的数量
+  127.0.0.1:6379> hlen user
+  (integer) 5
+  # 获取存储在哈希表中指定字段的值。
+  127.0.0.1:6379> hget user username
+  "zbcn"
+  # 获取所有给定字段的值
+  127.0.0.1:6379> hmget user username age
+  1) "zbcn"
+  2) "26"
+  #  将哈希表 key 中的字段 field 的值设为 value 。
+  127.0.0.1:6379> hset user pc mac
+  (integer) 1
+  
+  # 只有在字段 field 不存在时，设置哈希表字段的值。
+  127.0.0.1:6379> hsetnx user pc win
+  (integer) 0
+  127.0.0.1:6379> hsetnx user phone iphone
+  (integer) 1
+  
+  # 查看哈希表 key 中，指定的字段是否存在。
+  127.0.0.1:6379> hexists user name
+  (integer) 0 # 表示不存在
+  127.0.0.1:6379> hexists user username
+  (integer) 1 # 表示存在
+  
+  # 为哈希表 key 中的指定字段的整数值加上增量 increment 
+  127.0.0.1:6379> hincrby user age 3
+  (integer) 26
+  # 为哈希表 key 中的指定字段的浮点数值加上增量 increment 。
+  127.0.0.1:6379> hincrbyfloat user money 20.3
+  "40.799999999999997"
+  
+  # 获取哈希表中所有值。
+  127.0.0.1:6379> hvals user
+  1) "zbcn"
+  2) "26"
+  3) "1"
+  4) "beijing"
+  5) "40.799999999999997"
+  6) "mac"
+  7) "iphone"
+  # 迭代哈希表中的键值对。
+  127.0.0.1:6379> hscan user 0 match "age"
+  1) "0"
+  2) 1) "age"
+     2) "26"
+  
   ```
 
-#### Redis 集合 (Sets) ####
-- `SADD `命令添加元素到集合。
+# Redis 集合 (Sets) #
+- Redis 的 Set 是 String 类型的无序集合。集合成员是唯一的，这就意味着集合中不能出现重复的数据。
+- Redis 中集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是 O(1)。
+- 集合中最大的成员数为 232 - 1 (4294967295, 每个集合可存储40多亿个成员)。
+-  `SADD `命令添加元素到集合。
  ```shell
-    > sadd myset 1 2 3  
-    (integer) 3  
-    > smembers myset  
-    1. 3  
-    2. 1  
-    3. 2
+# 向集合添加一个或多个成员
+127.0.0.1:6379> sadd db redis
+(integer) 1
+127.0.0.1:6379> sadd db mysql es mongodb
+(integer) 3
+# 获取集合的成员数
+127.0.0.1:6379> scard db
+(integer) 4
 
-    > sismember myset 3   # 指定元素是否存在
-    (integer) 1  
-    > sismember myset 30  
-    (integer) 0  
+# 获取集合中的所有成员:SMEMBERS key
+127.0.0.1:6379> smembers db
+1) "mongodb"
+2) "es"
+3) "mysql"
+4) "redis"
+
+# 添加db2 集合
+127.0.0.1:6379> sadd db2 oracle mq es
+(integer) 3
+# 返回第一个集合与其他集合之间的差异。
+127.0.0.1:6379> sdiff db db2
+1) "mongodb"
+2) "mysql"
+3) "redis"
+
+# 给定所有集合的差集并存储在 destination  中
+127.0.0.1:6379> sdiffstore destination db db2
+(integer) 3
+# 获取 destination
+127.0.0.1:6379> smembers destination
+1) "mongodb"
+2) "mysql"
+3) "redis"
+
+# 返回给定所有集合的交集
+127.0.0.1:6379> sinter db db2
+1) "es"
+# 删除 destination
+127.0.0.1:6379> del destination
+(integer) 1
+# 返回给定所有集合的交集并存储在 destination 中
+127.0.0.1:6379> sinterstore destination db  db2
+(integer) 1
+# 判断 member 元素是否是集合 key 的成员: SISMEMBER key member
+127.0.0.1:6379> sismember db es
+(integer) 1
+# 将 member 元素从 source 集合移动到 destination 集合
+127.0.0.1:6379> smove db destination mysql
+(integer) 1
+127.0.0.1:6379> smembers db
+1) "mongodb"
+2) "es"
+3) "redis"
+127.0.0.1:6379> smembers destination
+1) "mysql"
+2) "es"
+
+# 移除并返回集合中的一个随机元素
+127.0.0.1:6379> spop destination
+"mysql"
+# 返回集合中一个或多个随机数
+127.0.0.1:6379> srandmember db 2
+1) "mongodb"
+2) "redis"
+# 移除集合中一个或多个成员
+127.0.0.1:6379> srem db mongodb redis
+(integer) 2
+# 返回所有给定集合的并集
+127.0.0.1:6379> sunion db distination
+1) "es"
+# 所有给定集合的并集存储在 destination 集合中
+127.0.0.1:6379> sunionstore destination db db2
+(integer) 3
+# 迭代集合中的元素
+127.0.0.1:6379> sscan db 0 MATCH my*
+1) "0"
+2) 1) "mysql"
  ```
 
-#### Redis 有序集合 (Sorted sets) ####
+# Redis 有序集合 (Sorted sets) #
+
+```shell
+ zadd key [NX|XX] [CH] [INCR] score member [score member ...]
+ 
+```
+
 - 排序规则：
-   * 如果 A 和 B 是拥有不同分数的元素，A.score > B.score，则 A > B。
-   * 如果 A 和 B 是有相同的分数的元素，如果按字典顺序 A 大于 B，则 A > B。A 和 B 不能相同，因为排序集合只能有唯一元素。
+
+   - Redis 有序集合和集合一样也是 string 类型元素的集合,且不允许重复的成员。
+   - 不同的是每个元素都会关联一个 double 类型的分数。redis 正是通过分数来为集合中的成员进行从小到大的排序。
+   - 有序集合的成员是唯一的,但分数(score)却可以重复。
+   - 如果 A 和 B 是拥有不同分数的元素，A.score > B.score，则 A > B。
+   - 合是通过哈希表实现的，所以添加，删除，查找的复杂度都是 O(1)。 集合中最大的成员数为 2^32 - 1 (4294967295, 每个集合可存储40多亿个成员)。
+   - 如果 A 和 B 是有相同的分数的元素，如果按字典顺序 A 大于 B，则 A > B。A 和 B 不能相同，因为排序集合只能有唯一元素。
 
    ```shell
-      > zadd hackers 1940 "Alan Kay"  
-      (integer) 1  
-      > zadd hackers 1957 "Sophie Wilson"  
-      (integer 1)  
-      > zadd hackers 1953 "Richard Stallman"  
-      (integer) 1  
-      > zadd hackers 1949 "Anita Borg"  
-      (integer) 1  
-      > zadd hackers 1965 "Yukihiro Matsumoto"  
-      (integer) 1  
-      > zadd hackers 1914 "Hedy Lamarr"  
-      (integer) 1  
-      > zadd hackers 1916 "Claude Shannon"  
-      (integer) 1  
-      > zadd hackers 1969 "Linus Torvalds"  
-      (integer) 1  
-      > zadd hackers 1912 "Alan Turing"  
-      (integer) 1  
+   # 向有序集合添加一个或多个成员，或者更新已存在成员的分数
+   127.0.0.1:6379> zadd score 90 zbcn
+   (integer) 1 
+   127.0.0.1:6379> zadd score 79 zhangsan 80 lisi 60 wangwu
+   (integer) 3
+   # 获取有序集合的成员数
+   127.0.0.1:6379> zcard score
+   (integer) 4
+   # 计算在有序集合中指定区间分数的成员数
+   127.0.0.1:6379> zcount score 80 90
+   (integer) 2
+   # 有序集合中对指定成员的分数加上增量 increment
+   127.0.0.1:6379> zincrby score 5 zbcn
+   "95"
+   # 计算给定的一个或多个有序集的交集并将结果集存储在新的有序集合 destination 中
+   ZINTERSTORE destination numkeys key [key ...]
+   # 添加集合 midd_test
+   127.0.0.1:6379> zadd midd_test 70 "Li Lei" 70 "Han Meimei" 99.5 "Tom"
+   (integer) 3
+   # 添加集合 fin_test
+   127.0.0.1:6379> ZADD fin_test 88 "Li Lei" 75 "Han Meimei" 99.5 "Tom"
+   (integer) 3
+   # 求 midd_test 和fin_test 的交集 并且存储到 sum_point 中
+   127.0.0.1:6379> zinterstore sum_point 2 midd_test fin_test
+   (integer) 3
+   
+   # 查看 sum_point 中的内容 ZRANGE key start stop [WITHSCORES]
+   # 以 -1 表示最后一个成员， -2 表示倒数第二个成员，以此类推
+   127.0.0.1:6379> zrange sum_point 0 -1
+   1) "Han Meimei"
+   2) "Li Lei"
+   3) "Tom"
+   # 带score 值查看  sum_ponit 中的值 分数由小到大
+   127.0.0.1:6379> zrange sum_point 0 -1 withscores
+   1) "Han Meimei"
+   2) "145"
+   3) "Li Lei"
+   4) "158"
+   5) "Tom"
+   6) "199"
+   
+   # 返回指定区间内的成员,成员的位置按分数值递减(从大到小)来排列
+   127.0.0.1:6379>  zrevrange sum_point 0 -1 withscores
+   1) "Tom"
+   2) "199"
+   3) "Li Lei"
+   4) "158"
+   5) "Han Meimei"
+   6) "145"
+   
+   # 返回有序集合中指定成员的索引
+   127.0.0.1:6379> zrank score zbcn
+   (integer) 4
+   
+   # 返回有序集合中指定成员的排名，有序集成员按分数值递减(从大到小)排序
+   127.0.0.1:6379> zrevrank score zbcn
+   (integer) 0
+   
+   # 返回有序集中，成员的分数值
+   127.0.0.1:6379> zscore score zbcn
+   "95"
+   
+   # 计算给定的一个或多个有序集的并集，并存储在新的 key 中
+   127.0.0.1:6379> zunionstore union_point 2 midd_test fin_test
+   (integer) 3
+   127.0.0.1:6379> zrange union_point 0 -1
+   1) "Han Meimei"
+   2) "Li Lei"
+   3) "Tom"
+   
+   
+   # 移除有序集合中的一个或多个成员
+   127.0.0.1:6379> zrem score lisi
+   (integer) 1
+   
+   # 移除有序集合中给定的字典区间的所有成员 ZREMRANGEBYLEX key min max
+   127.0.0.1:6379> zremrangebylex myzset [a [b
+   (integer) 2
+   # 移除有序集合中给定的排名区间的所有成员: ZREMRANGEBYRANK key start stop
+   127.0.0.1:6379> zremrangebyrank myzset 0 2
+   (integer) 3
+   
+   # 移除有序集合中给定的分数区间的所有成员
+   127.0.0.1:6379> zremrangebyscore score 60 (80
+   (integer) 2
+   
+   # 迭代有序集合中的元素（包括元素成员和元素分值）
+   127.0.0.1:6379> zscan union_point 0 match "Li Lei"
+   1) "0"
+   2) 1) "Li Lei"
+      2) "158"
    ```
+
+   ### ZRANGEBYLEX
+
+   `ZRANGEBYLEX key min max [LIMIT offset count]`
+
+   当以相同的分数插入排序集中的所有元素时，为了强制按字典顺序排序，此命令将返回键中排序集中的所有元素，且其值介于min和max之间。如果排序集中的元素具有不同的分数，则返回的元素未指定.
+
+   min 和 max 说明:
+
+   - 有效的开始和停止必须以（或[，为了指定范围项目是分别是排他性还是包含性。
+   - +和-的特殊值（对于开始和停止）具有特殊含义，或者是正无限和负无限字符串，因此，例如，命令`ZRANGEBYLEX myzset-+`保证返回排序集中的所有元素,如果所有元素都具有相同的分数. 
+
+   ```shell
+   127.0.0.1:6379> ZADD myzset 0 a 0 b 0 c 0 d 0 e
+   (integer) 5
+   127.0.0.1:6379> ZADD myzset 0 f 0 g
+   (integer) 2
+   # 移除有序集合中给定的字典区间的所有成员
+   127.0.0.1:6379> zrangebylex myzset [a [g
+   1) "a"
+   2) "b"
+   3) "c"
+   4) "d"
+   5) "e"
+   6) "f"
+   7) "g"
+   127.0.0.1:6379> zrangebylex myzset [a (g
+   1) "a"
+   2) "b"
+   3) "c"
+   4) "d"
+   5) "e"
+   6) "f"
+   127.0.0.1:6379>  zrangebylex myzset - +
+   1) "a"
+   2) "b"
+   3) "c"
+   4) "d"
+   5) "e"
+   6) "f"
+   7) "g"
+   ```
+
+   
+
+   ### ZLEXCOUNT
+
+   `ZLEXCOUNT key min max`
+
+   当以相同的分数插入排序集中的所有元素时，为了强制按字典顺序排序，此命令返回键中排序集中的元素数，其值介于min和max之间。min和max参数的含义与对ZRANGEBYLEX的描述相同。
+
+   ```shell
+   # 在有序集合中计算指定字典区间内成员数量
+   127.0.0.1:6379> ZLEXCOUNT myzset - +
+   (integer) 7
+   127.0.0.1:6379> ZLEXCOUNT myzset [a [b
+   (integer) 2
+   ```
+
+   ###  ZRANGEBYSCORE
+
+   Zrangebyscore 返回有序集合中指定分数区间的成员列表。有序集成员按分数值递增(从小到大)次序排列。
+
+   具有相同分数值的成员按字典序来排列(该属性是有序集提供的，不需要额外的计算)。
+
+   默认情况下，区间的取值使用闭区间 (小于等于或大于等于)，你也可以通过给参数前增加 `( `符号来使用可选的开区间 (小于或大于)。
+
+```shell
+127.0.0.1:6379> zrangebyscore score 60 90
+1) "wangwu"
+2) "zhangsan"
+3) "lisi"
+4) "zhaoliu"
+127.0.0.1:6379> zrangebyscore score 60 90 withscores
+1) "wangwu"
+2) "60"
+3) "zhangsan"
+4) "79"
+5) "lisi"
+6) "80"
+7) "zhaoliu"
+8) "80"
+# 显示整个有序集
+127.0.0.1:6379> zrangebyscore score -inf +inf
+1) "wangwu"
+2) "zhangsan"
+3) "lisi"
+4) "zhaoliu"
+5) "zbcn"
+127.0.0.1:6379> zrangebyscore score -inf +inf withscores
+ 1) "wangwu"
+ 2) "60"
+ 3) "zhangsan"
+ 4) "79"
+ 5) "lisi"
+ 6) "80"
+ 7) "zhaoliu"
+ 8) "80"
+ 9) "zbcn"
+10) "95"
+
+# 显示分数 <=95 的所有成员
+127.0.0.1:6379> zrangebyscore score -inf 95
+1) "wangwu"
+2) "zhangsan"
+3) "lisi"
+4) "zhaoliu"
+5) "zbcn"
+
+# 显示分数 >= 60 的所有成员
+127.0.0.1:6379>  zrangebyscore score 60 +inf withscores
+ 1) "wangwu"
+ 2) "60"
+ 3) "zhangsan"
+ 4) "79"
+ 5) "lisi"
+ 6) "80"
+ 7) "zhaoliu"
+ 8) "80"
+ 9) "zbcn"
+10) "95"
+
+# 显示分数大于 60 小于 95 的成员
+127.0.0.1:6379> zrangebyscore score (60 (95
+1) "zhangsan"
+2) "lisi"
+3) "zhaoliu"
+```
+
