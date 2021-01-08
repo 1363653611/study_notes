@@ -147,7 +147,7 @@ public class CyclicBarrierTest3 {
 ```java
 public class SemaphoreTest {
     private static final int THREAD_COUNT = 30;
-    private static ExecutorServicethreadPool = Executors.newFixedThreadPool(THREAD_COUNT);
+    private static ExecutorService threadPool = Executors.newFixedThreadPool(THREAD_COUNT);
     private static Semaphore s = new Semaphore(10);
     public static void main(String[] args) {
         for (int i = 0; i< THREAD_COUNT; i++) {
