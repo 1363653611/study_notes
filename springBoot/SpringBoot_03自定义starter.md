@@ -3,6 +3,38 @@
 - groupId不要用官方的org.springframework.boot 而要用你自己独特的
 - 对于artifactId的命名，Spring Boot官方建议非官方的Starter命名格式遵循 xxxx-spring-boot-starter，例如 mybatis-spring-boot-starter 。官方starter会遵循spring-boot-starter-xxxx
 
+# SpringBoot starter 组成
+
+一个完整的Spring Boot Starter可能包含以下组件：
+
+- **autoconfigure**模块：包含自动配置的代码
+- **starter**模块：提供对**autoconfigure**模块的依赖，以及一些其它的依赖
+
+（PS：如果你不需要区分这两个概念的话，也可以将自动配置代码模块与依赖管理模块合并成一个模块）
+
+简而言之，starter应该提供使用该库所需的一切
+
+##　命名
+
+- 模块名称不能以**spring-boot**开头
+- 如果你的starter提供了配置keys，那么请确保它们有唯一的命名空间。而且，不要用Spring Boot用到的命名空间（比如：**server**， **management**， **spring** 等等）
+
+举个例子，假设你为“acme”创建了一个starter，那么你的auto-configure模块可以命名为**acme-spring-boot-autoconfigure**，starter模块可以命名为**acme-spring-boot-starter**。如果你只有一个模块包含这两部分，那么你可以命名为**acme-spring-boot-starter**。
+
+## autoconfigure模块
+
+建议在autoconfigure模块中包含下列依赖：
+
+```xml
+<dependency>
+ 	<groupId>org.springframework.boot</groupId>
+ 	<artifactId>spring-boot-autoconfigure-processor</artifactId>
+ 	<optional>true</optional>
+ </dependency>
+```
+
+
+
 # SpringBoot Starter 加载原理
 
 ## Spring Boot对Spring Boot Starter的Jar包是如何加载的？
@@ -154,7 +186,17 @@ starter集成入应用有两种方式。我们从应用视角来看有两种：
 - 一种是主动生效，在starter组件集成入Spring Boot应用时需要你主动声明启用该starter才生效，即使你配置完全。这里会用到@Import注解，将该注解标记到你自定义的@Enable注解上：
 
 ```java
-
+/**
+ * 一种是主动生效，在starter组件集成入Spring Boot应用时需要你主动声明启用该starter才生效，即使你配置完全。
+ * 还有一种方式是:被动生效，在starter组件集成入Spring Boot应用时就已经被应用捕捉到。这里会用到类似java的SPI机制。在autoconfigure资源包下新建META-INF/spring.factories写入
+ * 配置信息
+ */
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Import(CustomRedisConfig.class)
+public @interface EnableCustomRedis {
+}
 ```
 
 我们将该注解标记入Spring Boot应用就可以使用该自定义starter功能了。
