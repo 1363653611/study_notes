@@ -70,15 +70,103 @@ SpringBoot 在启动时会去依赖的 starter 包中寻找 /META-INF/spring.fac
 
 ### 配置参数
 
+一般配置参数都是在Spring Boot 的application.yml中。我们会定义一个前缀标识来作为名称空间隔离各个组件的参数.对应的组件会定义一个XXXXProperties 来自动装配这些参数。自动装配的机制基于@ConfigurationProperties注解，请注意一定要显式声明你配置的前缀标识（prefix）。
 
+例如我们定义redis 配置:
+
+```java
+@ConfigurationProperties(prefix = "zbcn.redis")
+@Data
+public class RedisProperty {
+
+    private String host;
+
+    private String port;
+
+    private String username;
+
+    private String password;
+}
+```
+
+后期在使用 该starter 的项目中,在配置文件中配置如下信息:
+
+```yaml
+zbcn.redis:
+	host: xxxx
+	port: 6379
+	username:
+	password: 
+```
+
+集成了Spring Boot 校验库, 可以对SmsProperties进行校验。在配置application.yml时细心的java开发者会发现参数配置都有像下面一样的参数描述:
+
+首先在pom.xml 中引入校验库
+
+```xml
+<!--元数据生成依赖-->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-configuration-processor</artifactId>
+    <optional>true</optional>
+</dependency>
+```
+
+然后就该依赖会对SmsProperties 成员属性的注释进行提取生成一个spring-configuration-metadata.json文件，这就是配置描述的元数据文件。Spring Boot官方也对注释进行了一些规则约束：
+
+- 不要以“The”或“A”开头描述。
+- 对于boolean类型，请使用“Whether" 或“Enable”开始描述。
+- 对于基于集合的类型，请使用“Comma-separated list”
+- 如果默认时间单位不等同于毫秒，则使用java.time.Duration而不是long描述默认单位，例如“如果未指定持续时间后缀，则将使用秒”。
+- 除非必须在运行时确定，否则不要在描述中提供默认值。
+
+**描述尽量用英文描述**
 
 ### 配置自动暴露功能接口
 
+根据配置来初始化我们的功能接口，我们会抽象一个redis 配置信息bean `ZbcnRedisConfigBean`,请注意autoconfigure模块的依赖几乎都是不可传递的。也就是依赖坐标配置optional为true 。
 
+```java
+@Configuration
+@EnableConfigurationProperties(RedisProperty.class)
+public class CustomRedisConfig {
+    /**
+     * redis 配置信息
+     * @param redisProperty
+     * @return
+     */
+    @Bean
+    public ZbcnRedisConfigBean redisConfigBean(RedisProperty redisProperty){
+        return new ZbcnRedisConfigBean(redisProperty.getHost(), redisProperty.getPort(),
+                redisProperty.getUsername(), redisProperty.getPassword(),"自定义redis 配置");
+    }
+}
+```
+
+除了`@Configuration`注解外，`@ConfigurationProperties`会帮助我们将我们的配置类`ZbcnRedisConfigBean`加载进来。然后将我们需要暴露的功能接口声明为Spring Bean 暴露给Spring Boot应用 。有时候我们还可以通过一些条件来控制`CustomRedisConfig` 或者`ZbcnRedisConfigBean`，比如根据某个条件是否加载或加载不同的``ZbcnRedisConfigBean`。
+
+>  有时间,可以看看redis-starter就能很明显感觉到，它会根据luttuce、redisson、jedis 的变化实例化不同的客户端链接。实现方式是使用了@Conditional系列注解，有时间可以学习一下该系列的注解。
 
 ### 主动生效和被动生效
 
- 
+starter集成入应用有两种方式。我们从应用视角来看有两种：
+
+- 一种是主动生效，在starter组件集成入Spring Boot应用时需要你主动声明启用该starter才生效，即使你配置完全。这里会用到@Import注解，将该注解标记到你自定义的@Enable注解上：
+
+```java
+
+```
+
+我们将该注解标记入Spring Boot应用就可以使用该自定义starter功能了。
+
+- 另一种被动生效，在starter组件集成入Spring Boot应用时就已经被应用捕捉到。这里会用到类似java的SPI机制。在autoconfigure资源包下新建META-INF/spring.factories写入SmsAutoConfiguration全限定名。
+
+  ```properties
+  org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.zbcn.config.config.CustomRedisConfig
+  ```
+
+  多个配置类逗号隔开，换行使用反斜杠。
 
 ## com-zbcn-starter
 
