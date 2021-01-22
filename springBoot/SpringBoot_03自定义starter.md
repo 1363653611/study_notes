@@ -33,7 +33,11 @@
  </dependency>
 ```
 
+## starter模块
 
+事实上，**starter是一个空jar**。它唯一的目的是提供这个库所必须的依赖。
+
+你的starter必须直接或间接引用核心的Spring Boot starter（spring-boot-starter）
 
 # SpringBoot Starter 加载原理
 
