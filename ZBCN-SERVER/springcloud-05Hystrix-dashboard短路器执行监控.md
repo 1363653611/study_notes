@@ -1,3 +1,14 @@
+---
+title: Hystrix Dashboard 短路器执行监控
+date: 2021-01-05 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # Hystrix Dashboard 短路器执行监控
 
 Hystrix Dashboard 是Spring Cloud中查看Hystrix实例执行情况的一种仪表盘组件，支持查看单个实例和查看集群实例。

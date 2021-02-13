@@ -1,3 +1,14 @@
+---
+title: SSL 协议与 TLS 协议
+date: 2021-01-16 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
+
 # SSL 协议与 TLS 协议
 
 在软件发展过程中，有很多东西一开始都只是某个技术能力突出的公司研发出来的，在被大众认可取得一定市场后有可能被官方收编，成为行业内的一种标准。SSL 最早是 Netscape 公司研发的，后来被采纳成为标准后取名为 TLS。

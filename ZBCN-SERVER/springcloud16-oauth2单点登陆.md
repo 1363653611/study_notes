@@ -1,3 +1,14 @@
+---
+title: Spring Cloud Security：Oauth2实现单点登录
+date: 2021-01-16 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # Spring Cloud Security：Oauth2实现单点登录
 
 Spring Cloud Security 为构建安全的SpringBoot应用提供了一系列解决方案，结合Oauth2可以实现单点登录功能，本文将对其单点登录用法进行详细介绍。

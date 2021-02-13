@@ -1,3 +1,13 @@
+---
+title: 请求首部字段
+date: 2021-01-13 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
 # 请求首部字段
 
 请求的首部字段主要是客户端用来告知服务端自己能够支持的内容，让服务端尽量根据自己满足的优先级内容来响应。

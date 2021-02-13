@@ -1,3 +1,13 @@
+---
+title: 域名系统 DNS
+date: 2021-01-10 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
 # 域名系统 DNS
 
 我们知道网络中每台机器都有自己的 IP 地址，才能与外面的网络相互通信，传统的 IP 是由 4 个 8 位的字节组成的数字，这样的标识是不利于记忆的，所以延伸出域名的概念，每个域名可以映射成一个 IP。像 `www.taobao.com`；`www.baidu.com`；这种域名我们一看就知道是淘宝和百度。于是有了 DNS（Domain Name System）域名系统，**它的职责就是将人们便于记忆的域名转成计算机所需要的 IP 地址**。

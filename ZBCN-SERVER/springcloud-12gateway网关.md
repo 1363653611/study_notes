@@ -1,3 +1,14 @@
+---
+title: Spring Cloud Gateway：新一代API网关服务
+date: 2021-01-12 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # Spring Cloud Gateway：新一代API网关服务
 
 Spring Cloud Gateway 为 SpringBoot 应用提供了API网关支持，具有强大的智能路由与过滤器功能，本文将对其用法进行详细介绍。

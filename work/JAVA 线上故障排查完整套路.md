@@ -1,3 +1,15 @@
+---
+title: java 线上故障排查完整套路
+date: 2021-01-06 13:14:10
+tags:
+ - java
+categories:
+ - java
+top: 1
+topdeclare: true
+reward: true
+---
+
 线上故障主要会包括 CPU、磁盘、内存以及网络问题，而大多数故障可能会包含不止一个层面的问题，所以进行排查时候尽量四个方面依次排查一遍。同时例如 jstack、jmap 等工具也是不囿于一个方面的问题的，基本上出问题就是 df、free、top 三连，然后依次 jstack、jmap 伺候，具体问题具体分析即可。
 
 # CPU
@@ -76,7 +88,7 @@ ps -ef|grep java
 
 我们还可以通过 lsof 命令来确定具体的文件读写情况 `lsof -p pid`
 
-![img](https://mmbiz.qpic.cn/mmbiz_jpg/WwPkUCFX4x4q4SxZeO5N1RicXwYTjxYs977LolSkIQ1coxHc5ibhfpQFiakUeWs0IYMDmib207Vx6aCK8tDyelW1rQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![img](JAVA 线上故障排查完整套路/java_lsof.png)
 
 
 

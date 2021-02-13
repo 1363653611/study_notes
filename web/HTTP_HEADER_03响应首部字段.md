@@ -1,3 +1,13 @@
+---
+title: 响应首部字段
+date: 2021-01-14 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
 # 响应首部字段
 
 响应的头部字段很大一部分跟请求是对应的，客户端提了自己的诉求并根据优先级列举，服务端会根据自身情况选择一种回复客户端，这种过程就叫做内容协商（content negotiation）。内容协商的字段一般请求的首部是 Accept 开头，而响应的首部是 Content 开头。

@@ -2211,7 +2211,7 @@ Docker容器：容器就是镜像运行起来提供服务。
 
 ### DockerFile命令
 
-![æ¥çæºå¾å](http://www.yunweipai.com/wp-content/uploads/2016/09/171.jpg)
+![image](docker_00_学习/171.jpg)
 
 ### 
 

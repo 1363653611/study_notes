@@ -1,3 +1,14 @@
+---
+title: Spring Cloud Alibaba：Sentinel实现熔断与限流
+date: 2021-01-18 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # Spring Cloud Alibaba：Sentinel实现熔断与限流
 
 Spring Cloud Alibaba 致力于提供微服务开发的一站式解决方案，Sentinel 作为其核心组件之一，具有熔断与限流等一系列服务保护功能，本文将对其用法进行详细介绍。

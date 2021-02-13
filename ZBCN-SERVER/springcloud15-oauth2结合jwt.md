@@ -1,3 +1,14 @@
+---
+title: Spring Cloud Security：Oauth2结合JWT使用
+date: 2021-01-15 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # Spring Cloud Security：Oauth2结合JWT使用
 
 Spring Cloud Security 为构建安全的SpringBoot应用提供了一系列解决方案，结合Oauth2还可以实现更多功能，比如使用JWT令牌存储信息，刷新令牌功能，本文将对其结合JWT使用进行详细介绍。

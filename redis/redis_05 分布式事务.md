@@ -1,3 +1,14 @@
+---
+title: 05 redis 分布式事务
+date: 2021-02-20 09:14:10
+tags:
+  - redis
+categories:
+  - redis
+topdeclare: true
+reward: true
+---
+
 # 多路复用模型
 
 ## 常见的IO 模型(四种)

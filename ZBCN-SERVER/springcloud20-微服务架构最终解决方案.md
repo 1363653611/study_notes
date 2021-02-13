@@ -1,3 +1,14 @@
+---
+title: Spring Cloud Gateway + Oauth2 实现统一认证和鉴权！
+date: 2021-01-20 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # Spring Cloud Gateway + Oauth2 实现统一认证和鉴权！
 
 一个比较好的微服务解决方案：可以通过认证服务进行统一认证，然后通过网关来统一校验认证和鉴权。此方案为目前最新方案，仅支持Spring Boot 2.2.0、Spring Cloud Hoxton 以上版本。

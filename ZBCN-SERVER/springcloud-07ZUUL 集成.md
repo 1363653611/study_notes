@@ -1,3 +1,14 @@
+---
+title: zuul api 网关
+date: 2021-01-07 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # zuul api 网关
 - 定义类似于 面向对象的 Facade 模式，像一个微服务的门面。所有客户端的访问都要经过 网关来过滤和调度。
 ## 集合的工能

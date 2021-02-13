@@ -1,3 +1,14 @@
+---
+title: Spring Cloud Consul：服务治理与配置中心
+date: 2021-01-11 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # Spring Cloud Consul：服务治理与配置中心
 
 Spring Cloud Consul 为 SpringBoot 应用提供了 Consul的支持，Consul既可以作为注册中心使用，也可以作为配置中心使用，本文将对其用法进行详细介绍。

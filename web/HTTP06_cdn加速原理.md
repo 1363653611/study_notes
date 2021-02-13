@@ -1,3 +1,13 @@
+---
+title: CDN 加速原理
+date: 2021-01-11 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
 # CDN 加速原理
 
 CDN 全称 Content Delivery Network 即内容分发网络，它就类似京东的物流配送体系，通过智能分配算法，让用户最近最快速的获取到他们想要访问的资源。

@@ -1,3 +1,14 @@
+---
+title: Web 服务器：NGINX
+date: 2021-01-21 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
+
 # Web 服务器：NGINX
 
 前面讲过的 Httpd 和 Tomcat 以及这个小节所讲的 Nginx 都是 Web 服务器，他们三者发展到今天并没有很明显地成为某个产品一枝独秀的强垄断局面，因为他们有各自的特点和适用的场合，在某些场合他们甚至可以共用达到互补的功能。

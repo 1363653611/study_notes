@@ -1,3 +1,14 @@
+---
+title: 04 redis 概述
+date: 2021-02-09 09:14:10
+tags:
+  - redis
+categories:
+  - redis
+topdeclare: true
+reward: true
+---
+
 # 什么是redis？
 
 redis: remote dictionary server 远程字典服务。

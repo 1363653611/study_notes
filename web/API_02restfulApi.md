@@ -1,3 +1,13 @@
+---
+title: RESTFUL 开发设计规范
+date: 2021-01-03 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
 # RESTFUL 开发设计规范
 
 - URI : 是一种资源标识

@@ -1,3 +1,15 @@
+
+---
+title: Spring Cloud Alibaba：Ali-Seata
+date: 2021-01-19 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 使用Seata彻底解决Spring Cloud中的分布式事务问题！
 
 Seata是Alibaba开源的一款分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务，本文将通过一个简单的下单业务场景来对其用法进行详细介绍。
@@ -283,7 +295,7 @@ service {
 - seat-storage：存储库存的数据库；
 - seat-account：存储账户信息的数据库。
 
-### [初始化业务表](http://www.macrozheng.com/#/cloud/seata?id=初始化业务表)
+### 初始化业务表
 
 #### order表
 

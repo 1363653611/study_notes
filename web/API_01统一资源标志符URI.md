@@ -1,3 +1,14 @@
+---
+title: 统一资源标志符-URI
+date: 2021-01-02 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
+
 # 统一资源标志符-URI
 
 URI，统一资源标志符(Uniform Resource Identifier， URI)，标识了网络中的某个对象或者集合。它可以是 Web 系统中的某个图片地址，也可以是某个人的邮箱地址。下面我们将详细了解 URI 的定义，格式，以及 URI 和 URL 的区别。

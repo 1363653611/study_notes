@@ -1,3 +1,13 @@
+---
+title: HTTP 协议和 HTTPS 协议的对比
+date: 2021-01-15 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
 # HTTP 协议和 HTTPS 协议的对比
 
 在前面的章节中我们对 Http 已经有了一个很全面的了解，Http 在满足通信的基本功能外，也提供了很多丰富的交互功能，但是在安全性方面，Http 还有很多不足的地方，Https 就是为了解决这个问题而诞生。目前 google / 苹果 / 腾讯的小程序接口都强制要求使用 Https 安全协议。以后的网站全面采用 Https 协议已经是一个可以遇见的趋势了。

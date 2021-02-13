@@ -1,3 +1,14 @@
+---
+title: Spring Boot Admin：微服务应用监控
+date: 2021-01-13 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # Spring Boot Admin：微服务应用监控
 
 Spring Boot Admin 可以对SpringBoot应用的各项指标进行监控，可以作为微服务架构中的监控中心来使用，本文将对其用法进行详细介绍。

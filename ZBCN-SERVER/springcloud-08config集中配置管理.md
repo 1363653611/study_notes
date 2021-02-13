@@ -1,3 +1,14 @@
+---
+title: Spring Cloud Config：外部集中化配置管理
+date: 2021-01-08 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # Spring Cloud Config：外部集中化配置管理
 
 Spring Cloud Config 可以为微服务架构中的应用提供集中化的外部配置支持，它分为服务端和客户端两个部分。

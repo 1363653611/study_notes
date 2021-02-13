@@ -1,3 +1,14 @@
+---
+title: Spring Cloud Security：Oauth2使用入门
+date: 2021-01-14 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # Spring Cloud Security：Oauth2使用入门
 
 Spring Cloud Security 为构建安全的SpringBoot应用提供了一系列解决方案，结合Oauth2可以实现单点登录、令牌中继、令牌交换等功能，本文将对其结合Oauth2入门使用进行详细介绍。

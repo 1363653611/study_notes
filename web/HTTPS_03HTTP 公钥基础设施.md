@@ -1,3 +1,14 @@
+---
+title: HTTP 公钥基础设施（PKI）
+date: 2021-01-17 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
+
 # HTTP 公钥基础设施（PKI）
 
 公开密钥基础建设 PKI（Public Key Infrastructure）是一组由硬件、软件、参与者、管理政策与流程组成的基础设施，是为了保障网络系统的安全而产生的机构。PKI 里面包含了多个职能机构，其中 CA 是证书机构，负责管理证书的整个生命周期，它是 PKI 的核心组成。在当前在线交易盛行的今天，网络安全尤为重要。

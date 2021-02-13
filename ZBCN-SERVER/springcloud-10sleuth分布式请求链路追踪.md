@@ -1,3 +1,14 @@
+---
+title: Spring Cloud Sleuth：分布式请求链路跟踪
+date: 2021-01-10 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # Spring Cloud Sleuth：分布式请求链路跟踪
 
 Spring Cloud Sleuth 是分布式系统中跟踪服务间调用的工具，它可以直观地展示出一次请求的调用过程，本文将对其用法进行详细介绍。

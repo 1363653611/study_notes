@@ -1,3 +1,14 @@
+---
+title: APACHE TOMCAT
+date: 2021-01-20 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
+
 # APACHE TOMCAT
 
 Tomcat 是一个开源免费的 Web 服务器，它跟 Httpd 一样有处理静态 Html 的能力，除此之外它还是 Servlet 和 Jsp 的容器，通俗地说可以搭载 Java 的 Web 应用。

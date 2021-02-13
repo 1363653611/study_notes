@@ -1,3 +1,14 @@
+---
+title: OpenSSL
+date: 2021-01-18 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
+
 # OpenSSL
 
 OpenSSL 是一个开源的软件库，里面包含了SSL协议库、应用程序以及密码算法库。通过这个工具我们可以实现自签名证书，也可以更好的了解证书生成的过程。

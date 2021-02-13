@@ -1,3 +1,14 @@
+---
+title: Spring Cloud OpenFeign：基于Ribbon和Hystrix的声明式服务调用
+date: 2021-01-06 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # Spring Cloud OpenFeign：基于Ribbon和Hystrix的声明式服务调用
 
 Spring Cloud OpenFeign 是声明式的服务调用工具，它整合了Ribbon和Hystrix，拥有负载均衡和服务容错功能，本文将对其用法进行详细介绍。

@@ -1,3 +1,13 @@
+---
+title: SOCKET 协议
+date: 2021-01-09 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
 # SOCKET 协议
 
 Socket 是**传输层协议**的具体软件实现，它封装了**协议底层**的复杂实现方法，为开发人员提供了便利的网络连接。Socket 是网络编程的基石，像 Http 的请求，MySQL 数据库的连接等绝大部分的网络连接都是基于 Socket 实现的。

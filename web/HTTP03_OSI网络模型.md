@@ -1,3 +1,13 @@
+---
+title: 网络模型
+date: 2021-01-08 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
 ## 网络模型
 
 计算机的网络模型定义了计算机数据的传输过程，当前有以下 2 种主流模型：

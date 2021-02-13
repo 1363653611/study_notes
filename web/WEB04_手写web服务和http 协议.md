@@ -1,3 +1,14 @@
+---
+title: 手写 WEB 服务器和 HTTP 协议
+date: 2021-01-22 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
+
 # 手写 WEB 服务器和 HTTP 协议
 
 本节我们将借助 Socket 实现服务的端口监听并根据 Http 协议的请求和响应结构，实现一个简单的 Web 服务器，加深体验 Web 服务和 Http 协议的原理。

@@ -1,3 +1,14 @@
+---
+title: Spring Cloud Alibaba：Nacos 作为注册中心和配置中心使用
+date: 2021-01-17 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # Spring Cloud Alibaba：Nacos 作为注册中心和配置中心使用
 
 Spring Cloud Alibaba 致力于提供微服务开发的一站式解决方案，Nacos 作为其核心组件之一，可以作为注册中心和配置中心使用，本文将对其用法进行详细介绍。

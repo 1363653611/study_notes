@@ -1,3 +1,14 @@
+---
+title: WEB 应用安全开发
+date: 2021-01-24 12:14:10
+tags:
+  - newwork
+categories:
+  - newwork
+topdeclare: true
+reward: true
+---
+
 # WEB 应用安全开发
 
 黑客大部分利用的是软件的漏洞，所以我们要尽可能在开发的时候切断所有可能被利用的地方。要想开发出安全的系统，我们需要熟悉黑客进攻的模式和防守的策略。

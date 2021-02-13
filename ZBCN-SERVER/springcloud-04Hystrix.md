@@ -1,3 +1,14 @@
+---
+title: SpringCloud Hystrix 容器容错保护
+date: 2021-01-04 13:14:10
+tags:
+ - springCloud
+categories:
+ - springCloud
+topdeclare: true
+reward: true
+---
+
 # SpringCloud Hystrix 容器容错保护
 
 Spring Cloud Hystrix 是Spring Cloud Netflix 子项目的核心组件之一，具有服务容错及线程隔离等一系列服务保护功能，本文将对其用法进行详细介绍。
