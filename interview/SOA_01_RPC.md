@@ -1,3 +1,15 @@
+---
+title: RPC 框架概述
+date: 2021-02-16 13:14:10
+tags:
+ - RPC
+categories:
+ - RPC
+topdeclare: true
+reward: true
+---
+
+
 ### RPC 名词解释
 - rpc 全名是 remote process call(远程过程调用)
 
@@ -19,6 +31,9 @@
     out = new ObjectOutputStream(os)
     out.writeObject(object)
     ```
+
+<!--more-->
+
   - 字节输入流
   ```
   in = new byteArrayInputStream()

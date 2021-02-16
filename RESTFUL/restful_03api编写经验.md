@@ -1,3 +1,13 @@
+---
+title: 03 restful 接口编写经验
+date: 2021-02-15 18:14:10
+tags:
+  - restful
+categories:
+  - restful
+topdeclare: true
+reward: true
+---
 # 接口路径
 - 一个接口的可读性，对于调用者和维护者是非常重要的，当我们规划好怎么定义url 后，也就决定了项目中我们controller分类。
 - http 接口通常的结构：协议：//域名/应用content path/自定义路径？查询参数 （http://api.zbcn.com/zbcn-notication/users?pageSize=10&pageNo=1）
@@ -11,6 +21,9 @@ eg:
 说明：
 - back 代表是后台管理的意思。所以想要进入后台管理应该访问： `https://back.zbcn.com`, 前台为：`https://www.zhuma.com`
 - 在域名使用中我们可以利用三级域名对我们整体系统大的功能或应用进行很好的划分
+
+<!--more-->
+
 
 ## 词性的使用
 定义自定义路径部分时，使用名词的复数形式定义一个资源，如若有动词词性在url中考虑以下划线区分。

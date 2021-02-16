@@ -1,3 +1,16 @@
+---
+title: String 和常量池
+date: 2021-02-16 13:14:10
+tags:
+ - java
+ - String
+categories:
+ - java
+ - String
+topdeclare: true
+reward: true
+---
+
 # String 类和常量池
 
 - String 对象的两种创建方式：
@@ -18,6 +31,8 @@ System.out.println(str2==str3);//false
 - **只要使用 new 方法，便需要创建新的对象**
 
   ![image-20200731104926601](04_string和常量池/image-20200731104926601.png)
+
+<!--more-->
 
 ## string 类型的常量池
 

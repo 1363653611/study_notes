@@ -1,3 +1,14 @@
+---
+title: nginx 服务搭建
+date: 2021-02-09 15:14:10
+tags:
+ - nginx
+categories:
+ - nginx
+topdeclare: true
+reward: true
+---
+
 ## 在docker 下nginx 服务的搭建
 
 - 现在nginx 镜像 ` docker pull nginx:latested`
@@ -12,6 +23,9 @@
   -v /mydata/nginx/logs:/var/log/nginx  \
   -d nginx:1.10	
   ```
+
+<!--more-->
+
   - 从容器中配置文件拷贝到指定目录 `docker container cp nignx:/etc/ngix mydata/nignx`
 
   - 修改配置文件 `mv nginx conf`

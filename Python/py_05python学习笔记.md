@@ -1,3 +1,14 @@
+---
+title: python 基础学习笔记
+date: 2021-02-09 15:14:10
+tags:
+ - python
+categories:
+ - python
+topdeclare: true
+reward: true
+---
+
 ### python 基础学习笔记 ###
 
 ### 变量
@@ -20,6 +31,9 @@
         - 用小写字母拼写，多个单词之间用下划线链接
         - 受 保护的实例属性以单个下划线开头
         - 私有的属性以双下滑线开头
+
+<!--more-->
+
 - 变量使用：
     * 算数运算
     * 使用 `type()` 做类型检查

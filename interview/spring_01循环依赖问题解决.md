@@ -1,3 +1,14 @@
+---
+title: Spring 循环依赖问题解决
+date: 2021-02-16 13:14:10
+tags:
+ - RPC
+categories:
+ - RPC
+topdeclare: true
+reward: true
+---
+
 # 循环依赖问题解决
 
 ## 什么是循环依赖？
@@ -5,6 +16,8 @@
 - 简而言之就是	A 依赖了B ，B 依赖了A ，A和B 之间就形成了循环依赖
 
 ![image-20200730195137988](spring_01循环依赖问题解决/image-20200730195137988.png)
+
+<!--more-->
 
 example:
 

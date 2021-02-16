@@ -1,3 +1,15 @@
+---
+title: SpringBoot 整合 ElasticSearch
+date: 2021-02-12 13:33:36
+tags:
+  - springBoot
+categories:
+  - springBoot
+#top: 1
+topdeclare: false
+reward: true
+---
+
 # SpringBoot 整合 ElasticSearch
 
 ## ElasticSearch 和 Kinaba 安装
@@ -15,6 +27,8 @@ docker安装： study_notes\docker\docker_04es安装和kibana 集成.md
 # Spring Data Elasticsearch
 
 > Spring Data Elasticsearch是Spring提供的一种以Spring Data风格来操作数据存储的方式，它可以避免编写大量的样板代码。
+
+<!--starter-->
 
 ## 常用注解
 

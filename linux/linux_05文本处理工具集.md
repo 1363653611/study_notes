@@ -1,3 +1,14 @@
+---
+title: 文本处理工具集
+date: 2021-02-09 15:14:10
+tags:
+  - LINUX
+categories:
+  - LINUX
+topdeclare: true
+reward: true
+---
+
 ## Linux下使用Shell处理文本时最常用的工具
 
 ###  01 find 文件查找
@@ -23,6 +34,8 @@ find . -regex  ".*(.txt|.pdf)$"
 ```shell
 find . ! -name "*.txt" -print
 ```
+
+<!--more-->
 
 4.  指定搜索深度
 
@@ -277,12 +290,12 @@ sort -n file
 常用命令
 
 ```shell
-uniq file  #去除重复的行
-uniq -c file #去除重复的行，并显示重复次数
-uniq -d file #只显示重复的行
-uniq -u file #只显示出现一次的行
-uniq -i file #忽略大小写，去除重复的行
-uniqe -w 10 file #认为前10个字符相同，即为重复
+uniq file  --去除重复的行
+uniq -c file --去除重复的行，并显示重复次数
+uniq -d file --只显示重复的行
+uniq -u file --只显示出现一次的行
+uniq -i file --忽略大小写，去除重复的行
+uniqe -w 10 file --认为前10个字符相同，即为重复
 ```
 
 
@@ -429,16 +442,16 @@ sed是一个流编辑器，功能非常强大。
 显示匹配关键字行
 
 ```shell
-# 查看包含某些关键字的日志行
+-- 查看包含某些关键字的日志行
 sed -n "/string/p" logFile
 ```
 
 打印指定行
 
 ```shell
-sed -n "1,5p" logFile #打印第1到5行
-sed -n '3,5{=;p}' logFile #打印3到5行，并且打印行号
-sed -n "10p" logFIle  #打印第10行
+sed -n "1,5p" logFile --打印第1到5行
+sed -n '3,5{=;p}' logFile --打印3到5行，并且打印行号
+sed -n "10p" logFIle  --打印第10行
 ```
 
 首处替换
@@ -578,16 +591,16 @@ echo -e "1 2 3 4 " | awk 'BEGIN{num = 0 ;print "begin";} {sum += $1;} END {print
 传递外部变量
 
 ```shell
-var=1000echo | awk '{print vara}' vara=$var #  输入来自stdinawk '{print vara}' vara=$var file # 输入来自文件
+var=1000echo | awk '{print vara}' vara=$var -- 输入来自stdinawk '{print vara}' vara=$var file -- 输入来自文件
 ```
 
 用样式对awk处理的行进行过滤
 
 ```shell
-awk 'NR < 5' #行号小于5
-awk 'NR==1,NR==4 {print}' file #行号等于1和4的打印出来
-awk '/linux/' #包含linux文本的行（可以用正则表达式来指定，超级强大）
-awk '!/linux/' #不包含linux文本的行
+awk 'NR < 5' --行号小于5
+awk 'NR==1,NR==4 {print}' file --行号等于1和4的打印出来
+awk '/linux/' --包含linux文本的行（可以用正则表达式来指定，超级强大）
+awk '!/linux/' --不包含linux文本的行
 ```
 
 设置定界符
@@ -663,7 +676,7 @@ seq 100| awk 'NR==4,NR==6{print}'
 
 ```shell
 awk '/start_pattern/, /end_pattern/' filename
-# eg:
+-- eg:
 seq 100 | awk '/13/,/15/'
 cat /etc/passwd| awk '/mai.*mail/,/news.*news/'
 ```
@@ -671,7 +684,7 @@ cat /etc/passwd| awk '/mai.*mail/,/news.*news/'
 awk常用内建函数
 
 ```shell
-# index(string,search_string):返回search_string在string中出现的位置sub(regex,replacement_str,string):将正则匹配到的第一处内容替换为replacement_str;match(regex,string):检查正则表达式是否能够匹配字符串；length(string)：返回字符串长度
+-- index(string,search_string):返回search_string在string中出现的位置sub(regex,replacement_str,string):将正则匹配到的第一处内容替换为replacement_str;match(regex,string):检查正则表达式是否能够匹配字符串；length(string)：返回字符串长度
 echo | awk '{"grep root /etc/passwd" | getline cmdout; print length(cmdout) }' 
 ```
 
@@ -721,10 +734,10 @@ done
 
 3.  迭代每一个字符
 
-`${string:startpos:numof_chars}：`从字符串中提取一个字符；(bash文本切片）${#word}:返回变量word的长度
+`${string:startpos:numof_chars}：`从字符串中提取一个字符；(bash文本切片）${word}:返回变量word的长度
 
 ```shell
-for((i=0;i<${#word};i++))
+for((i=0;i<${word};i++))
 do
 echo ${word:i:1);
 done
@@ -733,16 +746,16 @@ done
 ### 11 cat  文本显示
 
 ```shell
-cat file  #全文本显示在终端
-cat -n file #显示全文本，并显示行号
-# cat也可用作合并文件: 将file1 file2的内容合并写到file3中
+cat file  --全文本显示在终端
+cat -n file --显示全文本，并显示行号
+-- cat也可用作合并文件: 将file1 file2的内容合并写到file3中
 cat file1 file2 >file3
 ```
 
 ### 12 tac 倒序显示全部文本
 
 ```shell
-# tac是cat倒过来的写法，tac以行为单位，倒序显示全文本内容。
+-- tac是cat倒过来的写法，tac以行为单位，倒序显示全文本内容。
 tac file
 ```
 
@@ -751,59 +764,59 @@ tac file
 cat将整个文本内容输出到终端。那么也就带来一个问题，如果文本内容较多，前面的内容查看将十分不便。而more命令可以分页显示。
 
 ```shell
-# 显示内容
+-- 显示内容
 more file
 ```
 
 之后，就可以使用按键来查看文本。常用按键如下：
 
-> 回车  #向下n行，默认为1行
-> 空格  #向下滚动一屏
-> b   #向上滚动一屏
-> =   #输出当前行号
-> :f   #输出当前文件名和当前行号
-> q   #退出
+> 回车  --向下n行，默认为1行
+> 空格  --向下滚动一屏
+> b   --向上滚动一屏
+> =   --输出当前行号
+> :f   --输出当前文件名和当前行号
+> q   --退出
 
 从指定行开始显示
 
 ```shell
-# 从第10行开始显示file的内容
+-- 从第10行开始显示file的内容
 more +10 file
-# 从匹配的字符串行开始显示:从有string的行的前两行开始file的内容
+-- 从匹配的字符串行开始显示:从有string的行的前两行开始file的内容
 more +/string file
 ```
 
 ### 14 less 任意浏览搜索文本
 
- less命令的基本功能和more没有太大差别，但是**less命令可以向前浏览文件，而more只能向后浏览文件**，同时less还拥有更多的搜索功能。
+ less命令的基本功能和more没有太大差别，但是 **less命令可以向前浏览文件，而more只能向后浏览文件**，同时less还拥有更多的搜索功能。
 常见使用方法：
 
 ```shell
-less file     #浏览file
-less -N file  #浏览file，并且显示每行的行号
-less -m file  #浏览file，并显示百分比
+less file     --浏览file
+less -N file  --浏览file，并且显示每行的行号
+less -m file  --浏览file，并显示百分比
 ```
 
 常用按键如下：
 
->f    #向前滚动一屏
->b    #向后滚动一屏
->回车或j  #向前移动一行
->k    #向后移动一行
->G    #移动到最后一行
->g    #移动到第一行
->/string #向下搜索string，n查看下一个，N查看上一个结果
->? string #向上搜索string，n查看下一个，N查看上一个结果
->q  #退出
+>f    --向前滚动一屏
+>b    --向后滚动一屏
+>回车或j  --向前移动一行
+>k    --向后移动一行
+>G    --移动到最后一行
+>g    --移动到第一行
+>/string --向下搜索string，n查看下一个，N查看上一个结果
+>? string --向上搜索string，n查看下一个，N查看上一个结果
+>q  --退出
 
 相比more命令，less命令能够搜索匹配需要的字符串。另外，less还能在多个文件间切换浏览：
 
 ```shell
 less file1 file2 file3
-:n     #切换到下一个文件
-:p     #切换到上一个文件
-:x     #切换到第一个文件
-:d     #从当前列表移除文件
+:n     --切换到下一个文件
+:p     --切换到上一个文件
+:x     --切换到第一个文件
+:d     --从当前列表移除文件
 ```
 
 ### 15 head 显示头部文件
@@ -811,8 +824,8 @@ less file1 file2 file3
 head命令的作用就像它的名字一样，用于显示文件的开头部分文本. 常见用法如下：
 
 ```shell
-head -n 100 file #显示file的前100行
-head -n -100 file #显示file的除最后100行以外的内容。  
+head -n 100 file --显示file的前100行
+head -n -100 file --显示file的除最后100行以外的内容。  
 ```
 
 ### 16  tail 显示文本尾部的内容
@@ -820,10 +833,10 @@ head -n -100 file #显示file的除最后100行以外的内容。
 和head命令类似，只不过tail命令用于读取文本尾部部分内容：
 
 ```shell
-tail -100 file  #显示file最后100行内容
-tail -n +100 file  #从第100行开始显示file内容   
+tail -100 file  --显示file最后100行内容
+tail -n +100 file  --从第100行开始显示file内容   
 
-# tail还有一个比较实用的用法，用于实时文本更新内容。比如说，有一个日志文件正在写，并且实时在更新，就可以用命令：
+-- tail还有一个比较实用的用法，用于实时文本更新内容。比如说，有一个日志文件正在写，并且实时在更新，就可以用命令：
 tail -f logFile
 ```
 
@@ -860,7 +873,7 @@ shift+v  进入行选择模式，选择完成后，按y复制，按p粘贴
 2 隐藏行号
 :set nonu
 3 查找关键字
-:/you       ## 效果：查找文件中出现的you，并定位到第一个找到的地方，按n可以定位到下一个匹配位置（按N定位到上一个）
+:/you       -- 效果：查找文件中出现的you，并定位到第一个找到的地方，按n可以定位到下一个匹配位置（按N定位到上一个）
 4 替换操作
 :s/sad/bbb    查找光标所在行的第一个sad，替换为bbb
 :%s/sad/bbb      查找文件中所有sad，替换为bbb
@@ -879,34 +892,34 @@ drwxr-xr-x      （也可以用二进制表示  111 101 101  -->  755）
 
 d：标识节点类型（d：文件夹   -：文件  l:链接）
 r：可读   w：可写    x：可执行 
-第一组rwx：  ## 表示这个文件的拥有者对它的权限：可读可写可执行
-第二组r-x：  ## 表示这个文件的所属组用户对它的权限：可读，不可写，可执行
-第三组r-x：  ## 表示这个文件的其他用户（相对于上面两类用户）对它的权限：可读，不可写，可执行
+第一组rwx：  -- 表示这个文件的拥有者对它的权限：可读可写可执行
+第二组r-x：  -- 表示这个文件的所属组用户对它的权限：可读，不可写，可执行
+第三组r-x：  -- 表示这个文件的其他用户（相对于上面两类用户）对它的权限：可读，不可写，可执行
 
 ```
 
 ###  修改文件权限
 
 ```shell
-chmod g-rw haha.dat		 ## 表示将haha.dat对所属组的rw权限取消
-chmod o-rw haha.dat		 ## 表示将haha.dat对其他人的rw权限取消
-chmod u+x haha.dat		 ## 表示将haha.dat对所属用户的权限增加x
-chmod a-x haha.dat               ## 表示将haha.dat对所用户取消x权限
+chmod g-rw haha.dat		-- 表示将haha.dat对所属组的rw权限取消
+chmod o-rw haha.dat		 -- 表示将haha.dat对其他人的rw权限取消
+chmod u+x haha.dat		 -- 表示将haha.dat对所属用户的权限增加x
+chmod a-x haha.dat               -- 表示将haha.dat对所用户取消x权限
 
-# 也可以用数字的方式来修改权限
+-- 也可以用数字的方式来修改权限
 chmod 664 haha.dat   
-# 就会修改成   rw-rw-r--
-# 如果要将一个文件夹的所有内容权限统一修改，则可以-R参数
+-- 就会修改成   rw-rw-r--
+-- 如果要将一个文件夹的所有内容权限统一修改，则可以-R参数
 chmod -R 770 aaa/
 ```
 
 ### 修改文件所有权
 
 ```shell
-# 只有root权限能执行
-chown angela  aaa		## 改变所属用户
-chown :angela  aaa		## 改变所属组
-chown angela:angela aaa/	## 同时修改所属用户和所属组
+-- 只有root权限能执行
+chown angela  aaa		--改变所属用户
+chown :angela  aaa		--改变所属组
+chown angela:angela aaa/	--同时修改所属用户和所属组
 
 ```
 

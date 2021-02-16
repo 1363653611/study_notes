@@ -1,3 +1,14 @@
+---
+title: lunix 环境下 jdk 8 安装
+date: 2021-02-09 15:14:10
+tags:
+ - LINUX
+categories:
+ - LINUX
+topdeclare: true
+reward: true
+---
+
 # lunix 环境下 jdk 8 安装
 
 ## 检查是否安装 jdk： `java -version`
@@ -28,6 +39,9 @@ python-javapackages-3.4.1-11.el7.noarch
 tzdata-java-2019c-1.el7.noarch
 javapackages-tools-3.4.1-11.el7.noarch
 ```
+
+<!--more-->
+
 
 ## 安装JDK
 

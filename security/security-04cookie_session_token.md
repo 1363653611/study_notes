@@ -1,3 +1,16 @@
+---
+title:  Cookie、Session、Token
+date: 2021-02-12 13:33:36
+tags:
+  - security    
+  - jwt
+categories:
+  - security
+#top: 1
+topdeclare: false
+reward: true
+---
+
 # Cookie、Session、Token
 
 在了解这三个概念之前我们先要了解HTTP是无状态的Web服务器.
@@ -9,6 +22,8 @@
 1. 浏览器第一次访问服务端时，服务器此时肯定不知道他的身份，所以创建一个独特的身份标识数据，格式为key=value，放入到Set-Cookie字段里，随着响应报文发给浏览器。
 2. 浏览器看到有Set-Cookie字段以后就知道这是服务器给的身份标识，于是就保存起来，下次请求时会自动将此key=value值放入到Cookie字段中发给服务端。
 3. 服务端收到请求报文后，发现Cookie字段中有值，就能根据此值识别用户的身份然后提供个性化的服务。
+
+<!--more-->
 
 ![Image](security-04cookie_session_token/cookie.png)
 
@@ -74,7 +89,7 @@ public String cookies(HttpServletResponse response){
 
 ### Domain
 
-设置为cookie.setDomain("localhost")，接下来我们访问http://localhost:8005/testCookies我们发现下图中左边的是有Cookie的字段的，但是我们访问http://172.16.42.81:8005/testCookies，看下图的右边可以看到没有Cookie的字段了。这就是Domain控制的域名发送Cookie。
+设置为cookie.setDomain("localhost")，接下来我们访问http://localhost:8005/testCookies我们发现下图中左边的是有Cookie的字段的，但是我们访问 `http://172.16.42.81:8005/testCookies`，看下图的右边可以看到没有Cookie的字段了。这就是Domain控制的域名发送Cookie。
 
 ![Image](security-04cookie_session_token/cookie05.png)
 

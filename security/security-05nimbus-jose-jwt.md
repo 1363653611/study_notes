@@ -1,3 +1,17 @@
+
+---
+title:  nimbus-jose-jwt
+date: 2021-02-12 13:33:36
+tags:
+  - security    
+  - jwt
+categories:
+  - security
+#top: 1
+topdeclare: false
+reward: true
+---
+
 以前一直使用的是`jjwt`这个JWT库，虽然小巧够用, 但对JWT的一些细节封装的不是很好。最近发现了一个更好用的JWT库`nimbus-jose-jwt`，简单易用，API非常易于理解，对称加密和非对称加密算法都支持。
 
 # 简介
@@ -8,6 +22,8 @@
 
 - JWT(JSON Web Token)指的是一种规范，这种规范允许我们使用JWT在两个组织之间传递安全可靠的信息。
 - 而JWS(JSON Web Signature)和JWE(JSON Web Encryption)是JWT规范的两种不同实现，我们平时最常使用的实现就是JWS。
+
+<!--more-->
 
 # 使用
 

@@ -1,3 +1,15 @@
+---
+title: 初识starter
+date: 2021-02-12 13:33:36
+tags:
+  - springBoot
+categories:
+  - springBoot
+#top: 1
+topdeclare: false
+reward: true
+---
+
 #  原理
 
 总体上，就是将Jar包作为项目的依赖引入工程。而现在之所以增加了难度，是因为我们引入的是Spring Boot Starter，所以我们需要去了解Spring Boot对Spring Boot Starter的Jar包是如何加载的？
@@ -7,6 +19,9 @@ SpringBoot 在启动时会去依赖的 starter 包中寻找 /META-INF/spring.fac
 细节上可以使用@Conditional 系列注解实现更加精确的配置加载Bean的条件。
 
 > JavaSPI 实际上是“基于接口的编程＋策略模式＋配置文件”组合实现的动态加载机制。
+
+<!--starter-->
+
 
 # 项目实战
 

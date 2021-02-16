@@ -1,3 +1,14 @@
+---
+title: 软件行专业名词
+date: 2021-02-09 15:14:10
+tags:
+ - other
+categories:
+ - other
+topdeclare: true
+reward: true
+---
+
 ### 英文缩写
 
 #### API

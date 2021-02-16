@@ -1,9 +1,23 @@
+---
+title: easticsearch windows 版安装教程
+date: 2021-02-12 13:33:36
+tags:
+  - elasticsearch    
+categories:
+  - elasticsearch
+#top: 1
+topdeclare: false
+reward: true
+---
+
 ## easticsearch windows 版安装教程
 
 ### 背景
 
   springboot2.x 版本的 `spring-boot-starter-data-elasticsearch` 的java api 版本不兼容 7.0 一下版本的elasticsearch. 启动和查询时报错. 所以需要安装 7.0 以上版本的es.  
   本安装教程时基于 `v7.5.2` 版本的.
+
+<!--more-->
 
 ### 安装过程
 

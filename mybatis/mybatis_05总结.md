@@ -1,3 +1,16 @@
+---
+title: 05.总结
+date: 2021-02-16 13:14:10
+tags:
+ - mybatis
+ - sql
+categories:
+ - mybatis
+ - 动态sql
+topdeclare: true
+reward: true
+---
+
 ## 核心原理
 
 ![MyBatis框架的执行流程图](mybatis_05总结/5-1ZF4130T31N.png)

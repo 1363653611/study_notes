@@ -1,3 +1,14 @@
+---
+title: raab_py 技术选型
+date: 2021-02-09 15:14:10
+tags:
+ - python
+categories:
+ - python
+topdeclare: true
+reward: true
+---
+
 ## raab_py 技术选型
 ### 什么是WSGI？
 >维基百科上面的定义是：web 服务网关接口（Python Web Service GateWay Interface），简写为 `WSGI`.是为python 语言定义的web服务器和web应用程序之间的一种简单而通用的接口。
@@ -17,6 +28,8 @@ WSGI[1] （有时发音作'wiz-gee'）
       - 允许在一个进程中同时运行多个应用程序或应用框架。
       - 负载均衡和远程处理，通过在网络上转发请求和响应消息。
       - 进行内容后处理，例如应用XSLT样式表。
+
+<!--more-->
 
 ### 技术选型
 > raab_py 使用 Flask 提供 web框架支持, 使用 setuptools 提供打包功能,在 正式环境中使用 `gunicorn` 和 `gevent` 配合提供部署功能.

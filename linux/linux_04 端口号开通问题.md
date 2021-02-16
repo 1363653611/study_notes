@@ -1,8 +1,21 @@
+---
+title: 端口号开通问题
+date: 2021-02-09 15:14:10
+tags:
+ - LINUX
+categories:
+ - LINUX
+topdeclare: true
+reward: true
+---
+
 问题： 用iptables开启防火墙报错: Failed to start  IPv4 firewall with iptables. - `CentOS 7 ：Failed to start IPv4 firewall with iptables.`
 !["ipv4 fialed"](./imgs/lunix_04_ipv4失败.jpg)
 
 - __错误原因__：因为centos7.0默认不是使用iptables方式管理，而是firewalld方式。CentOS6.0防火墙用iptables管理。
 - __解决办法有两个__：使用firewalld方式。或者关闭firewalld,然后安装iptables。
+
+<!--more-->
 
 ## 方法1: 关闭firewalld，安装iptables过程：
 - 停止并屏蔽firewalld：

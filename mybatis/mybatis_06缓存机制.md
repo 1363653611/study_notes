@@ -1,3 +1,16 @@
+---
+title: 06.缓存机制
+date: 2021-02-16 13:14:10
+tags:
+ - mybatis
+ - sql
+categories:
+ - mybatis
+ - 动态sql
+topdeclare: true
+reward: true
+---
+
 # 一级缓存
 
 在应用运行过程中，我们有可能在一次数据库会话中，执行多次查询条件完全相同的SQL，MyBatis提供了一级缓存的方案优化这部分场景，如果是相同的SQL语句，会优先命中一级缓存，避免直接对数据库进行查询，提高性能。具体执行过程如下图所示。

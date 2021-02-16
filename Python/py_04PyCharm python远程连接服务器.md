@@ -1,8 +1,22 @@
+---
+title: PyCharm python远程连接服务器
+date: 2021-02-09 15:14:10
+tags:
+ - python
+categories:
+ - python
+topdeclare: true
+reward: true
+---
+
 # PyCharm python远程连接服务器
 
 **PyCharm python远程连接服务器**
 **1、点击左上角File进入setting**
 ![](py_04PyCharm python远程连接服务器/1596523663243-7ce6eb20-3f65-4bc7-a6be-45adebea57f9.png)
+
+<!--more-->
+
 **2、找到当前Project，新建 Interpreter**
 ![](py_04PyCharm python远程连接服务器/1596523663673-1f70b0cb-c4fe-409c-9ccf-7815a34baa99.png)
 **3、设置按钮点击后选择 Add....**
@@ -32,7 +46,7 @@
 **9、如果Interpreter配置错误怎么修改**
 ![](py_04PyCharm python远程连接服务器/1596523668621-af17348c-fb3e-4811-bf51-6fe4a94f527e.png)
 ![](py_04PyCharm python远程连接服务器/1596523668855-c99a3c25-b8bd-4d70-8d4d-4f79eca379fa.png)
-![](https://cdn.nlark.com/yuque/0/2020/png/603072/1596523669011-ffa25dca-d515-4fd7-8e79-aef138d4f09b.png#height=200&width=415)
+![](py_04PyCharm python远程连接服务器/1596523669011-ffa25dca-d515-4fd7-8e79-aef138d4f09b.png)
 ![](py_04PyCharm python远程连接服务器/1596523669367-f67540e5-d7be-4bda-aa63-c7f7b390a4a1.png)
 **总结：为什么远程连接：**
 **使用 Remote Host 可以直接推送文件到服务器或者下载到本地，十分方便，并且可以在本地直接启动远程服务，非常适合debug远程，就像是在本地启动调试一样。**

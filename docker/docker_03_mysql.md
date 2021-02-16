@@ -1,3 +1,13 @@
+---
+title: docker nysql
+date: 2021-01-13 12:14:10
+tags:
+  - docker
+categories:
+  - docker
+reward: true
+---
+
 ## 查看可用的 MySQL 版本
  - 访问 MySQL 镜像库地址：https://hub.docker.com/_/mysql?tab=tags 。
  - 通过 命令: `docker search mysql`

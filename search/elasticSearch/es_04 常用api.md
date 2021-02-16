@@ -1,3 +1,15 @@
+---
+title: 基本设置和常用操作 api
+date: 2021-02-12 13:33:36
+tags:
+  - elasticsearch    
+categories:
+  - elasticsearch
+#top: 1
+topdeclare: false
+reward: true
+---
+
 # 基本设置和常用操作 api
 
 ```bash
@@ -138,7 +150,7 @@ GET /twitter/_shard_stores
 
 ```
 
-
+<!--more-->
 
 # 数据插入 API
 

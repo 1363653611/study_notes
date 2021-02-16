@@ -1,3 +1,17 @@
+
+---
+title: JWT 在 Web 应用间安全地传递信息
+date: 2021-02-12 13:33:36
+tags:
+  - security    
+  - jwt
+categories:
+  - security
+#top: 1
+topdeclare: false
+reward: true
+---
+
 # JWT 在 Web 应用间安全地传递信息
 
 JSON Web Token（JWT）是一个非常轻巧的规范。这个规范允许我们使用JWT在用户和服务器之间传递安全可靠的信息。
@@ -8,7 +22,7 @@ JSON Web Token（JWT）是一个非常轻巧的规范。这个规范允许我们
 
 上面的URL主要通过URL来描述这个当然这样做有一个弊端，那就是要求用户B用户是一定要先登录的。可不可以简化这个流程，让B用户不用登录就可以完成这个操作。JWT就允许我们做到这点。
 
-
+<!--more-->
 
 ![Image](security-03在 Web 应用间安全地传递信息/jwt_01.png)
 

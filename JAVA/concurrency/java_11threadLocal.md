@@ -1,3 +1,17 @@
+---
+title: threadlocal
+date: 2021-01-16 20:30:10
+tags:
+ - concurrency
+ - 并发
+ - java
+categories:
+ - java
+ - concurrency
+topdeclare: true
+reward: true
+---
+
 # ThreadLocal
 
 - 用来存放每个线程专属的本地变量。存放每个线程私有的数据

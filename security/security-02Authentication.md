@@ -1,3 +1,16 @@
+---
+title: security 登陆问题
+date: 2021-02-12 13:33:36
+tags:
+  - security    
+  - jwt
+categories:
+  - security
+#top: 1
+topdeclare: false
+reward: true
+---
+
 # 概述
 
 - 登录认证： Authentication
@@ -9,6 +22,8 @@
 - 如何使用session 和jwt 分别完成权限校验
 - 如何通过过滤器和拦截器分别完成对登录认证的统一处理
 - 如何实现上下文对象
+
+<!--more-->
 
 # 基础知识
 

@@ -1,3 +1,17 @@
+---
+title: AQS 简介
+date: 2021-01-16 20:30:10
+tags:
+ - concurrency
+ - 并发
+ - java
+categories:
+ - java
+ - concurrency
+topdeclare: true
+reward: true
+---
+
 # AQS 简介
 
 AQS全称为 AbstractQueuedSychronizer。该类属于 `java.util.concurrent.locks` 包。

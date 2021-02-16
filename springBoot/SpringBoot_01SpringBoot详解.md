@@ -1,3 +1,15 @@
+---
+title: spring 基础知识
+date: 2021-02-12 13:33:36
+tags:
+  - springBoot
+categories:
+  - springBoot
+#top: 1
+topdeclare: false
+reward: true
+---
+
 # spring 基础知识
 
 - IoC 容器、
@@ -13,6 +25,8 @@ SpringBoot 包含四个核心功能：
 - 起步依赖、
 - Actuator、
 - 命令行界面(CLI) 
+
+<!--starter-->
 
 # Spring Ioc 容器
 

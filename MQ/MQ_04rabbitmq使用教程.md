@@ -21,7 +21,7 @@ reward: true
 - 用户名/密码：guest/guest
 - 管理界面
 
-![image-20201024221945951](/zbcn.github.io/assets/postImg/mq/MQ_04rabbitmq使用教程/image-20201024221945951.png)
+![image-20201024221945951](MQ_04rabbitmq使用教程/image-20201024221945951.png)
 
 <!--more-->
 

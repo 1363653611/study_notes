@@ -1,3 +1,15 @@
+---
+title: autoconfig 自动配置
+date: 2021-02-12 13:33:36
+tags:
+  - springBoot
+categories:
+  - springBoot
+#top: 1
+topdeclare: false
+reward: true
+---
+
 # SpringBoot AutoConfig 自动配置
 
 ##　SpringBoot 的启动流程
@@ -25,6 +37,9 @@ public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySourc
     this.mainApplicationClass = deduceMainApplicationClass();
 }
 ```
+
+<!--starter-->
+
 
 **在创建SpringApplication的时候初始化了一些ApplicationContext和ApplicationListener**
 

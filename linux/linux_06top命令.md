@@ -1,3 +1,14 @@
+---
+title: top 命令
+date: 2021-02-09 15:14:10
+tags:
+ - LINUX
+categories:
+ - LINUX
+topdeclare: true
+reward: true
+---
+
 # top 命令详解
 
 ```shell
@@ -15,6 +26,8 @@ KiB Swap:        0 total,        0 free,        0 used.  1090732 avail Mem
     1 root      20   0  191528   3676   1760 S  0.0  0.2   2:51.49 systemd
     2 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kthreadd
 ```
+
+<!--more-->
 
 ## 输出分析
 

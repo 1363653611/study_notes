@@ -1,3 +1,14 @@
+---
+title: mysql 基础命令
+date: 2021-02-16 18:14:10
+tags:
+  - sql
+categories:
+  - sql
+topdeclare: false
+reward: true
+---
+
 /* Windows服务 */
 -- 启动MySQL
     net start mysql

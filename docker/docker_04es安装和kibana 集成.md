@@ -1,3 +1,14 @@
+---
+title: elasticsearch 安装
+date: 2021-01-13 12:14:10
+tags:
+  - docker
+categories:
+  - docker
+reward: true
+---
+
+
 # elasticsearch 安装
 
 ## 拉去镜像 

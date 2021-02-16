@@ -1,3 +1,15 @@
+---
+title: springboot 自定义starter
+date: 2021-02-12 13:33:36
+tags:
+  - springBoot
+categories:
+  - springBoot
+#top: 1
+topdeclare: false
+reward: true
+---
+
 # SpringBoot Starter 的约定
 
 - groupId不要用官方的org.springframework.boot 而要用你自己独特的
@@ -13,6 +25,8 @@
 （PS：如果你不需要区分这两个概念的话，也可以将自动配置代码模块与依赖管理模块合并成一个模块）
 
 简而言之，starter应该提供使用该库所需的一切
+
+<!--starter-->
 
 ##　命名
 

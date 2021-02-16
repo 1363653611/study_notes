@@ -1,3 +1,15 @@
+---
+title: elastic7 学习
+date: 2021-02-12 13:33:36
+tags:
+  - springBoot
+categories:
+  - springBoot
+#top: 1
+topdeclare: false
+reward: true
+---
+
 # 特性
 
 - 分布式的文档存储引擎
@@ -10,6 +22,8 @@
 - 门户网站：访问统计、文章点赞、留言评论等。
 - 广告推广：记录员工行为数据、消费趋势、员工群体进行定制推广等。
 - 信息采集：记录应用的埋点数据、访问日志数据等，方便大数据进行分析。
+
+<!--starter-->
 
 # ElasticSearch 基础概念
 
