@@ -2,9 +2,9 @@
 title: Spring Cloud Bus：消息总线
 date: 2021-01-09 13:14:10
 tags:
- - springCloud
+ - SpringCloud
 categories:
- - springCloud
+ - SpringCloud
 topdeclare: true
 reward: true
 ---

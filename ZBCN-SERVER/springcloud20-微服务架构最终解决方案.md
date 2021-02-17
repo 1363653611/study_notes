@@ -2,9 +2,9 @@
 title: Spring Cloud Gateway + Oauth2 实现统一认证和鉴权！
 date: 2021-01-20 13:14:10
 tags:
- - springCloud
+ - SpringCloud
 categories:
- - springCloud
+ - SpringCloud
 topdeclare: true
 reward: true
 ---

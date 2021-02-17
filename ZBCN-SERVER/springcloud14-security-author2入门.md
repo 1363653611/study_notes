@@ -2,9 +2,9 @@
 title: Spring Cloud Security：Oauth2使用入门
 date: 2021-01-14 13:14:10
 tags:
- - springCloud
+ - SpringCloud
 categories:
- - springCloud
+ - SpringCloud
 topdeclare: true
 reward: true
 ---

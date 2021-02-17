@@ -2,9 +2,9 @@
 title: Spring Cloud Config：外部集中化配置管理
 date: 2021-01-08 13:14:10
 tags:
- - springCloud
+ - SpringCloud
 categories:
- - springCloud
+ - SpringCloud
 topdeclare: true
 reward: true
 ---

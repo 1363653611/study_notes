@@ -2,9 +2,9 @@
 title: Spring Boot Admin：微服务应用监控
 date: 2021-01-13 13:14:10
 tags:
- - springCloud
+ - SpringCloud
 categories:
- - springCloud
+ - SpringCloud
 topdeclare: true
 reward: true
 ---

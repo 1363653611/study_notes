@@ -2,9 +2,9 @@
 title: Spring Cloud Security：Oauth2实现单点登录
 date: 2021-01-16 13:14:10
 tags:
- - springCloud
+ - SpringCloud
 categories:
- - springCloud
+ - SpringCloud
 topdeclare: true
 reward: true
 ---

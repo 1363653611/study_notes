@@ -2,9 +2,9 @@
 title: zuul api 网关
 date: 2021-01-07 13:14:10
 tags:
- - springCloud
+ - SpringCloud
 categories:
- - springCloud
+ - SpringCloud
 topdeclare: true
 reward: true
 ---

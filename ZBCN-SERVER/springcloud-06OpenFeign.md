@@ -2,9 +2,9 @@
 title: Spring Cloud OpenFeign：基于Ribbon和Hystrix的声明式服务调用
 date: 2021-01-06 13:14:10
 tags:
- - springCloud
+ - SpringCloud
 categories:
- - springCloud
+ - SpringCloud
 topdeclare: true
 reward: true
 ---
