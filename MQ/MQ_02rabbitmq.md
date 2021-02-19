@@ -1,5 +1,3 @@
-## RabbitMQ 简介
-
 ---
 title: RabbitMQ 简介
 date: 2020-02-11 10:14:10
@@ -10,6 +8,8 @@ categories:
 topdeclare: true
 reward: true
 ---
+
+## RabbitMQ 简介
 
 官方推出的六种模式
 ### 1.1 "Hello World!"

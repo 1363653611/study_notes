@@ -1,3 +1,14 @@
+---
+title: 多路复用IO模型详情
+date: 2021-02-19 12:14:10
+tags:
+  - IO
+categories:
+  - IO
+topdeclare: true
+reward: true
+---
+
 - I/O是指网络I/O
 - 多路指多个TCP连接(即socket或者channel）,复用指复用一个或几个线程。
 

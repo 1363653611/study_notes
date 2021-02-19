@@ -1,3 +1,16 @@
+---
+title: RMI
+date: 2021-02-19 12:14:10
+tags:
+  - WEB
+  - socket
+categories:
+  - WEB
+  - socket
+topdeclare: true
+reward: true
+---
+
 # RMI 远程过程调用
 
 - Java的RMI远程调用是指，一个JVM中的代码可以通过网络实现远程调用另一个JVM的某个方法。

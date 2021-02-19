@@ -11,6 +11,7 @@ categories:
 topdeclare: true
 reward: true
 ---
+
 Java的线程既是工作单元，也是执行机制。从JDK 5开始，把工作单元与执行机制分离开来。工作单元包括Runnable和Callable，而执行机制由Executor框架提供。
 
 <!--more-->

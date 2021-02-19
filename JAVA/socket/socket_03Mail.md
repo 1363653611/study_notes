@@ -1,3 +1,16 @@
+---
+title: JAVA MAIL
+date: 2021-02-19 12:14:10
+tags:
+  - WEB
+  - socket
+categories:
+  - WEB
+  - socket
+topdeclare: true
+reward: true
+---
+
 # 发送邮件
 
 Email就是电子邮件。

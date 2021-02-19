@@ -1,4 +1,3 @@
-
 ---
 title: RabbitMQ 使用教程
 date: 2021-02-11 11:14:10
@@ -9,6 +8,7 @@ categories:
 topdeclare: true
 reward: true
 ---
+
 # rabbitmq 使用教程
 
 # 安装

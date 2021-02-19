@@ -11,6 +11,7 @@ categories:
 topdeclare: true
 reward: true
 ---
+
 ### 虚拟环境搭建 ###
 1. venv 环境创建`virtualenv venv`
   - 报错,提示`virtualenv: command not found...`

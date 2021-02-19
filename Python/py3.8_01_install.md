@@ -11,6 +11,7 @@ categories:
 topdeclare: true
 reward: true
 ---
+
 ### lunix python 安装
 
 1. 先看看现有的 python2在哪里

@@ -10,6 +10,7 @@ categories:
 topdeclare: true
 reward: true
 ---
+
 # JVM 内存区域
 
 ![640](JVM_01java内存区域/640.jpg)

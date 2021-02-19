@@ -11,6 +11,7 @@ categories:
 topdeclare: true
 reward: true
 ---
+
 # 对象共享
 
 ## 问题?

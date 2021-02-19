@@ -2,11 +2,11 @@
 title: 02 JVM对象创建
 date: 2019-12-09 18:14:10
 tags:
-	- JVM
-	- java
+  - JVM
+  - java
 categories:
-	- JVM
-	- java
+  - JVM
+  - java
 topdeclare: true
 reward: true
 ---

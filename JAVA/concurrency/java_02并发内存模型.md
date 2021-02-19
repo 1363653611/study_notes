@@ -11,6 +11,7 @@ categories:
 topdeclare: true
 reward: true
 ---
+
 # java 内存模型
 
 ## java 内存模型的基础

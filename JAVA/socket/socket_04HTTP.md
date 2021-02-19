@@ -1,3 +1,16 @@
+---
+title: HTTP
+date: 2021-02-19 12:14:10
+tags:
+  - WEB
+  - socket
+categories:
+  - WEB
+  - socket
+topdeclare: true
+reward: true
+---
+
 # 什么是HTTP？
 
 > HTTP就是目前使用最广泛的Web应用程序使用的基础协议，例如，浏览器访问网站，手机App访问后台服务器，都是通过HTTP协议实现的。

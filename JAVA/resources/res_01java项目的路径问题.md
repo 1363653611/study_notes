@@ -1,3 +1,14 @@
+---
+title: java项目路径问题
+date: 2021-02-19 18:14:10
+tags:
+  - IO
+categories:
+  - IO
+topdeclare: true
+reward: true
+---
+
 # 路径概述
 
 ![Java Class路径](res_01java项目的路径问题/1690ff94ff2fb72c)
