@@ -223,16 +223,17 @@ public int add(){
 
 	1. 新年代(Young Generation)
 
-		   1. 使用复制清除算法（Copinng算法）,原因是年轻代每次GC都要回收大部分对象
-		   2. 新生代里面分成一份较大的Eden空间和两份较小的Survivor空间。每次只使用Eden和其中一块Survivor空间，然后垃圾回收的时候，把存活对象放到未使用的Survivor（划分出from、to）空间中，清空Eden和刚才使用过的Survivor空间
-		   3. 内存不足时发生Minor GC
-  	2. 老年代(Old Generation)
+		1. 使用复制清除算法（Copinng算法）,原因是年轻代每次GC都要回收大部分对象
+		2. 新生代里面分成一份较大的Eden空间和两份较小的Survivor空间。每次只使用Eden和其中一块Survivor空间，然后垃圾回收的时候，把存活对象放到未使用的Survivor（划分出from、to）空间中，清空Eden和刚才使用过的Survivor空间
+		3. 内存不足时发生Minor GC
+	2. 老年代(Old Generation)
 
-		   1. 采用标记-整理算法（mark-compact），原因是老年代每次GC只会回收少部分对象
+		. 采用标记-整理算法（mark-compact），原因是老年代每次GC只会回收少部分对象
 	3. 永久代(Permanent Generation)
 
-	      	1. Perm：用来存储类的元数据，也就是方法区。
-	     	 	2. Perm的废除：在jdk1.8中，Perm被替换成MetaSpace，MetaSpace存放在本地内存中.原因是永久代经常内存不够用，或者发生内存泄漏
+		1. Perm：用来存储类的元数据，也就是方法区。
+		2. Perm的废除：在jdk1.8中，Perm被替换成MetaSpace，MetaSpace存放在本地内存中.原因是永久代经常内存不够用，或者发生内存泄漏
+
 	4. MetaSpace（元空间）：元空间的本质和永久代类似，都是对JVM规范中方法区的实现。
 
 		   1. 元空间与永久代之间最大的区别在于：元空间并不在虚拟机中，而是使用本地内存
