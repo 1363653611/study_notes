@@ -59,20 +59,22 @@ ClassFile {
 ## 概述
 
 - class文件是以8位字节为基础单位的二进制流。各个数据项目严格按照顺序紧凑地排列在class文件之中，中间没有任何分割符。
-- 当遇到需要占用8位字节以上空间额数据项时，则会按照高位在前的方式，分割成若干个8位字节进行存储
+- 当遇到需要占用 8 位字节以上空间额数据项时，则会按照高位在前的方式，分割成若干个8位字节进行存储
 - class文件格式采用类似与C语言结构的方式存储
 
 ###  class文件的数据类型
-	- 无符号数
-		- u1\u2\u4\u8 来分别代表1个字节、2个字节、4个字节和8个字节
-		- 用途：
-			- 描述数字
-			- 索引引用
-			- 数量值
-			- 按照utf-8编码构成的字符串值
-	- 表
-		- 是由多个无符号数或者其他表作为数据项构成的复合类型
-		- 表都习惯以`_info` 结尾
+```shell
+- 无符号数
+	- u1\u2\u4\u8 来分别代表1个字节、2个字节、4个字节和8个字节
+	- 用途：
+		- 描述数字
+		- 索引引用
+		- 数量值
+		- 按照utf-8编码构成的字符串值
+- 表
+	- 是由多个无符号数或者其他表作为数据项构成的复合类型
+	- 表都习惯以 `_info` 结尾
+```
 
 # 各个数据项的含义
 ## 魔数       
@@ -85,8 +87,8 @@ ClassFile {
 ## class文件的版本
 
 ```java
-  u2             minor_version;//Class 的小版本号
-  u2             major_version;//Class 的大版本号
+  u2         minor_version; //Class 的小版本号
+  u2         major_version; //Class 的大版本号
 ```
 
 - 紧接着魔数的4个字节为Class文件的版本号
@@ -96,8 +98,8 @@ ClassFile {
 ## 常量池
 
 ```java
- u2             constant_pool_count;//常量池的数量
- cp_info        constant_pool[constant_pool_count-1];//常量池
+ u2             constant_pool_count; //常量池的数量
+ cp_info        constant_pool[constant_pool_count-1]; //常量池
 ```
 
 常量池的数量是 constant_pool_count-1（**常量池计数器是从1开始计数的，将第0项常量空出来是有特殊考虑的，索引值为0代表“不引用任何一个常量池项”**）。
@@ -107,9 +109,9 @@ ClassFile {
 - 特点
 
 - class文件之中的资源仓库。
-	- class文件结构中与其他项目关联最多的数据类型
-	- Class文件中第一个出现表类型数据的项目
-	- class文件中空间最大的数据项目之一
+	- class 文件结构中与其他项目关联最多的数据类型
+	- class 文件中第一个出现表类型数据的项目
+	- class 文件中空间最大的数据项目之一
 	
 - 常量池容量计数器
 	- 入口位置：放置u2类型的数据。代表常量池容量计数值（constant_pool_count）
@@ -265,8 +267,8 @@ field_info     fields[fields_count];//一个类会可以有个字段
 ## 属性表集合 attribute_info
 
 ```java
-u2             attributes_count;//此类的属性表中的属性数
-attribute_info attributes[attributes_count];//属性表集合
+u2             attributes_count; //此类的属性表中的属性数
+attribute_info attributes[attributes_count]; //属性表集合
 ```
 
 在 Class 文件，字段表，方法表中都可以携带自己的属性表集合，以用于描述某些场景专有的信息。与 Class 文件中其它的数据项目要求的顺序、长度和内容不同，属性表集合的限制稍微宽松一些，不再要求各个属性表具有严格的顺序，并且只要不与已有的属性名重复，任何人实现的编译器都可以向属性表中写 入自己定义的属性信息，Java 虚拟机运行时会忽略掉它不认识的属性。
