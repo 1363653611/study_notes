@@ -29,16 +29,16 @@ Java的线程既是工作单元，也是执行机制。从JDK 5开始，把工�
 
 #### Executor框架的结构与成员
 - Executor框架的结构（三部分）
-  - ·任务。包括被执行任务需要实现的接口：Runnable接口或Callable接口。
-  - ·任务的执行。包括任务执行机制的核心接口Executor，以及继承自Executor的ExecutorService接口。Executor框架有两个关键类实现了ExecutorService接口（ThreadPoolExecutor和ScheduledThreadPoolExecutor）。
-  - ·异步计算的结果。包括接口Future和实现Future接口的FutureTask类。
+  - 任务。包括被执行任务需要实现的接口：Runnable接口或Callable接口。
+  - 任务的执行。包括任务执行机制的核心接口Executor，以及继承自Executor的ExecutorService接口。Executor框架有两个关键类实现了ExecutorService接口（ThreadPoolExecutor和ScheduledThreadPoolExecutor）。
+  - 异步计算的结果。包括接口Future和实现Future接口的FutureTask类。
 
   Executor框架包含的主要的类与接口
   ![Executor框架包含的主要的类与接口](img/Executor的类与接口.jpg)
 
-  - ·Executor是一个接口，它是Executor框架的基础，它将任务的提交与任务的执行分离开
-  - ·ThreadPoolExecutor是线程池的核心实现类，用来执行被提交的任务。
-  - ·ScheduledThreadPoolExecutor是一个实现类，可以在给定的延迟后运行命令，或者定期执行命令。ScheduledThreadPoolExecutor比Timer更灵活，功能更强大。
+  - Executor是一个接口，它是Executor框架的基础，它将任务的提交与任务的执行分离开
+  - ThreadPoolExecutor是线程池的核心实现类，用来执行被提交的任务。
+  - ScheduledThreadPoolExecutor是一个实现类，可以在给定的延迟后运行命令，或者定期执行命令。ScheduledThreadPoolExecutor比Timer更灵活，功能更强大。
   - Future接口和实现Future接口的FutureTask类，代表异步计算的结果。
   - Runnable接口和Callable接口的实现类，都可以被ThreadPoolExecutor或Scheduled-ThreadPoolExecutor执行。
 
@@ -46,7 +46,7 @@ Executor框架的使用示意图
 ![executor使用示意图](img/executor使用示意图.jpg)
 
 - 创建实现Runnable或者Callable接口的任务对象。工具类Executors可以把一个Runnable对象封装为一个Callable对象（Executors.callable（Runnable task）或Executors.callable（Runnable task，Object resule））。
-- 然后可以把Runnable对象直接交给ExecutorService执行（ExecutorService.execute（Runnablecommand））；或者也可以把Runnable对象或Callable对象提交给ExecutorService执行（Executor-Service.submit（Runnable task）或ExecutorService.submit（Callable<T>task））。
+- 然后可以把Runnable对象直接交给ExecutorService执行（ExecutorService.execute（Runnablecommand））；或者也可以把Runnable对象或Callable对象提交给ExecutorService执行（ExecutorService.submit（Runnable task）或ExecutorService.submit（Callable<T> task））。
 - 如果执行ExecutorService.submit（…），ExecutorService将返回一个实现Future接口的对象（到目前为止的JDK中，返回的是FutureTask对象）。由于FutureTask实现了Runnable，程序员也可以创建FutureTask，然后直接交给ExecutorService执行。
 - 最后，主线程可以执行FutureTask.get()方法来等待任务执行完成。主线程也可以执行FutureTask.cancel（boolean mayInterruptIfRunning）来取消此任务的执行。
 

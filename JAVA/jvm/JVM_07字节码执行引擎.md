@@ -77,7 +77,7 @@ reward: true
     - invokespecial  调用实例构造`<init>`方法、是由方法和父类方法
     - invokevirtual 调用虚方法
 		
-    	> 被final修饰的方法，虽然使用invokevirtual指令来调用，但是由于它无法被覆盖，没有其他版本，所以也无需对方法接收者进行多太选择，或者选择果肯定是唯一的。final修饰的方法是非虚方法
+    	> 被final修饰的方法，虽然使用invokevirtual指令来调用，但是由于它无法被覆盖，没有其他版本，所以也无需对方法接收者进行多太选择，或者选择肯定是唯一的。final修饰的方法是非虚方法
     - invokeiniterface 调用接口方法，会在运行时再确定一个实现此接口的对象
     - invokedyname 先在运行时动态解析出调用点限定符所引用的方法，然后在执行该方法
     
@@ -89,6 +89,7 @@ reward: true
   
     - 类加载的时候会把符号引用转化为直接引用(invokestatic 调用静态方法, invokespecial  调用实例构造<init>方法、是由方法和父类方法)
 - 虚方法
+  
       - (`invokevirtual, invokeiniterface, invokedyname`)
 
 ## 分配(多态)
@@ -127,7 +128,7 @@ reward: true
   - 静态类型语言
     - 在编译器确定类型，最显著的好处时编译期可以提供严谨的类型检查。这样与类型相关的问题能在编码的时候就能及时发现，利于稳定性及代码达到更大的规模
   - 动态类型语言
-    - 行期确定类型，为开发人员提供更大的灵活性。动态语言实现可能会更加清晰简洁，提升开发效率
+    - 运行期确定类型，为开发人员提供更大的灵活性。动态语言实现可能会更加清晰简洁，提升开发效率
   - java.lang.invoke包
     - 使用MethodHandle 机制来动态调用方法
   - invokedynamic指令

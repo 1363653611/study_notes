@@ -213,7 +213,7 @@ public class ClassLoaderDemo {
 
 ####　 扩展类加载器 `ExtensionClassLoader`
 
-		  > 主要负责加载目录 `%JRE_HOME%/lib/ext` 目录下的jar包和类，或被 `java.ext.dirs` 系统变量所指定的路径下的jar包。
+>  主要负责加载目录 `%JRE_HOME%/lib/ext` 目录下的jar包和类，或被 `java.ext.dirs` 系统变量所指定的路径下的jar包。
 
 ####  应用程序类加载器 （`AppClassLoader`）: 
 
