@@ -428,6 +428,13 @@ class BTreeNode{
 1. 前序遍历：root 节点位于数组的开始位置（前序遍历确定根节点）
 2. 中序遍历： root 节点位于数组的中间。（后续遍历确认左右子树）
 
+操作思路：
+
+1. 依据前序遍历序列的第一个数字，确认出根节点：root
+2. 中序遍历中找到根节点的位置
+3. 确定左右子树的数量，在前序遍历和中序遍历的序列中划分左右子树的值，
+4. 递归的调用函数，分别构造他的左右子树
+
 ```java
  /**
      *有了前序遍历，首先我们可以知道根节点的值，也就是数组中下标为0的位置，由此创建根节点。
@@ -458,6 +465,7 @@ class BTreeNode{
         root.right = buildTree(rightPreOrder,rightInOrder);
         return root;
     }
+//寻找中序遍历中 root 节点的位置
 private int find(int[] inOrder, int value) {
         for (int i =0 ; 0 < inOrder.length ; i++){
             if(value == inOrder[i]){
