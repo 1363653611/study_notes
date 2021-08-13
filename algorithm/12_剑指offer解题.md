@@ -2,6 +2,11 @@
 
 实现函数 double power(double base, int exponent), 求base 的exponent 次方。 不得用库函数，同时不考虑大数据问题。
 
+技巧：
+
+1. 用 右位移运算符代替 除以 2，
+2. 用 位 于 运算符 代替求余 运算符（%）
+
 ```java
 public class T9_IntegerPower {
 
@@ -111,7 +116,7 @@ public class T9_IntegerPower {
 输入一个数字n,按照顺序打印出1最大的n位十进制数，比如输入3，则打印1,2,3……999，一直到最大的三位数999. 
 
 ```java
-public static void main(String[] args) {
+	public static void main(String[] args) {
         int n = 3;
         //print1ToMaxOfDigits_1(n);
         print1ToMaxOfDigits_2(n);
