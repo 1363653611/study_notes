@@ -45,7 +45,11 @@ docker rm id
 - 创建新nginx容器nginx-web,并将**www,logs,conf**目录映射到本地：
 
 ```shell
-docker run -d -p 80:80 --name nginx-web -v /home/nginx/www:/usr/share/nginx/html -v /home/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /home/nginx/logs:/var/log/nginx nginx
+# 启动nginx
+docker run -d -p 80:80 -p 443:443 --name nginx-web5 -v /home/nginx/www:/usr/share/nginx/html -v /home/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /home/nginx/logs:/var/log/nginx nginx
+
+# nginx 添加 ssl 映射
+docker run -d -p 80:80 -p 443:443 --name nginx-web6 -v /home/nginx/www:/usr/share/nginx/html -v /home/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /home/nginx/logs:/var/log/nginx -v /home/nginx/conf/cert/:/etc/nginx/cert/ --privileged=true -d --restart=always nginx 
 ```
 
 

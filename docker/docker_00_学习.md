@@ -2472,7 +2472,7 @@ lrwxrwxrwx   1 root root    9 May 11  2019 lib64 -> usr/lib64 ....
 ```shell
 $ vim dockerfile
 FROM centos                                         # 基础镜像centos
-MAINTAINER cao<1165680007@qq.com>                    # 作者
+MAINTAINER zbcn<1165680007@qq.com>                    # 作者
 COPY README /usr/local/README                         # 复制README文件
 ADD jdk-8u231-linux-x64.tar.gz /usr/local/             # 添加jdk，ADD 命令会自动解压
 ADD apache-tomcat-9.0.35.tar.gz /usr/local/         # 添加tomcat，ADD 命令会自动解压
