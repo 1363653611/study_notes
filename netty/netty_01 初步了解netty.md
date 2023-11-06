@@ -61,7 +61,6 @@ reward: true
 - ChannelFuture：代表I/O操作的执行结果，通过事件机制，获取执行结果，通过添加监听器，执行我们想要的操作。
 - ByteBuf：字节序列，通过ByteBuf操作基础的字节数组和缓冲区。
 
-
 # BIO, NIO,AIO 简单说明
 
 这三个概念分别对应三种通讯模型：阻塞、非阻塞、非阻塞异步。
@@ -107,7 +106,7 @@ Netty开发的实际过程，这是一个简化的过程，但已经把大概流
 
 ### **创建Handler**
 
-​	首先创建Handler类，该类用于接收服务器端发送的数据，这是一个简化的类，只重写了消息读取方法channelRead0、捕捉异常方法exceptionCaught。
+​    首先创建Handler类，该类用于接收服务器端发送的数据，这是一个简化的类，只重写了消息读取方法channelRead0、捕捉异常方法exceptionCaught。
 
 客户端的Handler一般继承的是SimpleChannelInboundHandler，该类有丰富的方法，心跳、超时检测、连接状态等等。
 
@@ -126,8 +125,6 @@ public class HandlerClientHello extends SimpleChannelInboundHandler<ByteBuf> {
     }
 }
 ```
-
-
 
 __代码说明：__
 
@@ -188,7 +185,6 @@ public class AppClientHello {
         new AppClientHello("127.0.0.1",18080).run();
     }
 }
-
 ```
 
 代码说明：
@@ -225,7 +221,6 @@ public class HandlerServerHello extends ChannelInboundHandlerAdapter {
         ctx.close();
     }
 }
-
 ```
 
 ### 创建服务器端启动类
@@ -270,8 +265,6 @@ public class AppServerHello {
 
 }
 ```
-
-
 
 代码说明：
 

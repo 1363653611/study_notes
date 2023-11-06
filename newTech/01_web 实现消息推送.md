@@ -73,8 +73,6 @@ setInterval(() => {
 
 [Nacos配置中心交互模型是push还是pull？](https://mp.weixin.qq.com/s?__biz=MzAxNTM4NzAyNg==&mid=2247494748&idx=1&sn=2cccdbc6269ea01e75012340af1496ef&scene=21#wechat_redirect)一文中我详细介绍过`Nacos`长轮询的实现原理。
 
-
-
 我使用`apollo`配置中心实现长轮询的方式，应用了一个类`DeferredResult`，它是在`servelet3.0`后经过Spring封装提供的一种异步请求机制，直意就是延迟结果。
 
 ![image-20220801143350183](01_web 实现消息推送/image-20220801143350183.png)
